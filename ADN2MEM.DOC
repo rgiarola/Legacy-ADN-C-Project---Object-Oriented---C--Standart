@@ -1,0 +1,16 @@
+
+  avaliacao efetuada em 29/12/93
+
+tamanho de memoria minima para carga  560k
+memoria gasta pelo ctree              50k
+memoria gasta pelo ADN basico         5k
+memoria gasta em stack minimo         20k
+memoria gasta pela aplicacao +/-      30k
+                                    -----
+total de memoria na carga do prog    105k
+
+apos a carga o minimo de memoria disponivel
+nao podera ser inferior a 60k
+
+
+

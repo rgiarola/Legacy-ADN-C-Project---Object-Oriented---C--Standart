@@ -1,0 +1,16 @@
+File VDTELEDC.c
+     case I('A'):
+     case I('a'):if (posinicio == -1)
+                  while(*aux == 'a' || *aux == 'A')
+File VDTELEDH.c
+     case 'A':
+     case 'a':if (posinicio == -1)
+                  while(*aux == 'a' || *aux == 'A')
+File VDTELMSD.c
+     case 'A':
+     case 'a':if (!tamano)
+                  while(*aux == 'a' || *aux == 'A')
+File VDTELMMA.c
+     case 'A':
+     case 'a':if (!tamano)
+                  while(*aux == 'a' || *aux == 'A')

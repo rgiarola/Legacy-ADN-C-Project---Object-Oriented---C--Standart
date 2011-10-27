@@ -1,0 +1,223 @@
+/* ============================================================================
+
+                         ESTRUTURAS DE CONTROLE DA TELA
+         Objetos de Dados para Composicao das Telas, Campos e Consistencias.
+
+   ============================================================================ */
+
+typedef struct
+ {
+  char            *indarq;
+  INT2             status;
+  VIDEO_SEG_CHAVE *segchave; /* segmento de chave para geracao do sub-file*/
+ }VIDEO_SUBFILE_CTRL;
+
+/* ============================================================================
+                        Estrutura Disparo de Manutencao
+   ============================================================================ */
+ typedef struct
+  {
+   char    *sistcrg, /* sistema da tela*/
+           *telacrg; /* nome da tela*/
+   VD_VOID *tela,    /* pointer da tela*/
+           *strtelacrg;
+  }VIDEO_ESTMANUT;
+
+ typedef struct
+  {
+   char    *sistcrg; /* sistema da tela*/
+   int     numtela ; /* numero da tela */
+   VD_VOID *tela,    /* pointer da tela*/
+           *strtelacrg;
+  }VIDEO_ESTMANUT_NUM;
+
+
+/* ============================================================================
+                            Estrutura da Imagem
+   ============================================================================ */
+
+typedef struct
+ {
+  INT2               retconsall,  /* retorno do consist all*/
+                     coli,        /* coluna inicial da imagem*/
+                     colf,        /* coluna final da imagem*/
+                     lini,        /* linha inicial da imagem*/
+                     linf,        /* linha final da imagem*/
+                     flagimagem,  /* flag de controle da imagem*/
+                     tipotela,    /* tipo da tela*/
+                     seqdisp;     /* sequencia de display de imagem*/
+  BYTE               sombra;      /* flag de sombra da imagem*/
+  char               *nmindarq,   /* nome do arquivo vinculado a imagem*/
+                     *nmindsub,   /* nome do arquivo vinculado ao subfile*/
+                     *nmindpai;   /* nome do arquivo pai*/
+  VIDEO_SEG_CHAVE    *segchave,   /* segmento de chave para geracao do sub-file*/
+                     *segsub;     /* segmento de chave para geracao do sub-file*/
+  INT2               arquivo,
+                     indarq,
+                     subfile,
+                     indsub;
+  char               *userfunc,   /* funcao de usuario*/
+                     *userserv,
+                     *mensagem;
+  VIDEO_NUCLEO_SERV  *campos;     /* campos da imagem*/
+  VIDEO_TRANSP_DADOS *transpdados;
+  char               *nomehelp,
+                     *ident;
+ }VIDEO_IMAGEMTELA;
+
+
+/* ============================================================================
+                               Estrutura da TELA
+   ============================================================================ */
+
+typedef struct
+ {
+  INT2             (*accept_tela)(),/* funcao de controle e disparo de imagens*/
+                   num_imagens,     /* numero de imagens*/
+                   imagem_accept,   /* numero da imagem de accept*/
+                   seqdisp,         /* sequencia de display de imagem*/
+                   flagtela;        /* flag da tela*/
+  VIDEO_IMAGEMTELA *imagens,        /* imagens da tela*/
+                   *imagem_ativa;   /* imagem ativa na tela*/
+  VIDEO_ESTMANUT   *tela;
+ }VIDEO_TELA_ENTRADA_DADOS;
+
+/* ============================================================================
+                            Estrutura da Planilha
+   ============================================================================ */
+typedef struct
+ {
+  INT2                (*pesquisa_tela)(), /* funcao geradora de servico*/
+                      flagplanilha;       /* flag de controle de planilha*/
+  VIDEO_ESTMANUT      *tela;              /* tela da planilha*/
+  VIDEO_SEG_CHAVE     *segchave;	  /* segmento de chave*/
+  VIDEO_TRANSP_DADOS  *transpdados;	  /* transferencia de dados*/
+  INT2                indice,             /* indice da planilha*/
+		      linatual; 	  /* linha atual da planilha*/
+  char                *nomeindice;        /* nome do indice*/
+  DWORD               numrec,             /* numero do registro fisico*/
+                      numrecpesq;
+  char                *buffer_rec,        /* buffer do arquivo*/
+                      *buffer_pesq;
+  char                *nomehelp;
+ }VIDEO_PESQUISA_PLANILHA;
+
+/* ============================================================================
+           Estrutura Consistencia Banco de Dados (Posiciona/Duplicata/Valkey)
+   ============================================================================ */
+ typedef struct
+  {
+   INT2                indice,
+                      *situacao;
+   VIDEO_MENSAGEM     *mensagem;
+   VIDEO_SEG_CHAVE    *segchave;
+   VIDEO_TRANSP_DADOS *transpdados;
+   char               *nomeindice;
+   unsigned long int  posicao;
+  }VIDEO_CONSDB;
+
+
+/* ============================================================================
+                                   Estrutura Consistencia Faixa
+   ============================================================================ */
+ typedef struct
+  {
+   char *mensagem,
+        *faixa;
+  }VIDEO_CONS_FAIXA;
+
+
+/* ============================================================================
+                 Estrutura de Controle de Consistencias Campos
+   ============================================================================ */
+typedef struct
+ {
+  BYTE tipocons;
+       union
+	 {
+          VIDEO_CONS_FAIXA        *faixa;
+          VIDEO_INFO_MENU         *menu;
+	  VIDEO_MENSAGEM	  *mens;
+	  VIDEO_CONSDB		  *consdb;
+	  VIDEO_PESQUISA_PLANILHA *planilha;
+          char                    *user_cons;
+          char                    *old_buffer;
+	  VIDEO_ESTMANUT	  *manutencao;
+         }objetocons;
+ }VIDEO_CAMPO_CONSISTENCIA;
+
+
+/* ============================================================================
+                             Estrutura Objeto Campos
+   ============================================================================ */
+typedef struct
+ {
+  INT2                      (*editacampo)(); /* Funcao de Edicao do Campo.*/
+
+  /* Localizacao na Tela.*/
+  WORD                     objeto_num;      /* Numero do Objeto para carga.*/
+  INT2                     col,lin;         /* Coordenadas de DISPLAY.*/
+  BYTE                     entrada,saida;   /* Atributos de Display.*/
+
+  /* Identidade do Campo*/
+  char                     *dodacampo,      /* Doda campo.*/
+                           *buffer_binario; /* Buffer Primario.*/
+  INT2                     offsetbuffer;    /* Offset no buffer do campo*/
+  char                     *mascara;        /* Mascara de Apresentacao.*/
+  WORD                     tamanho,         /* Tamanho de Display.*/
+                           autos,           /* Autos de Controle de Edicao.*/
+                           tipo,            /* Tipo do Campo.*/
+                           decimais,        /* Numero de Decimais (se algum).*/
+                           status,          /* STATUS de Utilizacao.*/
+                           *tabskip;        /* Teclas de Operacao de Saida.*/
+
+  /* Estruturas de Controle*/
+  VIDEO_CAMPO_CONSISTENCIA *consiste;       /* Parametros de Consistencia.*/
+  char                     *user_func;      /* Funcao Generica.*/
+  INT2                     flag_disparo;    /* Flag de Disparo da Funcao.*/
+ }VIDEO_CAMPO_TELA;
+
+typedef struct
+ {
+  INT2 numimag,
+      numdisp;
+ }VIDEO_TELASTRRFS;
+
+/* ========================================================================= */
+
+typedef struct
+ {
+  char *texto;
+  BYTE posicao_caracter,
+       cor_normal_texto,
+       cor_ativado_texto,
+       cor_normal_caracter_ativacao,
+       cor_ativado_caracter_ativacao,
+       cor_de_nao_disponivel,
+       cor_sombra,
+       flags,
+       coluna,
+       linha;
+  WORD *sequencia_de_ativacao,
+       sequencia_de_saida;
+ }VIDEO_BOTTOM;
+
+/* ============================================================================
+                          Estrutura De Controle De Carga
+   ============================================================================ */
+struct VIDEO_CONTROLE_CARGA_OBJETOS
+ {
+  VIDEO_ESTMANUT *atual;
+  int            tipo;
+  struct VIDEO_CONTROLE_CARGA_OBJETOS *posterior,
+                                      *anterior;
+ };
+
+typedef struct VIDEO_CONTROLE_CARGA_OBJETOS VIDEO_CTRL_CARGA;
+
+#define VIDEO_BOTTON_DISPONIVEL     B0
+#define VIDEO_BOTTON_NAO_DISPONIVEL B1
+#define VIDEO_BOTTON_ATIVADO        B2
+#define VIDEO_BOTTON_NAO_ATIVADO    B3
+
+

@@ -1,0 +1,195 @@
+
+#ifdef VIDEO_PROTOTIPO_PARAMETROS
+INT2 VIDEO_TRAN_ajusta_segchave(IDE_ARQUIVOS *tabarq);
+
+char *VIDEO_TRAN_allocmem(INT2 tam);
+
+VD_VOID VIDEO_TRAN_armazena_buffer(VIDEO_TRAN_BUFFER_REDE_REC *areainp,
+                                   VIDEO_TRAN_BUFFER_REDE_RET *areaout,
+                                   struct bct70              *areacom);
+
+VD_VOID VIDEO_TRAN_bcd_char(char *buffer_bcd,char *buffer_char);
+
+VD_VOID VIDEO_TRAN_bcd_double(char *bcd,double valor,INT2 tamanho);
+
+VD_VOID VIDEO_TRAN_char_bcd(char *buffer_char,char *buffer_bcd,INT2 tamanho);
+
+INT2 VIDEO_TRAN_montachavenxt(char *ptraux,IDE_INDEX *indice);
+
+INT2 VIDEO_TRAN_montachaveprv(char *ptraux,IDE_INDEX *indice);
+
+INT2 VIDEO_TRAN_checa_lock(VIDEO_TRAN_BLOQREG *lockreal,
+                          VIDEO_TRAN_BLOQREG *lockreg,
+                          char               *terminal);
+
+VD_VOID VIDEO_TRAN_double_bcd(double *valor,char *bcd,INT2 tamanho);
+
+INT2 VIDEO_TRAN_enddodabuf(IDE_TABREFERDODA *work,TEXT *buffer);
+
+VD_VOID VIDEO_TRAN_envia_buffer(VIDEO_TRAN_BUFFER_REDE_REC *areainp,
+                                VIDEO_TRAN_BUFFER_REDE_RET *areaout,
+                                struct bct70               *areacom);
+
+INT2  CTREE_filnm(char *nome_arquivo);
+
+INT2 VIDEO_TRAN_freemem(INT2 tam);
+
+INT2 VIDEO_TRAN_getchave(char *chavesai,char *registro,IDE_INDEX *indice);
+
+VD_VOID VIDEO_TRAN_grava_buffer(VD_VOID *buffer,INT2 tamanho);
+
+IDE_ARQUIVOS *CTREE_ifilend(INT2 numero_arquivo);
+
+INT2 VIDEO_TRAN_GetRecord(struct bct70 *areacom);
+
+VD_VOID VIDEO_TRAN_inicdodanome(VD_VOID);
+
+VD_VOID VIDEO_TRAN_inicarqnome(VD_VOID);
+
+INT2 VIDEO_TRAN_init_arq(VD_VOID);
+
+INT2 VIDEO_TRAN_initabdup();
+
+VD_VOID VIDEO_TRAN_inictabref(VD_VOID);
+
+INT2 VIDEO_TRAN_ServIoRecord(struct bct70  *areacom);
+
+INT2 CTREE_keynm(char *nome_indice);
+
+INT2 CTREE_keyfil(INT2 numero_indice );
+
+INT2 VIDEO_TRAN_LocKServRecord(struct bct70 *areacom);
+
+IDE_TABREFERDODA *VIDEO_TRAN_locitemtab(char *item);
+
+INT2  VIDEO_TRAN_menserr(char *mensagem);
+
+VD_VOID VIDEO_TRAN_transfl(long int *buffer);
+
+VD_VOID VIDEO_TRAN_transfi(INT2 *buffer);
+
+VD_VOID VIDEO_TRAN_monta_lock(VIDEO_TRAN_BLOQREG *lock,
+                              char               *terminal);
+
+INT2 VIDEO_TRAN_NextRecord(VIDEO_TRAN_BUFFER_WORK *buffer,
+                          INT2                    tambuffer,
+                          struct bct70           *areacom);
+
+INT2 VIDEO_TRAN_oper_siad(VD_VOID *chave,VD_VOID *registro,
+                         VD_VOID *serv ,VD_VOID *arquivo ,
+                         INT2     *tamreg);
+
+INT2 VIDEO_TRAN_prepara_bufenttran(VIDEO_TRAN_BUFFER_REDE_REC *areainp,
+                                  VIDEO_TRAN_BUFFER_REDE_RET *areaout,
+                                  struct bct70              *areacom);
+
+INT2 VIDEO_TRAN_prepara_bufsaitran(VIDEO_TRAN_BUFFER_REDE_REC *areainp,
+                                  VIDEO_TRAN_BUFFER_REDE_RET *areaout,
+                                  struct bct70               *areacom);
+
+VD_VOID principal(VIDEO_TRAN_BUFFER_REDE_REC *areainp,
+                  VIDEO_TRAN_BUFFER_REDE_RET *areaout,
+                  struct bct70               *areacom,
+                  char                       *areaexc);
+
+INT2 VIDEO_TRAN_PrevRecord(VIDEO_TRAN_BUFFER_WORK *buffer  ,
+                          INT2                    tambuffer,
+                          struct bct70           *areacom );
+
+INT2 VIDEO_TRAN_setadup(char      *nomeindice,
+                       DWORD     *lastdup   ,
+                       IDE_INDEX *indice    );
+
+INT2 VIDEO_TRAN_comparadup(char *chavebusca,char *reg,IDE_INDEX *indice);
+
+INT2 VIDEO_TRAN_ultimo(char *nomeindice,char *buffer,IDE_INDEX *indice);
+
+VD_VOID bcd_char(char *buffer_bcd,char *buffer_char);
+
+#else
+
+INT2 VIDEO_TRAN_ajusta_segchave();
+
+char *VIDEO_TRAN_allocmem();
+
+VD_VOID VIDEO_TRAN_armazena_buffer();
+
+VD_VOID VIDEO_TRAN_bcd_char();
+
+VD_VOID VIDEO_TRAN_bcd_double();
+
+VD_VOID VIDEO_TRAN_char_bcd();
+
+INT2 VIDEO_TRAN_montachavenxt();
+
+INT2 VIDEO_TRAN_montachaveprv();
+
+INT2 VIDEO_TRAN_checa_lock();
+
+VD_VOID VIDEO_TRAN_double_bcd();
+
+INT2 VIDEO_TRAN_enddodabuf();
+
+VD_VOID VIDEO_TRAN_envia_buffer();
+
+INT2  CTREE_filnm();
+
+INT2 VIDEO_TRAN_freemem();
+
+INT2 VIDEO_TRAN_getchave();
+
+VD_VOID VIDEO_TRAN_grava_buffer();
+
+IDE_ARQUIVOS *CTREE_ifilend();
+
+INT2 VIDEO_TRAN_GetRecord();
+
+VD_VOID VIDEO_TRAN_inicdodanome();
+
+VD_VOID VIDEO_TRAN_inicarqnome();
+
+INT2 VIDEO_TRAN_init_arq();
+
+INT2 VIDEO_TRAN_initabdup();
+
+VD_VOID VIDEO_TRAN_inictabref();
+
+INT2 VIDEO_TRAN_ServIoRecord();
+
+INT2 CTREE_keynm();
+
+INT2 CTREE_keyfil();
+
+INT2 VIDEO_TRAN_LocKServRecord();
+
+IDE_TABREFERDODA *VIDEO_TRAN_locitemtab();
+
+INT2  VIDEO_TRAN_menserr();
+
+VD_VOID VIDEO_TRAN_transfl();
+
+VD_VOID VIDEO_TRAN_transfi();
+
+VD_VOID VIDEO_TRAN_monta_lock();
+
+INT2 VIDEO_TRAN_NextRecord();
+
+INT2 VIDEO_TRAN_oper_siad();
+
+INT2 VIDEO_TRAN_prepara_bufenttran();
+
+INT2 VIDEO_TRAN_prepara_bufsaitran();
+
+VD_VOID principal();
+
+INT2 VIDEO_TRAN_PrevRecord();
+
+INT2 VIDEO_TRAN_setadup();
+
+INT2 VIDEO_TRAN_comparadup();
+
+INT2 VIDEO_TRAN_ultimo();
+
+VD_VOID bcd_char();
+
+#endif

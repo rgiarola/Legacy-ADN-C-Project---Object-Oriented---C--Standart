@@ -1,0 +1,10 @@
+LIBRARY     POINTERS                       
+
+DESCRIPTION 'POINTERS.DLL                  '
+CODE PRELOAD
+
+EXPORTS
+            WEP                            @1   
+	    BPtr2Lng			   @3	
+            BPtr2Str                       @4
+

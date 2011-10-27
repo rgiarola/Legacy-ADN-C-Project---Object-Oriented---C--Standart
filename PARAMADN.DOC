@@ -1,0 +1,33 @@
+
+
+CAMPO
+INT2 VIDEO_TELA_edita_campo(campo,param)
+VIDEO_CAMPO_TELA  *campo;
+VIDEO_NUCLEO_SERV *param;
+
+USERFUNC CAMPO
+(tabfuncuser->userfunc)(*campo,VIDEO_TELA_FDISPANT,*param);
+
+USERFUNC CONST CAMPO
+((tabfuncuser->userfunc)(**campos,flagmens,**param))
+
+
+INT2 VIDEO_PESQUISA_accept_tela(pesquisa,param)
+VIDEO_PESQUISA_PLANILHA *pesquisa;
+VIDEO_NUCLEO_SERV       *param;
+USERFUNC PESQUISA
+(tabfuncuser->userfunc)(**pesquisa,VIDEO_TELA_FDISPPOS,**param);
+VIDEO_PESQUISA_PLANILHA *pesquisa;
+
+
+
+INT2 VIDEO_ARVORE_accept_arvore(arvore,param)
+VIDEO_ARVORE_ESTRUTURA *arvore;
+VIDEO_NUCLEO_SERV      *param;
+if ( !(*(arvore)->userfunc)(**arvore,VIDEO_ARVORE_FUNCANT,**param) )
+
+
+INT2 VIDEO_MENU_pega_selecao(work,param)
+VIDEO_INFO_MENU   *work;
+VIDEO_NUCLEO_SERV *param;
+

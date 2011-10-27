@@ -1,0 +1,53 @@
+File VDVISACT.C:
+     if (VIDEO_VISUAL_carrega_pagina(visual,-1))
+     if (VIDEO_VISUAL_carrega_pagina(visual,-1))
+     if (VIDEO_VISUAL_carrega_pagina(visual,TRUE))
+       if (VIDEO_VISUAL_carrega_pagina(visual,FALSE))
+ if (visual->flags&VIDEO_VISUAL_DISPLAY_PAGINA)
+     visual->flags &= ~VIDEO_VISUAL_DISPLAY_PAGINA;
+File VDVISCAT.C:
+     visual_local->flags |= (VIDEO_VISUAL_DISPLAY_PAGINA|VIDEO_VISUAL_DISPLAY_PROMPT);
+File VDVISCPO.C:
+     visual_local->flags |= (VIDEO_VISUAL_DISPLAY_PAGINA|VIDEO_VISUAL_DISPLAY_PROMPT);
+File VDVISCRP.C:
+INT2 VIDEO_VISUAL_carrega_pagina(visual,sentido)
+File VDVISCTI.C:
+   Logica Original
+File VDVISDSP.C:
+                   VIDEO_VISUAL_DISPLAY_PAGINA);
+     VIDEO_VISUAL_carrega_pagina(visual,-1);
+File VDVISFIP.C:
+INT2 VIDEO_VISUAL_fim_pagina(visual,param)
+File VDVISINP.C:
+INT2 VIDEO_VISUAL_inicio_pagina(visual,param)
+File VDVISLAT.C:
+                       (VIDEO_VISUAL_DISPLAY_PAGINA|
+File VDVISLPO.C:
+                       (VIDEO_VISUAL_DISPLAY_PAGINA|
+File VDVISPAT.C:
+INT2 VIDEO_VISUAL_pagina_anterior(visual,param)
+                             (VIDEO_VISUAL_DISPLAY_PAGINA|VIDEO_VISUAL_DISPLAY_PROMPT);
+                        (VIDEO_VISUAL_DISPLAY_PAGINA|
+File VDVISPPO.C:
+INT2 VIDEO_VISUAL_pagina_posterior(visual,param)
+                             (VIDEO_VISUAL_DISPLAY_PAGINA|VIDEO_VISUAL_DISPLAY_PROMPT);
+                    (VIDEO_VISUAL_DISPLAY_PAGINA|
+File VDVISPRC.C:
+                           CARREGA PRIMEIRA PAGINA
+   if (VIDEO_VISUAL_carrega_pagina(ctrlvisual,-1))
+                       VIDEO_VISUAL_DISPLAY_PAGINA);
+File VDVISPRI.C:
+                (VIDEO_VISUAL_DISPLAY_PAGINA|
+        ctrlvisual->flags |= (VIDEO_VISUAL_DISPLAY_PAGINA|VIDEO_VISUAL_DISPLAY_PROMPT);
+File VDVISTAT.C:
+     visual_local->flags |= (VIDEO_VISUAL_DISPLAY_PAGINA|VIDEO_VISUAL_DISPLAY_PROMPT);
+File VDVISTPO.C:
+     visual_local->flags |= (VIDEO_VISUAL_DISPLAY_PAGINA|VIDEO_VISUAL_DISPLAY_PROMPT);
+File VDVISULT.C:
+                (VIDEO_VISUAL_DISPLAY_PAGINA|
+        ctrlvisual->flags |= (VIDEO_VISUAL_DISPLAY_PAGINA|VIDEO_VISUAL_DISPLAY_PROMPT);
+File VDVISVAR.C:
+{   VIDEO_VISUAL_tabserv_PAGPOS   , VIDEO_VISUAL_pagina_posterior    },
+{   VIDEO_VISUAL_tabserv_PAGANT   , VIDEO_VISUAL_pagina_anterior     },
+{   VIDEO_VISUAL_tabserv_INI      , VIDEO_VISUAL_inicio_pagina       },
+{   VIDEO_VISUAL_tabserv_FIM      , VIDEO_VISUAL_fim_pagina          },

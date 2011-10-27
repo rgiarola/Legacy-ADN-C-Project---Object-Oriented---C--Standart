@@ -1,0 +1,4 @@
+#include <INCVIDEO.H>
+
+INT2 VIDEO_PESQUISA_tabserv_userserv[] = {VIDEO_MTTECLA(VD_NULO,ALT_F),VD_NULO};
+

@@ -1,0 +1,1381 @@
+
+
+                                   EMS Library
+
+                                For the C Language
+
+
+                                      (EMS4C)
+
+
+
+                                 USERS MANUAL
+
+
+
+
+
+                                  Version 1.0
+
+                                 July 24, 1993
+
+
+
+
+                        This software is provided as-is.
+                 There are no warranties, expressed or implied.
+
+
+
+
+                              Copyright (C) 1993
+                              All rights reserved
+
+
+
+                              MarshallSoft Computing, Inc.
+                              Post Office Box 4543
+                              Huntsville AL 35815
+
+                              205-881-4630 Voice / FAX
+                              205-880-9748 Support BBS
+
+
+                                       _______
+                                  ____|__     |                (R)
+                               --|       |    |-------------------
+                                 |   ____|__  |  Association of
+                                 |  |       |_|  Shareware
+                                 |__|   o   |    Professionals
+                               -----|   |   |---------------------
+                                    |___|___|    MEMBER
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 1
+                              C O N T E N T S
+
+
+
+
+
+         Chapter                                                   Page
+
+         1.0 Introduction..............................................3
+             1.1 Distribution Files....................................3
+             1.2 Compiling the Library.................................4
+             1.3 User Support..........................................4
+             1.4 ASP Ombudsman.........................................5
+             1.5 Installation..........................................5
+         2.0 MSDOS Memory..............................................6
+             2.1 Types of Memory.......................................6
+             2.2 Bank Switching........................................6
+         3.0 Example Programs..........................................7
+             3.1 EMS_TEST..............................................7
+             3.2 EMS_STAT..............................................7
+             3.3 The EMM4C Library.....................................7
+         4.0 EMS Library Functions.....................................8
+             4.1  emsLoaded............................................9
+             4.2  emsGetStatus.........................................9
+             4.3  emsGetFrame..........................................10
+             4.4  emsGetPages..........................................10
+             4.5  emsAllocate..........................................11
+             4.6  emsMapMemory.........................................12
+             4.7  emsRelease...........................................13
+             4.8  emsVersion...........................................13
+             4.9  emsSaveMap...........................................14
+             4.10 emsRestoreMap........................................14
+             4.11 emsGetHandles........................................15
+             4.12 emsOwnedPages........................................15
+             4.13 emsPageInfo..........................................16
+             4.14 emsError.............................................17
+         5.0 EMS4C Error Codes.........................................18
+         6.0 Legal Issues..............................................19
+             6.1 Registration..........................................19
+             6.2 Referral Program......................................19
+             6.3 License...............................................20
+             6.4 Warranty..............................................20
+         7.0 Revision History..........................................20
+         8.0 Other MarshallSoft Computing Products for C...............21
+             8.1 The Personal Communications Library for C.............21
+             8.2 The Personal Protocol Library for C...................21
+             8.3 The LZW Data Compression Library for C................22
+
+
+
+
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 2
+         1.0 Introduction
+
+         The   EMS4C   library   implements   version   3.2   of   the  LIM
+         (Lotus-Intel-Microsoft) specification for expanded memory. It will
+         run with either version 3.2 or 4.0 of the LIM specification.
+
+         In  order  to  use  the EMS4C library, you must have either an EMS
+         memory board installed,  or  have  an  expanded  memory  emulation
+         driver program (such as EMM386 or 386MAX) installed.
+
+         The  EMS4C  library  provides 14 functions which allow the user to
+         make use of expanded memory from their programs.  Several  example
+         programs are also provides such as:
+
+         EMS_STAT : Displays EMS driver status.
+         EMS_TEST : EMS4C library test program.
+
+         1.1 Distribution Files
+
+         EMS4C.H      : EMS4C prototype file.
+         EMS4C_S.LIB  : EMS4C small model library.
+         EMS4C_L.LIB  : EMS4C large model library.
+         EMS4C_S.MIX  : MIX Power C small model object file.
+         EMS_ERR.C    : Error message file.
+         EMS_TEST.C   : Source code for the EMS4C test program.
+         EMS_TEST._T_ : Borland C & Turbo C makefile for EMS_TEST.
+         EMS_TEST._M_ : Microsoft C makefile for EMS_TEST.
+         EMS_TEST._Q_ : Microsoft Quick C makefile for EMS_TEST.
+         EMS_STAT.C   : Source code for the EMS4C status program.
+         EMS_STAT._T_ : Borland C & Turbo C makefile for EMS_TEST.
+         EMS_STAT._M_ : Microsoft C makefile for EMS_TEST.
+         EMS_STAT._Q_ : Microsoft Quick C makefile for EMS_TEST.
+
+         Registered users also receive:
+
+         EMS4C.ASM    : Source code for EMS4C library.
+         EMS4C_C.LIB  : EMS4C compact model library.
+         EMS4C_M.LIB  : EMS4C medium model library.
+         EMS4C_C.MIX  : MIX EMS4C compact model object.
+         EMS4C_L.MIX  : MIX EMS4C large model object.
+         MAKE_S.BAT   : Makes EMS4C_S.LIB from source.
+         MAKE_M.BAT   : Makes EMS4C_M.LIB from source.
+         MAKE_C.BAT   : Makes EMS4C_C.LIB from source.
+         MAKE_L.BAT   : Makes EMS4C_L.LIB from source.
+         MAKE_XS.BAT  : Makes EMS4C_S.MIX from source.
+         MAKE_XC.BAT  : Makes EMS4C_C.MIX from source.
+         MAKE_XL.BAT  : Makes EMS4C_L.MIX from source.
+
+
+
+
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 3
+         1.2 Compiling the Library
+
+
+         The registered user can re-assemble the source code  (source  code
+         is  provided in the registered version only) for the library using
+         one of the provided batch files ( MAKE_S.BAT,  etc.).   Note  that
+         you will need a Microsoft compatible assembler such as MASM.EXE in
+         order to create new EMS library files.
+
+         Makefiles  are  provided  for  re-assembling  the  libraries.  For
+         example, to create EMS4C_S.LIB, type:
+
+               MAKE_S
+
+
+         1.3 User Support
+
+
+         We  want you to be successful in developing your application using
+         our libraries! We depend on our customers to let us know what they
+         need in a library.  This means we are committed to  providing  the
+         best  libraries  that  we  can.   If  you  have any suggestions or
+         comments, please write to us or give us a call.
+
+         If  you  are having a problem using EMS4C or any of our libraries,
+         call (205) 881-4630 between 5 PM  and  9  PM  CST  Monday  through
+         Friday.  You can call at other times and leave a message, and call
+         back  later during our regular business hours for a reply. You can
+         also FAX us at this same number at any time.
+
+         You  may  also  call our 24 hour BBS (2400 baud, no parity, 8 data
+         bits, 1 stop bit) at any time.  The BBS will  contain  the  latest
+         shareware version of EMS4C, messages, and other related files. All
+         files  are  in standard ZIP format. You can leave a message on the
+         BBS, and we will usually have a reply  ready  for  you  within  24
+         hours.   The dedicated telephone number is 205-880-9748.  Set your
+         modem for 1200 to 9600 baud, 8 data bits, no parity, one stop bit.
+
+         The  MarshallSoft  Computing,  Inc.   newsletter  "Comm  Talk"  is
+         published quarterly.  It discusses various communications problems
+         and  solutions using PCL4C (the communications library) as well as
+         related information such as data compression  issues.   Registered
+         users  receive  a  one  year complimentary subscription when first
+         registering and for each update purchased.   Additional  one  year
+         subscriptions  are  $15  plus $5 for overseas postage (postpaid in
+         the US).
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 4
+         1.4 ASP Ombudsman
+
+
+         MarshallSoft  Computing,  Inc.  is  a member of the Association of
+         Shareware Professionals (ASP).  ASP wants to make  sure  that  the
+         shareware principle works for you.  If you are unable to resolve a
+         shareware-related  problem  with  an  ASP member by contacting the
+         member directly, ASP may be able to help. The  ASP  Ombudsman  can
+         help you resolve a dispute or problem with an ASP member, but does
+         not provide technical support for members' products.  Please write
+         to  the  ASP  Ombudsman  at  545  Grover  Road,  Muskegon,  MI USA
+         49442-9427, Fax 616-788-2765, or send  a  CompuServe  message  via
+         CompuServe Mail to ASP Ombudsman 70007,3536.
+
+
+         1.5 Installation
+
+
+         (1)  Microsoft C, Borland & Turbo C, and MIX Power C compilers are
+         supported. However, the code should work with most any C compiler.
+         Before installation of EMS4C, your C compiler  should  already  be
+         installed  on your system and tested. If you are not familiar with
+         makefiles, refer to your compiler manual. If  you  are  using  the
+         interactive environment for Quick C or Turbo C, be sure to compile
+         with the memory model corresponding to the EMS4C library used.
+
+         (2) Make a backup  copy  of  your  distribution  disk.   Put  your
+         original distribution disk in a safe place.
+
+         (3)  Create  a  work  directory  on  your work disk (normally your
+         harddisk). For example, to create a work directory named EMS4C, we
+         first log onto the work disk and then type:
+
+                               MKDIR EMS4C
+
+         (4)  Copy  all the files from your backup copy of the distribution
+         disk to your work directory.  For example, to  copy  from  the  A:
+         drive to your work directory, we type:
+
+                              CD EMS4C
+                              COPY A:*.*
+
+         (5)   Compile   EMS_STAT.C   and  EMS_TEST.C  and  link  with  the
+         appropriate EMS4C library For example, to make EMS_TEST.EXE:
+
+             a) Borland Turbo C: Type
+
+                  MAKE -fEMS_TEST._T_
+
+             b) Microsoft C: Type
+
+                  MAKE EMS_TEST._M_
+
+             c) Quick C: Type
+
+                  MAKE EMS_TEST._Q_
+
+             d) MIX Power C: Type
+
+        EMS4C Users Manual                                     Page 5
+
+                  X_TEST_T
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 6
+         2.0 MSDOS Memory
+
+         2.1 Types of Memory
+
+         Your  system  can  have  three  kinds  of  memory:   Conventional,
+         extended, and expanded.
+
+         All computers have "conventional" memory which includes all memory
+         up  to  640KB,  also known as "lower" DOS memory. The memory above
+         640KB to 1MB (1024KB) is known as "upper"  DOS  memory,  which  is
+         used  by  MSDOS  for  device  driver, video buffers, etc. Programs
+         running under MSDOS can address all memory up to 1MB.
+
+         Extended  memory  is  available  on  80286 systems and up.  To use
+         extended memory, you must install an extended-memory manager  such
+         as  HIMEM.SYS  (distributed with MSDOS 5.0 & up).  Extended memory
+         can also be converted to expanded memory as explained below.
+
+         The last type of memory on MSDOS  systems  is  "expanded"  memory.
+         Two  kinds  of  expanded  memory exists, both of which are handled
+         identically by EMS4C.  The first type of  expanded  memory  is  an
+         expanded memory board that you install in your computer.  Expanded
+         memory  boards  can  be installed in any IBM PC beginning with the
+         8088 processor. Refer to the directions that came with your board.
+
+         The  second type of expanded memory is really extended memory that
+         has  been  converted  to  expanded  memory  by  a  expanded-memory
+         emulator such as EMM386 (distributed with MSDOS 5.0 & up), 386MAX,
+         etc.  Expanded  memory  created  from  extended  memory behaves in
+         exactly the same way as true expanded memory.
+
+         2.1 Bank Switching
+
+         Expanded  memory is implemented by a technique where more than 1MB
+         can be used by MSDOS programs, which are limited to addressing 1MB
+         of memory.  This is done by a technique called "bank switching" in
+         which up to 32MB (in EMS 4.0) can be  referenced  in  16KB  blocks
+         within the 1st 1MB of memory.
+
+         The  expanded memory is organized into contiguous 16KB pages, which
+         can be mapped into any of four contiguous 16KB page frames located
+         somewhere between 640KB and 1024KB. The mapping is  controlled  by
+         the EMS driver using interrupt 67H.
+
+         The EMS4C library provides the interface necessary to perform this
+         bank switching from within your C program.
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 7
+         3.0 Example Programs
+
+
+         Two example programs are provided.  Each example program should be
+         compiled  with  the provided makefile.  These example programs are
+         meant to demonstrate various ways in  which  the  EMS  compression
+         library can be used.
+
+         If you are using an integrated  compiler  environment  instead  of
+         makefiles,  notice  that  each  program is compiled with the SMALL
+         memory model.
+
+         3.1 EMS_STAT
+
+         EMS_STAT  will  display  all EMS parameters (such as the amount of
+         EMS memory available) on your system.
+
+         To run EMS_STAT, just type:
+
+             EMS_STAT
+
+         3.2 EMS_TEST
+
+         The EMS_TEST program tests each of the  EMS4C  library  functions.
+         The  program  also  exercises  the memory mapping calls, verifying
+         that all mapping is performed without data loss.
+
+         To run EMS_TEST, just type:
+
+            EMS_TEST
+
+         3.3 The EMM4C Library
+
+         The EMM4C (Expanded Memory  Manager  for  C  Library)  library  is
+         provided  as a final example of using the EMS4C library. The EMM4C
+         library implements memory allocation and  de-allocation  functions
+         for  EMS  memory  similiar  to  the  standard  C  runtime  library
+         functions malloc() and free().
+
+         There is also a EMM4C test driver provided with the EMM4C  library
+         that   exercises  the  EMM4C  functions.  The  EMM4C  test  driver
+         (EMM_TEST) operates similiarly to the EMS4C test driver.
+
+         The  EMM4C  library  is  documented  in  the  EMM4C.DOC  file.   A
+         registered  version of the EMM4C library is provided when the user
+         registers the EMS4C library.
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 8
+         4.0 EMS Library Functions
+
+
+         There are 14 functions in the EMS4C library.
+
+         emsLoaded      Verifies that an expanded memory driver is loaded.
+         emsGetStatus   Verifies that EMS hardware (if installed) is OK.
+         emsGetFrame    Returns the address of the 1st EMS frame.
+         emsGetPages    Gets the # free pages & the total # pages.
+         emsAllocate    Allocates requested EMS pages.
+         emsMapMemory   Maps an EMS page to a page frame.
+         emsRelease     Release previously allocated EMS pages.
+         emsVersion     Gets EMS driver (EMM) version.
+         emsSaveMap     Saves EMS mapping context.
+         emsRestoreMap  Restores a previous saved EMS mapping context.
+         emsGetHandles  Get number of active EMS handles.
+         emsOwnedPages  Returns the number of pages owned by a handle.
+         emsPageInfo    Returns handles & pages for all handles.
+         emsPageMap     Gets or sets EMS page-mapping registers.
+
+         All  error  codes  returned by EMS4C are those returned by the EMS
+         driver, except for error codes 0xA0, 0xA1, and 0xA2.
+
+         This library should only be used with  EMS  version  3.2  or  4.0.
+         Earlier versions of the EMS may not work properly.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 9
+                             4.1 emsLoaded
+
+
+        Function:    Verifies that an expanded memory driver is loaded.
+
+          Syntax:    int emsLoaded(void);
+
+          Remarks:   You must  call  emsLoaded  before  any  other  EMS4C
+                     function  in order to verify that an expanded-memory
+                     driver is loaded.
+
+         Returns:    0   : No error.
+                     0xa0: EMS driver not loaded.
+                     0xa1: Illegal library modification. (Shareware only).
+
+          Example:      /* is EMS driver loaded ? */
+                       Code = emsLoaded();
+                       if( Code != 0 )
+                           {/* error returned ! */
+                            printf("emsLoaded returns %x\n",Code);
+                            ...
+                           }
+
+         See Also    emsGetStatus
+
+
+                             4.2 emsGetStatus
+
+
+        Function:    Verifies that EMS hardware (if installed) is OK.
+
+          Syntax:    int emsGetStatus(void);
+
+         Remarks:    The   emsGetStatus()   function   should  be  called
+                     immediately after call emsLoaded().
+
+         Returns:    0x00: No error.
+                     0x80: Internal error in EMS software.
+                     0x81: Malfunction in EMS hardware.
+                     0x84: Undefined function.
+
+         Example:    /* check EMS driver status */
+                     Code = emsGetStatus();
+                     if( Code != 0 )
+                        {/* error returned ! */
+                         printf("emsGetStatus returns %x\n",Code);
+                         ...
+                        }
+
+         See Also    emsLoaded.
+
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 10
+                             4.3 emsGetFrame
+
+
+        Function:  Returns the address of the 1st EMS frame.
+
+          Syntax:  int emsGetFrame(SegmentP)
+                       int *SegmentP;    /* pointer to segment of page frame */
+
+         Remarks:    The emsGetFrame() function is used to get the  segment
+                     address  of the first page frame. The four page frames
+                     are all 16KB  (16,384)  bytes  in  length  and  occupy
+                     contigous space in the area between 640KB and 1MB.
+
+         Returns:    0x00: No error.
+                     0x80: Internal error in EMS software.
+                     0x81: Malfunction in EMS hardware.
+                     0x84: Undefined function.
+
+         Example:    /* get the frame segment */
+                     int SegmentP;
+                     Code := emsGetFrame(&SegmentP);
+                     printf("Frame 0 address is at %x:0000\n",SegmentP);
+
+
+                             4.4 emsGetPages
+
+
+        Function:    Gets the # free pages & the total # pages.
+
+          Syntax:    int emsGetPages(FreePagesP,TotalPagesP)
+                     int *FreePagesP;   /* pointer to # of free pages */
+                     int *TotalPagesP;  /* pointer to # of total pages */
+
+         Remarks:     The  emsGetPages  function gets the nummber of system
+                     wide unallocated (free)  pages,  and  also  the  total
+                     number of pages. You may subsequently allocate no more
+                     than  the  number  of  free  pages  reported  by  this
+                     function.
+
+         Returns:    0x00: No error.
+                     0x80: Internal error in EMS software.
+                     0x81: Malfunction in EMS hardware.
+                     0x84: Undefined function.
+
+         Example:    /* get  # free and total pages */
+                     int Code;
+                     int FreePages;
+                     int TotalPages;
+                     ...
+                     Code = emsGetPages(&FreePages,&TotalPages);
+
+         See Also    emsAllocate
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 11
+                             4.5 emsAllocate
+
+
+        Function:    Allocates requested EMS pages.
+
+          Syntax:    int emsAllocate(NumberPages,HandleP)
+                     int NumberPages;  /* number of pages to allocate */
+                     int *HandleP;     /* pointer to handle */
+
+         Remarks:    The emsAllocated function  attempts  to  allocate  the
+                     requested  number  of pages, which must be less tna or
+                     equal to  the  number  of  free  pages  as  return  by
+                     emsGetPages.  The  Handle  (returned) must be used for
+                     subsequent calls to the remaining EMS functions.
+
+         Returns:    0x00: No error.
+                     0x80: Internal error in EMS software.
+                     0x81: Malfunction in EMS hardware.
+                     0x84: Undefined function.
+                     0x85: No more handles available.
+                     0x87: Logical pages not available.
+                     0x88: Logical pages not currently available.
+                     0x89: Zero pages requested.
+
+         Example:    /* get  # free and total pages */
+                     int Code;
+                     int NumberPages;
+                     int Handle;
+                     ...
+                     Code = emsAllocate(&NumberPages,&Handle);
+
+         See Also    emsGetPages, emsRelease.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 12
+                             4.6 emsMapMemory
+
+
+        Function:    Maps an EMS page to a page frame.
+
+          Syntax:    int emsMapMemory(PhysicalPage,LogicalPage,Handle)
+                     int PhysicalPage;    /* Physical page (frame) number (0-3) */
+                     int LogicalPage;     /* Logical page number */
+                     int Handle;          /* EMS handle */
+
+         Remarks:    The emsMapMemory function maps the requested  page  to
+                     the  the  requested  frame.  Once  the  page  has been
+                     successfully mapped, you may address the  contents  of
+                     the page at the frame addresss.
+
+         Returns:    0x00: No error.
+                     0x80: Internal error in EMS software.
+                     0x81: Malfunction in EMS hardware.
+                     0x83: Invalid handle.
+                     0x84: Undefined function.
+                     0x8a: Logical page not assigned to this handle.
+                     0x8b: Physical page number invalid.
+
+         Example:    /* map memory */
+                     int Page;
+                     int Frame;
+                     int Handle;
+                     ...
+                     Code = emsMapMemory(Page,Frame,Handle);
+
+         See Also    emsAllocate().
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 13
+                             4.7 emsRelease
+
+
+        Function:    Release previously allocated EMS pages.
+
+          Syntax:    int emsRelease(Handle)
+                     int Handle;          /* EMS handle */
+
+         Remarks:    The  emsRelease  function  releases memory previously
+                     allocated with emsAllocate(). Once memory is released,
+                     you can no longer reference it through the page frame.
+
+         Returns:    0x00: No error.
+                     0x80: Internal error in EMS software.
+                     0x81: Malfunction in EMS hardware.
+                     0x83: Invalid handle.
+                     0x84: Undefined function.
+                     0x86: Error in mapping context.
+
+         Example:    /* release memory */
+                     int Handle;
+                     ...
+                     Code = emsRelease(Handle);
+
+         See Also    emsAllocate().
+
+
+                             4.8 emsVersion
+
+
+        Function:    Gets EMS driver (EMM) version.
+
+          Syntax:    int emsVersion(VersionP)
+                     int *Version;       /* pointer to version number */
+
+         Remarks:    The emsVersion function  returns the  Expanded  Memory
+                     Manager (EMM). The EMS4C library supports versions 3.2
+                     and 4.0 (the two most recent as of this date).
+
+         Returns:    0x00: No error.
+                     0x80: Internal error in EMS software.
+                     0x81: Malfunction in EMS hardware.
+                     0x84: Undefined function.
+
+         Example:    /* get EMM version # */
+                     int Version;
+                     int Code;
+                     Code = emsVersion(&Version);
+
+
+
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 14
+                             4.9 emsSaveMap
+
+
+        Function:    Saves EMS mapping context.
+
+          Syntax:    int emsSaveMap(Handle)
+                     int Handle;          /* EMS handle */
+
+         Remarks:     The emsSaveMap function saves the current EMS mapping
+                     context. You will only need to call this  function  if
+                     you  are  writing  a  memory resident (TSR)program, an
+                     interrupt service routine  (ISR),  device  driver,  or
+                     other  code that will have to share the EMS with other
+                     programs at runtime.
+
+         Returns:    0x00: No error.
+                     0x80: Internal error in EMS software.
+                     0x81: Malfunction in EMS hardware.
+                     0x83: Invalid handle.
+                     0x84: Undefined function.
+                     0x8c: Page-mapping hardware state save area full.
+                     0x8d: Mapping context already associated.
+
+         Example:    /* save mapping context */
+                     int Handle;
+                     int Code;
+                     Code = emsSaveMap(Handle);
+
+         See Also    emsRestoreMap
+
+
+                             4.10 emsRestoreMap
+
+
+        Function:    Restores a previous saved EMS mapping context.
+
+          Syntax:    int emsRestoreMap(Handle)
+                     int Handle;          /* EMS handle */
+
+         Remarks:    The emsRestoreMap() function  restores  the  mapping
+                     context  previously saved with emsSaveMap(). Note that
+                     at most one mapping context can be saved  at  any  one
+                     time. Refer to the emsSaveMap() function.
+
+         Returns:    0x00: No error.
+                     0x80: Internal error in EMS software.
+                     0x81: Malfunction in EMS hardware.
+                     0x83: Invalid handle.
+                     0x84: Undefined function.
+                     0x8e: Save area has no context for handle.
+
+         Example:    /* restore mapping context */
+                     int Handle;
+                     int Code;
+                     Code = emsRestoreMap(Handle);
+
+         See Also    emsSaveMap
+
+
+        EMS4C Users Manual                                     Page 15
+                             4.11 emsActiveHandles
+
+        Function:    Get number of active EMS handles.
+
+          Syntax:    int emsActiveHandles(HandlesP)
+                     int *HandlesP;     /* pointer to number of handles */
+
+         Remarks:     The  emsActiveHandles()  function  gets the number of
+                     active  EMS  handles  already  allocated.  If   0   is
+                     reported,  then  EMS  is not in use. There is a system
+                     wide maximum of 255 handles.
+
+         Returns:    0x00: No error.
+                     0x80: Internal error in EMS software.
+                     0x81: Malfunction in EMS hardware.
+                     0x83: Invalid handle.
+                     0x84: Undefined function.
+
+         Example:    /* report # free EMS handles */
+                     int Code;
+                     int Handles;
+                     Code = emsActiveHandles(&Handles);
+                     if(Handles>0)printf("%d free handles\n",255-Handles);
+
+         See Also    emsOwnedPages
+
+
+                             4.12 emsOwnedPages
+
+
+        Function:    Returns the number of pages owned by a handle.
+
+          Syntax:    int emsOwnedPages(Handle,OwnedP)
+                     int Handle;     /* EMS handle */
+                     int OwnedP;     /* pointer to owned handles */
+
+         Remarks:     The  emsOwnedPages()  function  gets  the  number  of
+                     handles owned by the specified EMS handle. The minimum
+                     value is one.
+
+         Returns:    0x00: No error.
+                     0x80: Internal error in EMS software.
+                     0x81: Malfunction in EMS hardware.
+                     0x83: Invalid handle.
+                     0x84: Undefined function.
+
+         Example:    /* report # owned pages */
+                     int Code;
+                     int Owned;
+                     int Handle;
+                     ...
+                     Code = emsOwnedPages(Handle,&Owned);
+                     printf("%d pages owned by handle %d\n",Owned);
+
+         See Also    emsActiveHandles
+
+
+
+
+        EMS4C Users Manual                                     Page 16
+                             4.13 emsPageInfo
+
+        Function:    Returns handles & pages for all handles
+
+          Syntax:    int emsPageInfo(PagesP,ActiveP)
+                     int *PagesP;       /* pointer to array to hold info */
+                     int *ActiveP;      /* pointer to # active pages */
+
+         Remarks:    The emsPageInfo() function fills a passed  array  with
+                     4-byte  entries  of  handles & page counts: Bytes 0 &1
+                     contain the EMS handle, while bytes 2 & 3 contain  the
+                     number   of  pages.  Be  sure  to  pass  an  array  of
+                     sufficient size to contain all  entries.
+
+         Returns:    0x00: No error.
+                     0x80: Internal error in EMS software.
+                     0x81: Malfunction in EMS hardware.
+                     0x84: Undefined function.
+
+         Example:    /* get page info */
+                     int Code;
+                     int Active;
+                     struct
+                     {int Handle;
+                      int Pages;
+                     } Array[255];
+                     ...
+                     Code = emsPageInfo(&Array,&Active);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 17
+                             4.14 emsPageMap
+
+
+        Function:    Gets or sets EMS page-mapping registers.
+
+          Syntax:    int emsPageMap(Function,SrcArray,DstArray,*Result)
+                     int Function;        /* sub-function */
+                     char SrcArray[];     /* pointer to source array */
+                     char DstArray[];     /* pointer to dest. array */
+                     int  *Result;        /* pointer to Result */
+
+         Remarks:    The emsPageMap function is used to get or set page map
+                     registers, or get the size of the Page Map array. This
+                     function is  designed  to  support  multi-tasking  DOS
+                     extenders such as Windows.
+
+                     The  Result  variable  will contain the page map array
+                     size  if  emsPageMap  was  called  successfully   with
+                     sub-function 3.
+
+                     The  emsPageMap  function  should  not  be  used   for
+                     programs  other  than multi-tasking Operating Systems.
+                     It is included in the EMS4C library  for  completeness
+                     only.
+
+                       Subfunction values are:
+
+                       00H = Getting registers into array
+                       01H = Setting registers from array
+                       02H = Get and set operation
+                       03H = Return size of page-mapping array
+
+         Returns:    0x00: No error.
+                     0x80: Internal error in EMS software.
+                     0x81: Malfunction in EMS hardware.
+                     0x84: Undefined function.
+                     0x8f: Subfunction not defined.
+
+         Example:    /* get size of page mapping array */
+                     char SrcArray[], DstArray[];
+                     int Result;
+                     ...
+                     Code = emsPageMap(3,SrcArray,DstArray,&Result);
+                     if(Code==0) printf("Array size = %d\n",Result);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 18
+         5.0 EMS Error Codes
+
+
+         Be  sure and check the return codes from each EMS4C function call.
+         There are 18 error codes returned by the EMS4C library other  than
+         0  (no  error).   All  error  codes  are  negative numbers.  Their
+         numerical values are the same  as  returned  from  the  MSDOS  EMS
+         Driver (EMMXXXX0) and are defined in the EMS4C.H file.
+
+                             EMS Error Codes
+
+         **************************************************************
+         *  0x00  *  No error.                                        *
+         *  0x80  *  Internal error in EMS software.                  *
+         *  0x81  *  Malfunction in EMS hardware.                     *
+         *  0x83  *  Invalid handle.                                  *
+         *  0x84  *  Undefined function.                              *
+         *  0x85  *  No more handles available.                       *
+         *  0x86  *  Error in mapping context.                        *
+         *  0x87  *  Logical pages not available.                     *
+         *  0x88  *  Logical pages not currently available.           *
+         *  0x89  *  Zero pages requested.                            *
+         *  0x8a  *  Logical page not assigned to this handle.        *
+         *  0x8b  *  Physical page number invalid.                    *
+         *  0x8c  *  Page-mapping hardware state save area full.      *
+         *  0x8d  *  Mapping context already associated.              *
+         *  0x8e  *  Save area has no context for handle.             *
+         *  0x8f  *  Subfunction not defined.                         *
+         *  0xa0  *  EMS driven not loaded.                           *
+         *  0xa1  *  Illegal library modification. (Shareware only).  *
+         *  0xa2  *  emsLoaded not called.                            *
+         **************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 19
+         6.0 Legal Issues
+
+         6.1 Registration
+
+
+         If you wish to register the EMS4C library, please send $35 plus $3
+         S&H ($6 outside of North America) to:
+
+                  MarshallSoft Computing, Inc.
+                  Post Office Box  4543
+                  Huntsville AL 35815
+
+         We  accept  American  Express  (account  number,  expiration date,
+         exact name  on  your  card,  and  complete  AmEx  billing  address
+         required),  checks  in  US  dollars  drawn  on a US bank, purchase
+         orders (POs) from recognized US schools and  companies  listed  in
+         Dun  &  Bradstreet,  and  COD  (street  address  and  phone number
+         required) within the USA (plus a $3 COD charge).  Print  the  file
+         EMS4C.INV if an invoice is needed.
+
+         You  can  also  order EMS4C from The Public Software Library (PSL)
+         with your MC, Visa, AmEx, or Discover card by calling 800-242-4PSL
+         (from overseas: 713-524-6394) or by  FAX  at  713-524-6398  or  by
+         CompuServe  at  [71355,470].  THESE NUMBERS ARE FOR ORDERING ONLY.
+         The product number for EMS4C is 10912.
+
+         If  you  wish  to  update from an older version of EMS4C, send $15
+         plus  $3  S&H  ($6 outside  of  North  America).  Updates  must be
+         ordered directly from MarshallSoft Computing.
+
+         The registered package includes:
+
+         o  No shareware screen.
+         o  Assembler source code for the library.
+         o  Laser printed Users Manual.
+         o  Telephone / FAX / BBS support for one year.
+         o  The EMM4C library.
+
+         Print  the  file EMS4C.INV if an invoice is needed. The registered
+         user will receive the latest version of EMS4C shipped by  two  day
+         priority  mail  (packet  airmail  overseas).   A 5.25" diskette is
+         provided unless a 3.5" diskette is requested.
+
+
+         6.2 Referral Program
+
+
+         The registered user will receive  a  $5  certificate  towards  any
+         MarshallSoft   Computing  product  by  referring  a  new  customer
+         (someone who has never registered with us). The new customer  must
+         identify  you at the time the order is placed.  You will be mailed
+         a certificate worth $5 when the new registration is paid.
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 20
+         6.3 License
+
+
+         MarshallSoft Computing, Inc. grants the registered user  of  EMS4C
+         the  right  to  use  the  EMS4C  library  (in  object form) in the
+         development  of  any  software  product  without  any   royalties.
+         However,   the   source   code  (EMS4C.ASM)  for  the  library  is
+         copyrighted by  MarshallSoft  Computing,  Inc.,  and  may  not  be
+         released in whole or in part.
+
+
+         6.4 Warranty
+
+
+         MARSHALLSOFT COMPUTING, INC. DISCLAIMS ALL WARRANTIES RELATING  TO
+         THIS  SOFTWARE,  WHETHER  EXPRESSED  OR IMPLIED, INCLUDING BUT NOT
+         LIMITED TO ANY IMPLIED WARRANTIES OF MERCHANTABILITY  AND  FITNESS
+         FOR  A  PARTICULAR  PURPOSE, AND ALL SUCH WARRANTIES ARE EXPRESSLY
+         AND SPECIFICALLY DISCLAIMED. NEITHER MARSHALLSOFT COMPUTING,  INC.
+         NOR ANYONE ELSE WHO HAS BEEN INVOLVED IN THE CREATION, PRODUCTION,
+         OR  DELIVERY  OF  THIS  SOFTWARE SHALL BE LIABLE FOR ANY INDIRECT,
+
+         CONSEQUENTIAL, OR INCIDENTAL DAMAGES ARISING OUT  OF  THE  USE  OR
+         INABILITY  TO  USE  SUCH  SOFTWARE EVEN IF MARSHALLSOFT COMPUTING,
+         INC.  HAS BEEN ADVISED OF  THE  POSSIBILITY  OF  SUCH  DAMAGES  OR
+         CLAIMS. IN NO EVENT SHALL MARSHALLSOFT COMPUTING, INC.'S LIABILITY
+         FOR ANY SUCH DAMAGES EVER EXCEED THE PRICE PAID FOR THE LICENSE TO
+         USE  THE SOFTWARE, REGARDLESS OF THE FORM OF THE CLAIM. THE PERSON
+         USING  THE  SOFTWARE  BEARS  ALL  RISK  AS  TO  THE  QUALITY   AND
+         PERFORMANCE OF THE SOFTWARE.
+
+         Some  states  do not allow the exclusion of the limit of liability
+         for consequential or incidental damages, so the  above  limitation
+         may not apply to you.
+
+         This  agreement  shall  be  governed  by  the laws of the State of
+         Alabama and shall inure to the benefit of Marshallsoft  Computing,
+         Inc.   and  any successors, administrators, heirs and assigns. Any
+         action or proceeding brought by either  party  against  the  other
+         arising  out of or related to this agreement shall be brought only
+         in a STATE or FEDERAL COURT of competent jurisdiction  located  in
+         Madison County, Alabama. The parties hereby consent to in personam
+         jurisdiction of said courts.
+
+
+         7.0 Revision History
+
+
+         Version 1.0 -- July 24, 1993 -- original release.
+
+
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 21
+         8.0 Other MarshallSoft Computing Products for C
+
+
+         Shareware  versions  of  all  MarshallSoft  Computing products are
+         available on our user support BBS 205-880-9748.
+
+
+         8.1 The Personal Communications Library for C
+
+
+         The Personal Communications Library for the C Language (PCL4C)  is
+         an  asynchronous  communications  library designed for experienced
+         software  developers  programming  in  C.   Four   compilers   are
+         supported:  Microsoft  Optimizing  C,  Microsoft  Quick C, Borland
+         Turbo C, and MIX Power  C.   An  IBM  PC/XT/AT  or  compatible  is
+         required.  The PCL features:
+
+         o SMALL, COMPACT, MEDIUM & LARGE memory models.
+         o 33 communications and support functions.
+         o Supports PC/4 and PC/8 Digiboard.
+         o Support for the high performance INS16550 UART.
+         o Supports hardware (RTS/CTS) flow control.
+         o Interrupt driven receiver.
+         o Supports 300 baud to 115,200 baud.
+         o Supports COM1, COM2, COM3, and  COM4.
+         o Adjustable receive queues from 8 bytes to 32 KB.
+         o Control-BREAK error exit.
+         o 17 communications error conditions trapped.
+         o Allows 4 ports to run concurrently.
+         o Complete modem control & status.
+         o Written in assembly language for small size & high speed.
+         o Terminal program featuring XMODEM, YMODEM, & YMODEM-G.
+
+         The Personal Communications Library for C (PCL4C) is available for
+         $55  plus  $3 S&H ($6 S&H overseas). It may be ordered at the same
+         time as the Personal Protocol Library for $65 plus $3.50  S&H  ($7
+         overseas).
+
+
+         8.2 The Personal Protocol Library for C
+
+
+         The  Personal  Protocol  Library  (PPL)  consist of a state driven
+         library  which  implements  the  XMODEM,  XMODEM-CRC,   XMODEM-1K,
+         XMODEM-G,  YMODEM,  and  YMODEM-G  file  transfer protocols.  This
+         allows  the  programmer  to  run   multiple   protocol   transfers
+         simultaneously while interacting with the user at the keyboard.
+
+         The  Personal  Protocol Library for C (PPL4C) is available for $35
+         plus $3 S&H ($6 S&H overseas). Both the Communications library and
+         the Protocol library can be ordered together for $65.
+
+         The PPL requires the Personal Protocol Library for  C  (PCL4C)  as
+         described above.
+
+
+
+
+
+        EMS4C Users Manual                                     Page 22
+         8.3 The LZW Data Compression Library for C
+
+         LZW4C is an implementation of the LZW (Lempel-Ziv-Welch) algorithm
+         for compressing and decompressing  data.   LZW  does  particularly
+         well on text files, achieving better than a 50 % compression ratio
+         for many files.
+
+         The  LZW  algorithm  is  considered  to be one of the best general
+         purpose algorithms available today.  The  new  high  speed  modems
+         that  employ  on-the-fly  data  compression (such as MNP 5.0 & the
+         V.42 bis international standard) use the LZW algorithm, as well as
+         such well known utility programs such as PKZIP.
+
+         The  LZW  Data Compression Library for C is available for $35 plus
+         $3 S&H ($6 S&H overseas).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMS4C Users Manual                                     Page 23
+

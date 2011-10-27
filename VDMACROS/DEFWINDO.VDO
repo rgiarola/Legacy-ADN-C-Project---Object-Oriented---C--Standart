@@ -1,0 +1,650 @@
+#ifdef VIDEO_DOS
+#define VIDEO_FISICO(lin,col) ((char far *) VIDEO_MK_FP(0xB800,((lin-1)*160+(col-1)*2)))
+#endif
+
+#ifdef VIDEO_UNIX
+#define VIDEO_FISICO(lin,col) (VIDEO_UNIX_buffer_video+((lin-1)*160+(col-1)*2))
+#endif
+
+/*==========================================================================
+      definicoes dos valores maximos assumidos por col e lim nas funcoes
+==========================================================================*/
+#define VIDEO_MAXCOL          W(80)        /* MAIOR COLUNA MACRO*/
+#define VIDEO_MINCOL          W(1 )        /* MENOR COLUNA MACRO*/
+#define VIDEO_MAXLIN          W(25)        /* MAIOR LINHA  MACRO*/
+#define VIDEO_MINLIN          W(1 )        /* MENOR LINHA  MACRO*/
+
+/*=========================================================================
+                  definicoes para cores em video colorido
+==========================================================================*/
+#define VIDEO_NORMAL          B(0x00)      /* ATRIBUTO NORMAL DE VIDEO*/
+#define VIDEO_INTER           VD_B7           /* ATRIBUTO DE FUNDO INTERMITENTE*/
+#define VIDEO_BRIL            VD_B3           /* ATRIBUTO DE FRENTE BRILHANTE*/
+#define VIDEO_PRETO           B(0x00)      /* COR PRETA*/
+#define VIDEO_AZULTURQ        VD_B0           /* COR AZUL TURQUEZA*/
+#define VIDEO_VERDE           VD_B1           /* COR VERDE*/
+#define VIDEO_AZULCEL         VD_B0|VD_B1        /* COR AZULCEL*/
+#define VIDEO_VERMELHO        VD_B2           /* COR VERMELHO*/
+#define VIDEO_LILAZ           VD_B0|VD_B2        /* COR LILAZ*/
+#define VIDEO_MARROM          VD_B1|VD_B2        /* COR MARROM*/
+#define VIDEO_BLANK           VD_B0|VD_B1|VD_B2     /* COR BRANCA*/
+
+/*==========================================================================
+                    primeiro nivel de caracter ( FUNDO )
+==========================================================================*/
+#define VIDEO_FUNDO(COR,ATRIBUTO) B(B(B(COR)*B(16))|B(ATRIBUTO))
+                                             /* ATRIBUTO DE FUNDO*/
+
+/*==========================================================================
+                   segundo nivel de caracter ( FRENTE )
+==========================================================================*/
+#define VIDEO_FRENTE(COR,ATRIBUTO) B(B(COR)|B(ATRIBUTO))
+                                             /* ATRIBUTO DE FRENTE*/
+
+/*==========================================================================
+                     formato fundo e frente do caracter 
+==========================================================================*/
+#define VIDEO_FORMATO(COR_FUNDO,ATRIBUTO_FUNDO,COR_FRENTE,ATRIBUTO_FRENTE) \
+     B(VIDEO_FUNDO(COR_FUNDO,ATRIBUTO_FUNDO)|                              \
+     VIDEO_FRENTE(COR_FRENTE,ATRIBUTO_FRENTE))
+                                           /* ATRIBUTOS DE VIDEO DO CARACTER*/
+
+/*==========================================================================
+             definicoes de parametros de VIDEO_tprt e macros
+==========================================================================*/
+#define VIDEO_VET_H           W(0)          /* VETOR DE IMPRESSAO HORIZONTAL*/
+#define VIDEO_VET_V           W(1)          /* VETOR DE IMPRESSAO VERTICAL*/
+#define VIDEO_tprt_l(col,lin,buffer,cor)                                   \
+                                  VIDEO_tprt(col,lin,buffer,cor,VIDEO_VET_H)
+                                  /* IMPRESSAO DE BUFFER EM LINHA*/
+#define VIDEO_tprt_c(col,lin,buffer,cor)                                 \
+                                  VIDEO_tprt(col,lin,buffer,cor,VIDEO_VET_V)
+                                  /* IMPRESSAO DE BUFFER EM COLUNA*/
+
+/*==========================================================================
+                definicoes de parametros de tipo_vetor
+==========================================================================*/
+#define VIDEO_vertical(lini,linf,col,carac,cor)                            \
+                       VIDEO_tipo_vetor(lini,linf,col,carac,cor,VIDEO_VET_V)
+                       /* IMPRIME UMA LINHA VERTICAL COM O CARACTER*/
+
+#define VIDEO_horizontal(coli,colf,lin,carac,cor)                          \
+                       VIDEO_tipo_vetor(coli,colf,lin,carac,cor,VIDEO_VET_H)
+                       /* IMPRIME UMA LINHA HORIZONTAL COM O CARACTER*/
+
+#define VIDEO_vertical_simples(lini,linf,col,cor)                          \
+              VIDEO_vertical(lini,linf,col,W(0X00B3),cor)
+              /* IMPRIME UMA LINHA VERTICAL COM O CARACTER DE COLUNA SIMPLES*/
+
+#define VIDEO_horizontal_simples(coli,colf,lin,cor)                        \
+             VIDEO_horizontal(coli,colf,lin,W(0X00C4),cor)
+             /* IMPRIME UMA LINHA HORIZONTAL COM O CARACTER DE LINHA SIMPLES*/
+
+#define VIDEO_vertical_dupla(lini,linf,col,cor)                            \
+                VIDEO_vertical(lini,linf,col,W(0X00BA),cor)
+                /* IMPRIME UMA LINHA VERTICAL COM O CARACTER DE COLUNA DUPLO*/
+
+#define VIDEO_horizontal_dupla(coli,colf,lin,cor)                        \
+               VIDEO_horizontal(coli,colf,lin,W(0X00CD),cor)
+               /* IMPRIME UMA LINHA HORIZONTAL COM O CARACTER DE LINHA DUPLO*/
+
+#define VIDEO_plotcarac(col,lin,carac,cor)                                 \
+                                     VIDEO_horizontal(col,col,lin,carac,cor)
+                                     /* PLOTA UM CARACTER NA POSICAO COL LIN*/
+
+/*=========================================================================
+                 definicoes de parametros de mvwin e macros
+   jan move a janela e prenche o espaco anterior de espacos com a cor
+                       win copia a janela apenas
+=========================================================================*/
+#define VIDEO_MV_DIREITA       W(1)  /* VETOR DE MOVIMENTACAO PARA DIREITA*/
+#define VIDEO_MV_ESQUERDA      W(2)  /* VETOR DE MOVIMENTACAO PARA ESQUERDA*/
+#define VIDEO_MV_BAIXO         W(4)  /* VETOR DE MOVIMENTACAO PARA BAIXO*/
+#define VIDEO_MV_CIMA          W(8)  /* VETOR DE MOVIMENTACAO PARA CIMA*/
+#define VIDEO_OPER_QUADRO      W(16) /* VETOR DE MOVIMENTACAO DE QUADRO*/
+#define VIDEO_OPER_ATRIB       W(0)  /* VETOR DE MOVIMENTACAO DE ATRIBUTOS*/
+#define VIDEO_MOVE             W(32) /* VETOR DE IDENTIFICACAO PARA MOVER*/
+#define VIDEO_COPIA            W(0)  /* VETOR DE DE IDENTIFICACAO PARA COPIA*/
+
+#define VIDEO_sobe_jan(coli,colf,lini,linf,numlin,cor)                    \
+                     VIDEO_mvwindow(coli,colf,lini,linf,VIDEO_NULO,numlin,\
+                     VIDEO_MV_CIMA|VIDEO_OPER_QUADRO|VIDEO_MOVE,cor)
+
+#define VIDEO_desce_jan(coli,colf,lini,linf,numlin,cor)                   \
+                     VIDEO_mvwindow(coli,colf,lini,linf,VIDEO_NULO,numlin,\
+                    VIDEO_MV_BAIXO|VIDEO_OPER_QUADRO|VIDEO_MOVE,cor)
+
+#define VIDEO_dir_jan(coli,colf,lini,linf,numcol,cor)                      \
+                      VIDEO_mvwindow(coli,colf,lini,linf,numcol,VIDEO_NULO,\
+                      VIDEO_MV_DIREITA|VIDEO_OPER_QUADRO|VIDEO_MOVE,cor)
+
+#define VIDEO_esq_jan(coli,colf,lini,linf,numcol,cor)                      \
+                      VIDEO_mvwindow(coli,colf,lini,linf,numcol,VIDEO_NULO,\
+                      VIDEO_MV_ESQUERDA|VIDEO_OPER_QUADRO|VIDEO_MOVE,cor)
+
+#define VIDEO_eb_jan(coli,colf,lini,linf,numcol,numlin,cor)                \
+          VIDEO_mvwindow(coli,colf,lini,linf,numcol,numlin,                \
+          VIDEO_MV_BAIXO|VIDEO_MV_ESQUERDA|VIDEO_OPER_QUADRO|VIDEO_MOVE,cor)
+
+#define VIDEO_ec_jan(coli,colf,lini,linf,numcol,numlin, cor)               \
+           VIDEO_mvwindow(coli,colf,lini,linf,numcol,numlin,               \
+           VIDEO_MV_CIMA|VIDEO_MV_ESQUERDA|VIDEO_OPER_QUADRO|VIDEO_MOVE,cor)
+
+#define VIDEO_db_jan(coli,colf,lini,linf,numcol,numlin, cor)               \
+           VIDEO_mvwindow(coli,colf,lini,linf,numcol,numlin,               \
+           VIDEO_MV_BAIXO|VIDEO_MV_DIREITA|VIDEO_OPER_QUADRO|VIDEO_MOVE,cor)
+
+#define VIDEO_dc_jan(coli,colf,lini,linf,numcol,numlin, cor)               \
+            VIDEO_mvwindow(coli,colf,lini,linf,numcol,numlin,              \
+            VIDEO_MV_CIMA|VIDEO_MV_DIREITA|VIDEO_OPER_QUADRO|VIDEO_MOVE,cor)
+
+#define VIDEO_sobe_win(coli,colf,lini,linf,numlin)                         \
+                     VIDEO_mvwindow(coli,colf,lini,linf,VIDEO_NULO,numlin, \
+                     VIDEO_MV_CIMA|VIDEO_OPER_QUADRO|VIDEO_COPIA,VIDEO_NULO)
+
+#define VIDEO_desce_win(coli,colf,lini,linf,numlin)                        \
+                    VIDEO_mvwindow(coli,colf,lini,linf,VIDEO_NULO,numlin,  \
+                    VIDEO_MV_BAIXO|VIDEO_OPER_QUADRO|VIDEO_COPIA,VIDEO_NULO)
+
+#define VIDEO_dir_win(coli,colf,lini,linf,numcol)                          \
+                   VIDEO_mvwindow(coli,colf,lini,linf,numcol,VIDEO_NULO,   \
+                   VIDEO_MV_DIREITA|VIDEO_OPER_QUADRO|VIDEO_COPIA,VIDEO_NULO)
+
+#define VIDEO_esq_win(coli,colf,lini,linf,numcol)                          \
+                  VIDEO_mvwindow(coli,colf,lini,linf,numcol,VIDEO_NULO,    \
+                  VIDEO_MV_ESQUERDA|VIDEO_OPER_QUADRO|VIDEO_COPIA,VIDEO_NULO)
+
+#define VIDEO_eb_win(coli,colf,lini,linf,numcol,numlin)                    \
+  VIDEO_mvwindow(coli,colf,lini,linf,numcol,numlin,                        \
+  VIDEO_MV_BAIXO|VIDEO_MV_ESQUERDA|VIDEO_OPER_QUADRO|VIDEO_COPIA,VIDEO_NULO)
+
+#define VIDEO_ec_win(coli,colf,lini,linf,numcol,numlin)                    \
+    VIDEO_mvwindow(coli,colf,lini,linf,numcol,numlin,                      \
+    VIDEO_MV_CIMA|VIDEO_MV_ESQUERDA|VIDEO_OPER_QUADRO|VIDEO_COPIA,VIDEO_NULO)
+
+#define VIDEO_db_win(coli,colf,lini,linf,numcol,numlin)                    \
+   VIDEO_mvwindow(coli,colf,lini,linf,numcol,numlin,                       \
+   VIDEO_MV_BAIXO|VIDEO_MV_DIREITA|VIDEO_OPER_QUADRO|VIDEO_COPIA,VIDEO_NULO)
+
+#define VIDEO_dc_win(coli,colf,lini,linf,numcol,numlin)                    \
+    VIDEO_mvwindow(coli,colf,lini,linf,numcol,numlin,                      \
+    VIDEO_MV_CIMA|VIDEO_MV_DIREITA|VIDEO_OPER_QUADRO|VIDEO_COPIA,VIDEO_NULO)
+
+/*==========================================================================
+     definicoes das macros de operacao de leitura e escrita de windows
+==========================================================================*/
+#define VIDEO_GRAVACAO       W(0)
+#define VIDEO_LEITURA        W(1)
+#define VIDEO_LERATRIB       W(2)
+#define VIDEO_GRVATRIB       W(4)
+
+#define VIDEO_lertela(coli,colf,lini,linf,buffer)                          \
+                    VIDEO_opertela(coli,colf,lini,linf,buffer,VIDEO_LEITURA)
+
+#define VIDEO_grvtela(coli,colf,lini,linf,buffer)                          \
+                   VIDEO_opertela(coli,colf,lini,linf,buffer,VIDEO_GRAVACAO)
+
+#define VIDEO_leratrib(coli,colf,lini,linf,buffer)                         \
+                    VIDEO_opertela(coli,colf,lini,linf,buffer,VIDEO_LERATRIB)
+
+#define VIDEO_grvatrib(coli,colf,lini,linf,buffer)                         \
+                   VIDEO_opertela(coli,colf,lini,linf,buffer,VIDEO_GRVATRIB)
+
+/*==========================================================================
+              definicoes das macros de montagem de box
+==========================================================================*/
+#define VIDEO_BOX_DUPLA       W(0)
+#define VIDEO_BOX_SIMPLES     W(1)
+#define VIDEO_BOX_CARACTER    W(2)
+
+#define VIDEO_box_dupla(coli,colf,lini,linf,cor)                           \
+                  VIDEO_box(coli,colf,lini,linf,cor,VIDEO_BOX_DUPLA,VD_NULO)
+
+#define VIDEO_box_simples(coli,colf,lini,linf,cor)                         \
+                VIDEO_box(coli,colf,lini,linf,cor,VIDEO_BOX_SIMPLES,VD_NULO)
+
+#define VIDEO_box_car(coli,colf,lini,linf,cor,caracter)                    \
+              VIDEO_box(coli,colf,lini,linf,cor,VIDEO_BOX_CARACTER,caracter)
+
+/*==========================================================================
+              definicoes das macros de montagem de quadros
+==========================================================================*/
+#define VIDEO_CLS VIDEO_quadro(VIDEO_MINCOL,VIDEO_MAXCOL,                  \
+        VIDEO_MINLIN,VIDEO_MAXLIN,' ',                                     \
+        VIDEO_FORMATO(VIDEO_PRETO,VIDEO_NORMAL,VIDEO_BLANK,VIDEO_NORMAL));        \
+        VIDEO_gtxy(VIDEO_MINCOL,VIDEO_MINLIN)
+
+#define VIDEO_CLEAR(cor) VIDEO_quadro(VIDEO_MINCOL,VIDEO_MAXCOL,           \
+        VIDEO_MINLIN,VIDEO_MAXLIN,' ',cor)
+
+#define VIDEO_CLEAR_PIC(coli,colf,lini,linf,cor)                           \
+        VIDEO_quadro(coli,colf,lini,linf,' ',cor)
+
+#define VIDEO_CLEAR_EOL(col,lin,cor)                                       \
+                              VIDEO_quadro(col,VIDEO_MAXCOL,lin,lin,' ',cor)
+
+#define VIDEO_CLEAR_LIN(lin,cor)       VIDEO_CLEAR_EOL(VIDEO_MINCOL,lin,cor)
+
+#define VIDEO_CLEAR_EOC(col,lin,cor)                                       \
+                              VIDEO_quadro(col,col,lin,VIDEO_MAXLIN,' ',cor)
+
+#define VIDEO_CLEAR_COL(col,cor)       VIDEO_CLEAR_EOL(col,VIDEO_MINLIN,cor)
+
+
+/*==========================================================================
+               definicoes das macros de armazenamento de telas
+==========================================================================*/
+#define VIDEO_WPOP            W(0)
+#define VIDEO_WPUSH           W(1)
+#define VIDEO_WFREE           W(2)
+#define VIDEO_WFREE_ALL       W(3)
+#define VIDEO_WGET            W(4)
+#define VIDEO_WMEM            W(5)
+#define VIDEO_WDEL            W(6)
+#define VIDEO_WPUSHATR        W(7)
+#define VIDEO_WPOPATR         W(8)
+#define VIDEO_MAXWINDOW       W(200)
+
+
+#define VIDEO_PUSHWIN(coli,colf,lini,linf) VIDEO_gerwindow(coli,colf,lini, \
+                               linf,VIDEO_WPUSH, VIDEO_NILL(VIDEO_ESTWIN *))
+
+#define VIDEO_POPWIN() VIDEO_gerwindow(VIDEO_NULO,VIDEO_NULO,VIDEO_NULO,   \
+                           VIDEO_NULO,VIDEO_WPOP,VIDEO_NILL(VIDEO_ESTWIN *))
+
+#define VIDEO_PUSHATR(coli,colf,lini,linf) VIDEO_gerwindow(coli,colf,lini, \
+                               linf,VIDEO_WPUSHATR, VIDEO_NILL(VIDEO_ESTWIN *))
+
+#define VIDEO_POPATR() VIDEO_gerwindow(VIDEO_NULO,VIDEO_NULO,VIDEO_NULO,   \
+                           VIDEO_NULO,VIDEO_WPOPATR,VIDEO_NILL(VIDEO_ESTWIN *))
+
+
+#define VIDEO_FREEWIN() VIDEO_gerwindow(VIDEO_NULO,VIDEO_NULO,VIDEO_NULO,  \
+                          VIDEO_NULO,VIDEO_WFREE,VIDEO_NILL(VIDEO_ESTWIN *))
+
+#define VIDEO_FREEWIN_ALL() VIDEO_gerwindow(VIDEO_NULO,VIDEO_NULO,         \
+                            VIDEO_NULO,VIDEO_NULO,VIDEO_WFREE_ALL,         \
+                            VIDEO_NILL(VIDEO_ESTWIN *))
+
+#define VIDEO_GETWIN(numtela,tela) VIDEO_gerwindow(numtela,VIDEO_NULO,     \
+                                VIDEO_NULO,VIDEO_NULO,VIDEO_WGET,tela)
+
+#define VIDEO_MEMWINPAR() VIDEO_gerwindow(VIDEO_NULO,VIDEO_NULO,VIDEO_NULO,\
+                      VIDEO_NULO,VIDEO_WMEM,VIDEO_NILL(VIDEO_ESTWIN *))
+
+#define VIDEO_MEMWINLONG(mem) VIDEO_gerwindow(VIDEO_NULO,VIDEO_NULO,       \
+                           VIDEO_NULO,VIDEO_NULO,VIDEO_WMEM,mem)
+
+#define VIDEO_DELWIN(numtela) VIDEO_gerwindow(numtela,VIDEO_NULO,          \
+                              VIDEO_NULO,VIDEO_NULO,VIDEO_WMEM,            \
+                              VIDEO_NILL(VIDEO_ESTWIN *))
+
+/*==========================================================================
+         definicoes das macros de teste de limites de coordenadas x, y
+==========================================================================*/
+#define VIDEO_TESTE_4_COORD   W(0)
+#define VIDEO_TESTE_2_COORD   W(1)
+
+#define VIDEO_teste_4(coli,colf,lini,linf)                                 \
+         VIDEO_teste_cordenadas_x_y(VIDEO_TESTE_4_COORD,coli,colf,lini,linf)
+
+#define VIDEO_teste_2(col,lin)                                             \
+                     VIDEO_teste_cordenadas_x_y(VIDEO_TESTE_2_COORD,col,lin)
+
+/*==========================================================================
+                definicoes das macros de filtro de teclado
+==========================================================================*/
+#define VIDEO_TAMBUFTCL       W(64)
+#define VIDEO_FILTCL_INATIVO  W(0)
+#define VIDEO_FILTCL_CARACTER B00
+#define VIDEO_FILTCL_NUMERO   B01
+#define VIDEO_FILTCL_PONTO    B02
+#define VIDEO_FILTCL_SINMAIS  B03
+#define VIDEO_FILTCL_SINMENOS B04
+#define VIDEO_FILTCL_MAIUSC   B05
+#define VIDEO_FILTCL_MINUSC   B06
+#define VIDEO_FILTCL_INVERTE (VIDEO_FILTCL_MAIUSC|VIDEO_FILTCL_MINUSC)
+#define VIDEO_FILTCL_TABSKIP  B07
+
+/*==========================================================================
+                definicoes das macros de edicao de menu
+                          nao documentado
+==========================================================================*/
+
+#define VIDEO_MENU_FLAGMENUANT B00
+#define VIDEO_MENU_FLAGMENUPOS B01
+#define VIDEO_MENU_FLAGELEMANT B02
+#define VIDEO_MENU_FLAGELEMPOS B03
+
+#define VIDEO_MENU_SEL_ESQ  I(1)
+#define VIDEO_MENU_SEL_DIR  I(2)
+#define VIDEO_MENU_SEL_ANT  I(3)
+#define VIDEO_MENU_SEL_POS  I(4)
+
+#define VIDEO_ADMEM_TAM_DESCMEM         sizeof(VIDEO_ADMEM_DESCRITOR)
+#define VIDEO_ADMEM_NUM_DESCMEM_DEFAULT W(200)
+#define VIDEO_ADMEM_NUM_BLOCO_DEFAULT   W(30)
+#define VIDEO_ADMEM_UNIDADE_ALOCACAO    W(1024)
+#define VIDEO_ADMEM_TAM_AREA_DEFAULT    W(VIDEO_ADMEM_NUM_BLOCO_DEFAULT *  \
+                                          VIDEO_ADMEM_UNIDADE_ALOCACAO)
+#define VIDEO_ADMEM_DIRETORIO           W(VIDEO_ADMEM_NUM_DESCMEM_DEFAULT* \
+                                          VIDEO_ADMEM_TAM_DESCMEM)
+
+#define VIDEO_EDITA_NUMERO    W(1)
+#define VIDEO_EDITA_STRING    W(0)
+
+#define VIDEO_EDITA_AUTOIMP    B00
+#define VIDEO_EDITA_AUTOSKIP   B01
+#define VIDEO_EDITA_AUTOBLANK  B02
+#define VIDEO_EDITA_SINALMENOS B03
+#define VIDEO_EDITA_SINALMAIS  B04
+#define VIDEO_EDITA_EDPONTO    B05
+#define VIDEO_EDITA_LSPACE     B06
+#define VIDEO_EDITA_LZEROS     B07
+#define VIDEO_EDITA_LIMPMASC   B08
+#define VIDEO_EDITA_EDTMASC    B09
+#define VIDEO_EDITA_VALOR      B10
+
+#define VIDEO_EDITA_PROTEGIDO  B11
+#define VIDEO_EDITA_NAOTROCA   B12
+#define VIDEO_EDITA_NAOMOSTRA  B13
+#define VIDEO_EDITA_PRENCH     B14
+
+/* ----------------------------------
+       Definicoes Para Uso RTREE.
+   ----------------------------------*/
+
+#define VIDEO_CAMPO_STRING    CT_ARRAY
+#define VIDEO_CAMPO_CARACTER  CT_BOOL
+#define VIDEO_CAMPO_BYTE      CT_CHARU
+#define VIDEO_CAMPO_SHINT     CT_CHAR
+#define VIDEO_CAMPO_WORD      CT_INT2U
+#define VIDEO_CAMPO_INT       CT_INT2
+#define VIDEO_CAMPO_DWORD     CT_INT4U
+#define VIDEO_CAMPO_LONG      CT_INT4
+#define VIDEO_CAMPO_FLOAT     CT_SFLOAT
+#define VIDEO_CAMPO_DOUBLE    CT_DFLOAT
+#define VIDEO_CAMPO_UNDOUBLE  CT_DFLOAT
+#define VIDEO_CAMPO_DATA      CT_DATE
+#define VIDEO_CAMPO_TIME      CT_TIME
+
+#define VIDEO_TELA_CONS_OBRIGATORIO  B(1)
+#define VIDEO_TELA_CONS_MENU         B(2)
+#define VIDEO_TELA_CONS_FAIXA        B(3)
+#define VIDEO_TELA_VALKEY            B(4)
+#define VIDEO_TELA_DUPKEY            B(5)
+#define VIDEO_TELA_CONS_POSICIONA_DB B(6)
+#define VIDEO_TELA_CONS_BUSCA_DB     B(7)
+#define VIDEO_TELA_CONS_USER_FUNC    B(8)
+#define VIDEO_TELA_CONS_MANUT        B(9)
+#define VIDEO_TELA_CONS_INUSADO      B(10)
+#define VIDEO_TELA_CONS_OLD_BUFFER   B(11)
+
+#define VIDEO_DATABASE_INCLUSAO      VD_MTTECLA(0XFF,0XFF)
+#define VIDEO_DATABASE_ALTERACAO     VD_MTTECLA(0XFF,0XFE)
+
+#define VIDEO_DISPLAY_CAMPO          B00
+#define VIDEO_FLAGDESPROTEGE_CAMPO   B01
+#define VIDEO_FLAGPROTEGE_CAMPO      B02
+#define VIDEO_FLAGNAOMOSTRA_CAMPO    B03
+#define VIDEO_FLAGMOSTRA_CAMPO       B04
+#define VIDEO_FLAGNAOTROCA_CAMPO     B05
+#define VIDEO_FLAGTROCA_CAMPO        B06
+#define VIDEO_FLAGVALIDA_CAMPO       B07
+#define VIDEO_FLAGOFFSET_CAMPO       B08
+#define VIDEO_FLAGUSER_CAMPO         B09
+
+#define VIDEO_MENU_LOCALIZADO        I(2)
+#define VIDEO_MENU_NAO_LOCALIZADO    I(1)
+#define VIDEO_MENU_ERRO_ARQUIVO      I(0)
+
+#define VIDEO_TELA_FDISPANT          B00
+#define VIDEO_TELA_FDISPPOS          B01
+#define VIDEO_TELA_DISPIMAGEM        B02
+#define VIDEO_TELA_DISPCAMPOS        B03
+#define VIDEO_TELA_STATUS            B04
+#define VIDEO_TELA_INICIMAGEM        B05
+#define VIDEO_TELA_SALVATELA         B06
+#define VIDEO_TELA_SERVICO_EXECUTADO B07
+#define VIDEO_TELA_ACCEPTCAMPOS      B08
+#define VIDEO_TELA_STATSUBFILE       B09
+#define VIDEO_TELA_SETARQIND         B10
+#define VIDEO_TELA_FLAGPOPWIN        B11
+#define VIDEO_TELA_FLAGRESETDISPLAY  B12
+#define VIDEO_TELA_FLAGREGALT        B13
+#define VIDEO_TELA_FLAGCONFDELECAO   B14
+#define VIDEO_TELA_FLAGALTERSUB      B15
+
+#define VIDEO_COLUNA_DEFAULT         1
+#define VIDEO_LINHA_DEFAULT          25
+#define VIDEO_CORENT_DEFAULT                                                 \
+                            VD_FORMATO(VD_AZULTURQ,VD_NORMAL,VD_BLANK,VD_BRIL)
+#define VIDEO_CORSAI_DEFAULT                                                 \
+                            VD_FORMATO(VD_AZULTURQ,VD_NORMAL,VD_BLANK,VD_BRIL)
+/*==========================================================================
+                definicoes das macros de edicao de menu
+                          nao documentado
+==========================================================================*/
+
+#define VIDEO_PESQUISA_MANUTENCAO         B00
+#define VIDEO_PESQUISA_DISPCAMPOS         B01
+#define VIDEO_PESQUISA_DISPCURSOR         B02
+#define VIDEO_PESQUISA_DISPIMAGEM         B03
+#define VIDEO_PESQUISA_DISPLINHA          B04
+#define VIDEO_PESQUISA_INICIALIZA         B05
+#define VIDEO_PESQUISA_TELACRG            B06
+#define VIDEO_PESQUISA_POPWIN             B07
+#define VIDEO_PESQUISA_SALVATELA          B08
+#define VIDEO_PESQUISA_INICBUFFER         B09
+#define VIDEO_PESQUISA_STATUSTELA         B10
+#define VIDEO_PESQUISA_ATIVADA		  B11
+#define VIDEO_PESQUISA_SALVAADISP         B12
+#define VIDEO_PESQUISA_INICDISP           B13
+#define VIDEO_PESQUISA_FLAGPROC           B14
+#define VIDEO_PESQUISA_FLAGVAZIO          B15
+
+/* ============================================================================
+                         Definicao para estrutura Arvore
+   ============================================================================ */
+#define VIDEO_ARVOREENTRADA  VD_FORMATO(VD_VERDE,   VD_NORMAL,VD_MARROM,VD_BRIL)
+#define VIDEO_ARVORESAIDA    VD_FORMATO(VD_VERMELHO,VD_NORMAL,VD_MARROM,VD_NORMAL)
+#define VIDEO_ARVOREAUXILIAR VD_FORMATO(VD_BLANK,   VD_NORMAL,VD_PRETO, VD_BRIL)
+
+#define VIDEO_ARVORE_SETACIMA        C(24)
+#define VIDEO_ARVORE_SETABAIXO       C(25)
+#define VIDEO_ARVORE_SETADIR         C(26)
+#define VIDEO_ARVORE_SETAESQ         C(27)
+
+#define VIDEO_SCROLL_SETACIMA        C(30)
+#define VIDEO_SCROLL_SETABAIXO       C(31)
+#define VIDEO_SCROLL_SETADIR         C(16)
+#define VIDEO_SCROLL_SETAESQ         C(17)
+
+#define VIDEO_LINHAVERT              C(179)
+#define VIDEO_LINHAHORIZ             C(196)
+
+#define VIDEO_ARVDES_TITULO          B01
+#define VIDEO_ARVDES_RODAPE          B02
+#define VIDEO_ARVATV_DESTAQOPC       B03
+#define VIDEO_ARVATV_LINHAOPC        B04
+
+#define VIDEO_ARVORE_CORFUNDO  VD_FORMATO(VD_AZULTURQ,VD_NORMAL, VD_BLANK,   VD_NORMAL)
+#define VIDEO_ARVORE_CORBARRAS VD_FORMATO(VD_AZULCEL, VD_NORMAL, VD_BLANK,   VD_NORMAL)
+#define VIDEO_ARVORE_CORTITULO VD_FORMATO(VD_AZULCEL, VD_NORMAL, VD_MARROM,  VD_BRIL  )
+#define VIDEO_ARVORE_CORRODAPE VD_FORMATO(VD_AZULCEL, VD_NORMAL, VD_VERMELHO,VD_NORMAL)
+#define VIDEO_ARVORE_CORELEM   VD_FORMATO(VD_AZULTURQ,VD_NORMAL, VD_BLANK,   VD_BRIL  )
+#define VIDEO_ARVORE_CORSELELE VD_FORMATO(VD_PRETO,   VD_NORMAL, VD_BLANK,   VD_BRIL  )
+#define VIDEO_ARVORE_CORITSEL  VD_FORMATO(VD_PRETO,   VD_NORMAL, VD_BLANK,   VD_BRIL  )
+#define VIDEO_ARVORE_CORITOP   VD_FORMATO(VD_AZULTURQ,VD_NORMAL, VD_BLANK,   VD_NORMAL)
+#define VIDEO_ARVORE_CORSCBAR  VD_FORMATO(VD_MARROM,  VD_NORMAL, VD_VERMELHO,VD_NORMAL)
+#define VIDEO_ARVORE_CORSETAS  VD_FORMATO(VD_VERMELHO,VD_NORMAL, VD_PRETO,   VD_NORMAL)
+#define VIDEO_ARVORE_CARACFUNDO    ' '
+#define VIDEO_ARVORE_CARACBAR      C(177)
+#define VIDEO_ARVORE_CARACSCROW    C(178)
+#define VIDEO_ARVORE_FLAGPOPWIN    B00
+#define VIDEO_ARVORE_FLAGPUSHWIN   B01
+#define VIDEO_ARVORE_FLAGSTATUS    B02
+
+#define VIDEO_MOUSE_BOTTRV        B(0XFE)
+#define VIDEO_MOUSE_BOTCLICK      B(0XFD)
+#define VIDEO_MOUSE_INICIALIZACAO W(0X0000)
+#define VIDEO_MOUSE_HABCURSOR     W(0X0001)
+#define VIDEO_MOUSE_DESHABCURSOR  W(0X0002)
+#define VIDEO_MOUSE_GETPOS        W(0X0003)
+#define VIDEO_MOUSE_SETPOS        W(0X0004)
+#define VIDEO_MOUSE_INTBOT        W(0X0005)
+#define VIDEO_MOUSE_INTBOTPRES    W(0X0006)
+#define VIDEO_MOUSE_LIMITECOL     W(0X0007)
+#define VIDEO_MOUSE_LIMITELIN     W(0X0008)
+#define VIDEO_MOUSE_VELOCIDADE    W(0X0013)
+#define VIDEO_MOUSE_INT           W(0X0033)
+#define VIDEO_MOUSE_DPI           W(0X000F)
+
+#define VIDEO_IMPRESSORA_INT      W(0X0017)
+#define VIDEO_IMPRESSORA_ENVIA    B(0X00)
+#define VIDEO_IMPRESSORA_INIC     B(0X01)
+#define VIDEO_IMPRESSORA_STATUS   B(0X02)
+
+#define VIDEO_ARVORE_FUNCANT      B01
+#define VIDEO_ARVORE_FUNCPOS      B02
+
+/* ============================================================================
+                         Definicao para estrutura de mascara
+   ============================================================================ */
+#define VIDEO_EDITA_MASCARA_Z   B00
+#define VIDEO_EDITA_MASCARA_z   B00
+#define VIDEO_EDITA_MASCARA_B   B00
+#define VIDEO_EDITA_MASCARA_b   B00
+#define VIDEO_EDITA_MASCARA_9   B00
+
+#define VIDEO_EDITA_MASCARA_E   B01
+#define VIDEO_EDITA_MASCARA_e   B02
+#define VIDEO_EDITA_MASCARA_L   (B01|B02)
+
+#define VIDEO_EDITA_MASCARA_U   (B01|B04)
+#define VIDEO_EDITA_MASCARA_u   (B02|B04)
+#define VIDEO_EDITA_MASCARA_l   (B01|B02|B04)
+
+#define VIDEO_EDITA_MASCARA_C   (B00|B01)
+#define VIDEO_EDITA_MASCARA_c   (B00|B02)
+#define VIDEO_EDITA_MASCARA_O   (B00|B01|B02)
+
+#define VIDEO_EDITA_MASCARA_F   (B00|B01|B04)
+#define VIDEO_EDITA_MASCARA_f   (B00|B02|B04)
+#define VIDEO_EDITA_MASCARA_H   (B00|B01|B02|B04)
+
+#define VIDEO_EDITA_MASCARA_Q   B03
+
+#define VIDEO_EDITA_TESTA_Z(x)  (x&VIDEO_EDITA_MASCARA_Z)
+#define VIDEO_EDITA_TESTA_z(x)  (x&VIDEO_EDITA_MASCARA_z)
+#define VIDEO_EDITA_TESTA_B(x)  (x&VIDEO_EDITA_MASCARA_B)
+#define VIDEO_EDITA_TESTA_b(x)  (x&VIDEO_EDITA_MASCARA_b)
+#define VIDEO_EDITA_TESTA_9(x)  (x&VIDEO_EDITA_MASCARA_9)
+
+#define VIDEO_EDITA_TESTA_U(x)  (x&VIDEO_EDITA_MASCARA_U)
+#define VIDEO_EDITA_TESTA_u(x)  (x&VIDEO_EDITA_MASCARA_u)
+#define VIDEO_EDITA_TESTA_l(x)  (x&VIDEO_EDITA_MASCARA_l)
+
+#define VIDEO_EDITA_TESTA_E(x)  (x&VIDEO_EDITA_MASCARA_E)
+#define VIDEO_EDITA_TESTA_e(x)  (x&VIDEO_EDITA_MASCARA_e)
+#define VIDEO_EDITA_TESTA_L(x)  (x&VIDEO_EDITA_MASCARA_L)
+
+#define VIDEO_EDITA_TESTA_C(x)  (x&VIDEO_EDITA_MASCARA_C)
+#define VIDEO_EDITA_TESTA_c(x)  (x&VIDEO_EDITA_MASCARA_c)
+#define VIDEO_EDITA_TESTA_O(x)  (x&VIDEO_EDITA_MASCARA_O)
+
+#define VIDEO_EDITA_TESTA_F(x)  (x&VIDEO_EDITA_MASCARA_F)
+#define VIDEO_EDITA_TESTA_f(x)  (x&VIDEO_EDITA_MASCARA_f)
+#define VIDEO_EDITA_TESTA_H(x)  (x&VIDEO_EDITA_MASCARA_H)
+
+#define VIDEO_EDITA_TESTA_Q(x)  (x&VIDEO_EDITA_MASCARA_Q)
+#define VIDEO_EDITA_TESTA_X(x)  (VIDEO_EDITA_TESTA_Q(x) && !VIDEO_EDITA_TESTA_e(x))
+#define VIDEO_EDITA_TESTA_x(x)  (VIDEO_EDITA_TESTA_Q(x) && !VIDEO_EDITA_TESTA_E(x))
+
+#define VIDEO_EDITA_TESTA_T(x)  (VIDEO_EDITA_TESTA_X(x) && !VIDEO_EDITA_TESTA_9(x))
+#define VIDEO_EDITA_TESTA_t(x)  (VIDEO_EDITA_TESTA_x(x) && !VIDEO_EDITA_TESTA_9(x))
+#define VIDEO_EDITA_TESTA_q(x)  (VIDEO_EDITA_TESTA_Q(x) && !VIDEO_EDITA_TESTA_9(x))
+
+#define  VIDEO_OFFSET_CRG PTR_CAST(char,VIDEO_bufparamarq)
+#define  VIDEO_OFFSET_BUF PTR_CAST(char,(VIDEO_OFFSET_CRG+VIDEO_bufparamarq->offsetbuf))
+
+#define  VIDEO_OFF_ARQ    (VIDEO_OFFSET_CRG+W(VIDEO_bufparamarq->arquivos))
+#define  VIDEO_TAB_ARQ    PTR_CAST(IDE_ARQUIVOS,VIDEO_OFF_ARQ)
+
+#define  VIDEO_OFF_IND    (VIDEO_OFFSET_CRG+W(VIDEO_bufparamarq->indices))
+#define  VIDEO_TAB_IND    PTR_CAST(IDE_INDEX,VIDEO_OFF_IND)
+
+#define  VIDEO_OFF_CHV    (VIDEO_OFFSET_CRG+W(VIDEO_bufparamarq->chaves))
+#define  VIDEO_TAB_CHV    PTR_CAST(IDE_CHAVES,VIDEO_OFF_CHV)
+
+#define  VIDEO_OFF_DODA   (VIDEO_OFFSET_CRG+W(VIDEO_bufparamarq->dodas))
+#define  VIDEO_TAB_DODA   PTR_CAST(IDE_DODA,VIDEO_OFF_DODA)
+
+#define  VIDEO_OFF_TAB    (VIDEO_OFFSET_CRG+W(VIDEO_bufparamarq->bufdodas))
+#define  VIDEO_TAB_TAB    PTR_CAST(IDE_TABREFERDODA,VIDEO_OFF_TAB)
+
+#define VIDEO_VISUAL_RESSET_PROMPT  B00
+#define VIDEO_VISUAL_DISPLAY_PROMPT B01
+#define VIDEO_VISUAL_SALVA_FUNDO    B02
+#define VIDEO_VISUAL_DISPLAY_LINHA  B03
+#define VIDEO_VISUAL_DISPLAY_PAGINA B04
+#define VIDEO_VISUAL_PEGA_LINHA_ANT B05
+#define VIDEO_VISUAL_PEGA_PAG_ANT   B06
+#define VIDEO_VISUAL_PEGA_LINHA_POS B07
+#define VIDEO_VISUAL_PEGA_PAG_POS   B08
+
+#define VD_tela_sn(mens,cor)          VD_telaconfirma((80-strlen(mens))/2,10,mens,cor,0)
+#define VD_tela_sn_2(mens,cor)        VD_telaconfirma((80-strlen(mens))/2,10,mens,cor,1)
+#define VD_telaerr(xi,yi,mens,cor)    VD_telamensagem(xi,yi,mens,cor,0)
+#define VD_telaconf(xi,yi,mens,cor)   VD_telaconfirma(xi,yi,mens,cor,0)
+#define VD_telaproc(xi,yi,mens,cor)   VD_telamensagem(xi,yi,mens,cor,2)
+#define VD_telprocessa(mens,cor)      VD_telaproc((80-strlen(mens))/2-2,VIDEO_LIN_MENSAGEM,mens,cor)
+#define VIDEO_atod_t(buffer,tamanho)  D(VIDEO_atold_t(buffer,tamanho))
+#define VIDEO_atoi_t(buffer,tamanho)  I(VIDEO_atol_t(buffer,tamanho))
+#define VIDEO_atoui_t(buffer,tamanho) UI(VIDEO_atoul_t(buffer,tamanho))
+
+#define VIDEO_FLAG_INDICE_ATIVADO BIT0
+#define VIDEO_pega_atributo(col,lin) peekb(0xB800,(((lin-1)*160)+((col-1)*2)+1))
+#define VIDEO_pega_caracter(col,lin) peekb(0xB800,(((lin-1)*160)+((col-1)*2)))
+#define VIDEO_UNIX_AUTOREFRESH 1
+
+#ifdef FPUTFGET
+#define VIDEO_DUMMY_LOCK_FILE TRUE
+#else
+#define VIDEO_DUMMY_LOCK_FILE FALSE
+#endif
+
+#define VIDEO_LOCKFILE    lock
+#define VIDEO_UNLOCKFILE  unlock
+#define VIDEO_LIN_MENSAGEM 9
+
+// Cores para Uso Generico.
+#define PD_COR_01       VD_FORMATO(VD_VERMELHO, VD_NORMAL, VD_BLANK,  VD_BRIL)
+#define PD_COR_02       VD_FORMATO(VD_AZULTURQ, VD_NORMAL, VD_BLANK,  VD_BRIL)
+#define PD_COR_03       VD_FORMATO(VD_AZULTURQ, VD_NORMAL, VD_MARROM, VD_BRIL)
+#define PD_COR_04       VD_FORMATO(VD_AZULCEL,  VD_NORMAL, VD_BLANK,  VD_BRIL)
+#define PD_COR_05       VD_FORMATO(VD_MARROM,   VD_NORMAL, VD_BLANK,  VD_BRIL)
+#define PD_COR_06       VD_FORMATO(VD_VERDE,    VD_NORMAL, VD_BLANK,  VD_BRIL)
+#define PD_COR_07       VD_FORMATO(VD_BLANK,    VD_NORMAL, VD_PRETO,   VD_NORMAL)
+#define PD_COR_08       VD_FORMATO(VD_BLANK,    VD_NORMAL, VD_VERMELHO,VD_NORMAL)
+
+#define VIDEO_INCLUSAO_PASSO1 1
+#define VIDEO_INCLUSAO_PASSO2 2
+#define VIDEO_INCLUSAO_PASSO3 3
+
+#define VIDEO_EXCLUSAO_PASSO1 1
+#define VIDEO_EXCLUSAO_PASSO2 2
+#define VIDEO_EXCLUSAO_PASSO3 3
+
+#define VIDEO_ALTERACAO_PASSO1 1
+#define VIDEO_ALTERACAO_PASSO2 2
+#define VIDEO_ALTERACAO_PASSO3 3
+
+#define VIDEO_VISUAL_MAX_COL   250
+
+
+#define VIDEO_FUNCAO_ESPECIAL_ARVORE 1
+#define VIDEO_FUNCAO_ESPECIAL_TELA   2
+#define VIDEO_FUNCAO_ESPECIAL_MENU   3
+#define VIDEO_FUNCAO_ESPECIAL_PESQ   4
+

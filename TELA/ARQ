@@ -1,0 +1,16 @@
+File VDTELCON.C:
+           VIDEO_mensagem_default.cor = consiste->objetocons.mens->cor;
+                                                        VIDEO_mostra_mens_erro(consiste->objetocons.mens->mensagem,TRUE);
+                            VIDEO_mostra_mens_erro(consiste->objetocons.mens->mensagem,TRUE);
+                            VIDEO_mostra_mens_erro(consiste->objetocons.mens->mensagem,TRUE);
+                                  consiste->objetocons.consdb->mensagem->mensagem,TRUE);
+                           VIDEO_mostra_mens_erro(consiste->objetocons.consdb->mensagem->mensagem,TRUE);
+File VDTELDSF.C:
+VD_VOID VIDEO_TELA_display_faixa(mensagem)
+char *mensagem;
+ strcat(mensfaixa,mensagem);
+File VDTELACT.C:
+ /* Seta a linha de para esta Imagem mensagem.*/
+ VIDEO_mensagem_default.lin = imagem->linf-1 == imagem->lini ?
+ VIDEO_mensagem_default.col = imagem->coli+1;
+     VIDEO_mostra_mens_erro(imagem->mensagem,TRUE);

@@ -1,0 +1,37 @@
+Publics by module
+
+VDARVVAR	size = 328
+	_VIDEO_ARVORE_tabela_navegacao    _VIDEO_ARVORE_tabserv_COLANT
+	_VIDEO_ARVORE_tabserv_COLPOST     _VIDEO_ARVORE_tabserv_CTRL_DIR
+	_VIDEO_ARVORE_tabserv_CTRL_END    _VIDEO_ARVORE_tabserv_CTRL_ESQ
+	_VIDEO_ARVORE_tabserv_CTRL_HOME   _VIDEO_ARVORE_tabserv_CTRL_PGDN
+	_VIDEO_ARVORE_tabserv_CTRL_PGUP   _VIDEO_ARVORE_tabserv_END
+	_VIDEO_ARVORE_tabserv_ESPECIAIS   _VIDEO_ARVORE_tabserv_HOME
+	_VIDEO_ARVORE_tabserv_LININF      _VIDEO_ARVORE_tabserv_LINSUP
+	_VIDEO_ARVORE_tabserv_PGDN        _VIDEO_ARVORE_tabserv_PGUP
+	_VIDEO_ARVORE_tabserv_SELEC       _VIDEO_ARVORE_tabserv_TERMINA
+	_VIDEO_ARVORE_tabserv_calculadora  _VIDEO_ARVORE_tabserv_mousedoiscl
+	_VIDEO_ARVORE_tabserv_mousedoistr  _VIDEO_ARVORE_tabserv_mouseumclic
+	_VIDEO_ARVORE_tabserv_mouseumtrav
+
+VDVISINT	size = 212
+	_VIDEO_VISUAL_flag_erro           _VIDEO_VISUAL_flag_int
+	_VIDEO_VISUAL_nova_int05          _VIDEO_VISUAL_nova_int24
+	_VIDEO_VISUAL_velha_int05         _VIDEO_VISUAL_velha_int24
+
+VDVISVAR	size = 423
+	_VIDEO_HELP_imagem_padrao         _VIDEO_HELP_menu_padrao
+	_VIDEO_VISUAL_funcao_disparo      _VIDEO_VISUAL_imagem_arquivos
+	_VIDEO_VISUAL_imagem_impressao    _VIDEO_VISUAL_imagem_padrao
+	_VIDEO_VISUAL_imagem_spool        _VIDEO_VISUAL_menu_config
+	_VIDEO_VISUAL_menu_seleciona      _VIDEO_VISUAL_tabserv_COLANT
+	_VIDEO_VISUAL_tabserv_COLPOS      _VIDEO_VISUAL_tabserv_FIM
+	_VIDEO_VISUAL_tabserv_INI         _VIDEO_VISUAL_tabserv_LINANT
+	_VIDEO_VISUAL_tabserv_LINPOS      _VIDEO_VISUAL_tabserv_PAGANT
+	_VIDEO_VISUAL_tabserv_PAGPOS      _VIDEO_VISUAL_tabserv_PRI
+	_VIDEO_VISUAL_tabserv_TABANT      _VIDEO_VISUAL_tabserv_TABPOS
+	_VIDEO_VISUAL_tabserv_TER         _VIDEO_VISUAL_tabserv_ULT
+	_VIDEO_VISUAL_tabserv_calculadora  _VIDEO_VISUAL_tabserv_deleta
+	_VIDEO_VISUAL_tabserv_impress     _VIDEO_VISUAL_tabserv_menu
+	_VIDEO_VISUAL_tabserv_navegacao   _VIDEO_VISUAL_tabserv_posiciona
+	_VIDEO_VISUAL_tabserv_procura     _VIDEO_VISUAL_tabserv_spool

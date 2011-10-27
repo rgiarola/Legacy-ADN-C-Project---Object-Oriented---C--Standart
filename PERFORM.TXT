@@ -1,0 +1,96 @@
+
+Performance tuning for c-tree (non-server mode)
+
+=================================================================
+
+To increase the overall performance of a single-user application
+there are two items:
+
+1.  Increase the number of 'bufs' (the first argument to
+INTISAM()) as large as possible.  This value is used to create
+the index cache size.  To figure the amount of memory to be used
+by the cache:
+        memory (in bytes) = bufs * sect * 128
+        'sect' is the third argument to INTISAM()
+
+This is the best way to improve performance.  The more memory the
+better.  We have seen bufs of 1500 and sect of 16 used on Unix
+systems to drop rebuild times from 15-20 hours down to 15-20
+minutes.  For DOS, without a memory extender, 40-100 bufs is
+probably about all you can use.  The way to determine the value
+to use is increase bufs until you get an error 10 (not enough
+memory), then back it down one at a time until the application
+starts working.
+
+2.  The second method is optimizing 'sect'.  The sect argument is
+used to determine the node size of the index.  Every time you
+change sect, you MUST rebuild all indexes used by the
+application.  
+
+The rule of thumb for 'sect' is to set it so the node size of the
+index is the same as the page size for your operating system. 
+For example, DOS uses a 512 byte page size so a 'sect' setting of
+4 is the best value to start with (because a sect setting of 4
+makes the index nodes 512 bytes (4 x 128).  If you have large
+keys (40 bytes or larger) or a large number of keys (100,000 or
+more) then try experimenting with larger sect settings in
+multiples of 4 until the best value is found.
+
+Other operating systems such as OS/2 use 2K page size so 16 is a
+good starting value.  Most unix systems use 4K page sizes so 32
+is a good starting value there.
+
+=================================================================
+
+To increase the performance of a multi-user application:  
+
+1.  Item 2 above is applicable.  In multi-user non-server mode
+all read and writes are done to disk for data integrity reasons. 
+
+2. There is a define that can be added to ctcmpl.h called
+NO_IDXENT that will improve multi-user non-server performance by
+disabling the internal count of index entries.  When NO_IDXENT is
+defined, the function IDXENT is not available.
+
+
+=================================================================
+
+To increase the speed of a rebuild there are 4 items:
+
+1.  Be sure the rebuild program has been compiled and linked to a
+single-user (NOTFORCE) library not multiuser (FPUTFGET).  This
+item alone can show a three to five times speed differential.
+
+2.  Increase "fils" parameter in the InitISAM() call.  This is
+only helpful in single-user mode.  At minimum this number should
+be equal to:
+
+data file number + the number of indices + MAX_HANDLES
+
+MAX_HANDLES is defined in ctsort.h, see item 3.  Be sure to take
+into account any other files that could be open when rebuild is
+called.  It might be a good idea, although not absolutely
+necessary, to close other unrelated files before calling
+RebuildIFile() especially if memory is at a premium.  If you have
+no other files open and are allowing c-tree to assign file
+numbers (dfilno = -1), use 1 for data file number in the equation
+above.  Unless you are short on memory use a number larger than
+this.
+
+3.  Increase #define MAX_HANDLES in ctsort.h.  The default is 5. 
+This is helpful when there are a large number of records in the
+file (generally several hundred thousand) or you are using large
+keys.
+
+4.  Increase #define MAX_K_TO_USE in ctsort.h.  The default is
+1000.  That is 1000K or 1 MEG.
+
+If you change either of the #defines you will need to rebuild
+your c-tree library and recompile your application.  There are no
+firm rules for "how much is enough" on these items.  Generally
+more is better but you will receive deminishing returns after a
+point.  Some testing with real-world sized databases and keys
+should help you find what is appropriate for your application. 
+We have seen rebuild times reduced by as much as 90% by making
+these changes.
+

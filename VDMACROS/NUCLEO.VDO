@@ -1,0 +1,43 @@
+/*==========================================================================
+            DEFINICOES DOS TIPOS DE DADOS USADOS NA BLIBLIOTECA
+==========================================================================*/
+
+typedef struct
+ {
+  INT2     (*VIDEO_funcao)(); /* funcao de controle do objeto*/
+  char    VIDEO_buffer[1];   /* dados do objeto*/
+ }VIDEO_TAB_FUNC;
+
+/*===========================================================================
+          ESTRUTURA DE ITEM DE TABELA DE SERVICO A EXECUTAR (tabserv)
+===========================================================================*/
+typedef struct
+ {
+  INT2       *VIDEO_servico,   /* IDENTIFICADOR DO SERVICO                 */
+            (*VIDEO_funcao)();/* FUNCAO REALIZADORA DO SERVICO            */
+ }VIDEO_TABSERV;
+/*=========================================================================*/
+
+
+/*===========================================================================
+              ESTRUTURA DE DEFINICAO DO MODELO REQUISITOR DE SERVICO
+===========================================================================*/
+typedef struct
+ {
+  VIDEO_TAB_FUNC *VIDEO_campos;  /* RELACAO DOS CAMPOS            */
+  INT2            VIDEO_numcampos,/* NUMERO DE CAMPOS              */
+                 VIDEO_tamcampo, /* TAMANHO DA ESTRUTURA DE CAMPOS*/
+                 VIDEO_inicial;  /* CAMPO INICIAL                 */
+  VIDEO_TABSERV  *VIDEO_tabserv; /* TABELA DE SERVICOS A EXECUTAR */
+  INT2            VIDEO_servrec,  /* SERVICO REQUISITADO PELO MSPAS*/
+                 VIDEO_repdisp;  /* SERVICO A SER EXECUTADO ESTA  */
+                                 /* SERVREC                       */
+ }VIDEO_NUCLEO_SERV;
+
+typedef struct
+ {
+  INT2     servico,
+          (*VIDEO_tratador_nucleo)(),
+          (*VIDEO_tratador_usuario)();
+ }VIDEO_SWAP_TRATADOR_SERVICO;
+

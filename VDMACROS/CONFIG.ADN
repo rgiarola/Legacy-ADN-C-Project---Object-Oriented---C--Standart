@@ -1,0 +1,52 @@
+//#define MS_C
+//#define _VIDEO_TRANSAC
+
+//**************************************************************************
+// includes do CTREE
+#define __CTREE
+//**************************************************************************
+
+//**************************************************************************
+// includes do TRANSACAO
+//#define _VIDEO_TRANSAC
+//**************************************************************************
+
+
+//**************************************************************************
+// base de dados
+#define DATABASE_CTREE
+//#define DATABASE_GRI
+//**************************************************************************
+
+
+//**************************************************************************
+// compilador
+#ifdef MS_C
+  #ifdef M_I86CM
+    #define __COMPACT__
+  #endif
+  #ifdef M_I86LM
+    #define __LARGE__
+  #endif
+  #ifdef M_I86HM
+    #define __HUGE__
+  #endif
+  # ifndef _VIDEO_TRANSAC
+      #define _VIDEO_TRANSAC
+  #endif
+#else
+  #define _CDECL _Cdecl
+#endif
+
+//**************************************************************************
+
+//**************************************************************************
+// MODELO DE COMPILACAO
+#define ctLP
+
+//**************************************************************************
+// PROTOTIPOS DE PARAMETROS
+#define VIDEO_PROTOTIPO_PARAMETROS
+
+#define VIDEO_DOS
+

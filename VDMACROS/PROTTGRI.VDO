@@ -1,0 +1,192 @@
+
+#ifdef VIDEO_PROTOTIPO_PARAMETROS
+
+int VIDEO_GRI_montachavepos(char *ptraux,
+                            IDE_INDEX *indice,
+                            BOOLEAN serv,
+                            int set);
+
+
+INT2 VIDEO_GRI_ServGetRecord_rede(INT2                    indice,
+                                 VIDEO_GRI_SERV_EXTSIAD *buffer,
+                                 INT2                    tamreg,
+                                 INT2                    tamchave,
+                                 INT2                    servico,
+                                 char                   *transerv);
+
+INT2 VIDEO_GRI_monta_chave_rede(INT2  numero_indice,
+                               char *chavesai,char *chaveent);
+
+VD_VOID VIDEO_GRI_convi_ctree(INT2 *bufsai,INT2 *bufent);
+
+VD_VOID VIDEO_GRI_convi_rede(INT2 *bufsai,INT2 *bufent);
+
+VD_VOID VIDEO_GRI_convsi(char *bufsai,char *bufent);
+
+VD_VOID VIDEO_GRI_convl_ctree(long int *bufsai,long int *bufent);
+
+VD_VOID VIDEO_GRI_convl_ctree(long int *bufsai,long int *bufent);
+
+VD_VOID VIDEO_GRI_convl_rede(long int *bufsai,long int *bufent);
+
+VD_VOID VIDEO_GRI_transfi(INT2 *buffer);
+
+VD_VOID VIDEO_GRI_transfl(long int *buffer);
+
+INT2 VIDEO_GRI_RET_TRUE(VD_VOID);
+
+INT2 VIDEO_GRI_RET_FALSE(VD_VOID);
+
+INT2 VIDEO_GRI_atucurchaves(IDE_ARQUIVOS *arquivo,char *buffer_reg);
+
+INT2 VIDEO_GRI_executa_transacao(char *transacao   ,char *buffer_saida  ,
+                                INT2  tamanho_saida,char *buffer_entrada,
+                                INT2  tamanho_entrada);
+
+INT2 VIDEO_GRI_recebe_transacao(char *transacao,char *buffer,
+                               INT2  tamanho);
+
+INT2 VIDEO_GRI_logsys(char *terminal_cep);
+
+INT2 VIDEO_GRI_haltsys(VD_VOID);
+
+INT2 VIDEO_GRI_trata_buffer_rede(VD_VOID *buffer,INT2 tamanho,
+                                char    *servico);
+
+INT2 VIDEO_GRI_GetTempFileName(char *nome,INT2 tam);
+
+INT2 VIDEO_GRI_monta_reg_ctree(IDE_ARQUIVOS *arquivo   ,char *buffer_sai,
+                              char         *buffer_ent,INT2 tamanho);
+
+INT2 VIDEO_GRI_envia_transacao(char *transacao,char *buffer,
+                              INT2  tamanho);
+
+INT2 VIDEO_GRI_comparachaves(IDE_ARQUIVOS *arquivo);
+
+INT2 VIDEO_GRI_ServGetRecord(INT2 indice,char *chave ,char *buffer,
+                            INT2 dupkey,INT2  servico,INT2 tamanho);
+
+INT2 VIDEO_GRI_monta_chave_ctree(INT2  numero_indice,char *chavesai,
+                                char *chaveent);
+
+INT2 VIDEO_GRI_RebuildIFile(IDE_ARQUIVOS *arquivo);
+
+INT2 VIDEO_GRI_monta_reg_rede(IDE_ARQUIVOS *arquivo   ,char *buffer_sai,
+                             char         *buffer_ent,INT2  tamanho);
+
+INT2 VIDEO_GRI_CmpFileOffset(unsigned long int pos1,
+                             unsigned long int pos2);
+
+unsigned long int VIDEO_GRI_CurrentFileOffset(INT2 arquivo);
+
+INT2 VIDEO_GRI_ResetRecord(INT2  arquivo        ,INT2 servico,
+                           unsigned long int pos,char *buffer);
+
+INT2 VIDEO_GRI_FreeCurrentFileOffset(unsigned long int *pos);
+
+INT2 VIDEO_GRI_SetRecord(INT2  arq    ,unsigned long int *pos,
+                        char *buffer,INT2                tam);
+
+VD_VOID VIDEO_GRI_monta_lock(VIDEO_GRI_TABIND *lock);
+
+INT2 VIDEO_GRI_criatmp(IDE_ARQUIVOS *arquivo,
+                      CT_TMP_NOMES *aux_tempor);
+
+INT2 VIDEO_GRI_ServIoRecord(INT2  arquivo,char *buffer,
+                           INT2  tamanho,INT2  servico);
+
+INT2 VIDEO_GRI_inicializa(IDE_DODA     *init_doda,
+                         IDE_ARQUIVOS *init_arquivos);
+
+INT2 VIDEO_GRI_opentmp(IDE_ARQUIVOS *arquivo,
+                      CT_TMP_NOMES *aux_tempor);
+
+INT2 VIDEO_GRI_CreateIFile(IDE_ARQUIVOS *arquivo);
+
+INT2 VIDEO_GRI_OpenIFile(IDE_ARQUIVOS *arquivo);
+
+INT2 VIDEO_GRI_CloseIFile(IDE_ARQUIVOS *arquivo);
+
+
+#else
+INT2 VIDEO_GRI_ServGetRecord_rede();
+
+INT2 VIDEO_GRI_monta_chave_rede();
+
+VD_VOID VIDEO_GRI_convi_ctree();
+
+VD_VOID VIDEO_GRI_convi_rede();
+
+VD_VOID VIDEO_GRI_convsi();
+
+VD_VOID VIDEO_GRI_convl_ctree();
+
+VD_VOID VIDEO_GRI_convl_ctree();
+
+VD_VOID VIDEO_GRI_convl_rede();
+
+VD_VOID VIDEO_GRI_transfi();
+
+VD_VOID VIDEO_GRI_transfl();
+
+INT2 VIDEO_GRI_RET_TRUE();
+
+INT2 VIDEO_GRI_RET_FALSE();
+
+INT2 VIDEO_GRI_atucurchaves();
+
+INT2 VIDEO_GRI_executa_transacao();
+
+INT2 VIDEO_GRI_recebe_transacao();
+
+INT2 VIDEO_GRI_logsys();
+
+INT2 VIDEO_GRI_haltsys();
+
+INT2 VIDEO_GRI_trata_buffer_rede();
+
+INT2 VIDEO_GRI_GetTempFileName();
+
+INT2 VIDEO_GRI_monta_reg_ctree();
+
+INT2 VIDEO_GRI_envia_transacao();
+
+INT2 VIDEO_GRI_comparachaves();
+
+INT2 VIDEO_GRI_ServGetRecord();
+
+INT2 VIDEO_GRI_monta_chave_ctree();
+
+INT2 VIDEO_GRI_RebuildIFile();
+
+INT2 VIDEO_GRI_monta_reg_rede();
+
+INT2 VIDEO_GRI_CmpFileOffset();
+
+unsigned long int VIDEO_GRI_CurrentFileOffset();
+
+INT2 VIDEO_GRI_ResetRecord();
+
+INT2 VIDEO_GRI_FreeCurrentFileOffset();
+
+INT2 VIDEO_GRI_SetRecord();
+
+VD_VOID VIDEO_GRI_monta_lock();
+
+INT2 VIDEO_GRI_criatmp();
+
+INT2 VIDEO_GRI_ServIoRecord();
+
+INT2 VIDEO_GRI_inicializa();
+
+INT2 VIDEO_GRI_opentmp();
+
+INT2 VIDEO_GRI_CreateIFile();
+
+INT2 VIDEO_GRI_OpenIFile();
+
+INT2 VIDEO_GRI_CloseIFile();
+#endif
+
+
+

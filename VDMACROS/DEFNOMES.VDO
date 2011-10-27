@@ -1,0 +1,312 @@
+#define VD_FUNCAO             VIDEO_FUNCAO
+#define VD_VOID               VIDEO_VOID
+
+#define VD_FIM_ARQ            VIDEO_FIM_ARQ
+#define VD_INI_ARQ            VIDEO_INI_ARQ
+#define VD_MEIO_ARQ           VIDEO_MEIO_ARQ
+#define VD_cria               VIDEO_cria
+#define VD_open_ler           VIDEO_open_ler
+#define VD_open_esc           VIDEO_open_esc
+#define VD_open_io            VIDEO_open_io
+#define VD_NILL               VIDEO_NILL
+#define VD_NULO               VIDEO_NULO
+
+#define VD_DOS_FLAG_CARRY        VIDEO_DOS_FLAG_CARRY
+#define VD_DOS_FLAG_PARIDADE     VIDEO_DOS_FLAG_PARIDADE
+#define VD_DOS_FLAG_AUXILIAR     VIDEO_DOS_FLAG_AUXILIAR
+#define VD_DOS_FLAG_ZERO         VIDEO_DOS_FLAG_ZERO
+#define VD_DOS_FLAG_SINAL        VIDEO_DOS_FLAG_SINAL
+#define VD_DOS_FLAG_TRAP         VIDEO_DOS_FLAG_TRAP
+#define VD_DOS_FLAG_INTERRUPCOES VIDEO_DOS_FLAG_INTERRUPCOES
+#define VD_DOS_FLAG_DIRECAO      VIDEO_DOS_FLAG_DIRECAO
+#define VD_DOS_FLAG_OVERFLOW     VIDEO_DOS_FLAG_OVERFLOW
+
+#define VD_FP_OFF             VIDEO_FP_OFF
+#define VD_FP_SEG             VIDEO_FP_SEG
+#define VD_MK_FP              VIDEO_MK_FP
+#define VD_alloc              VIDEO_alloc
+#define VD_free               VIDEO_free
+#define VD_freemem            VIDEO_freemem
+
+#define VD_MAXCOL             VIDEO_MAXCOL
+#define VD_MINCOL             VIDEO_MINCOL
+#define VD_MAXLIN             VIDEO_MAXLIN
+#define VD_MINLIN             VIDEO_MINLIN
+#define VD_maxcol             VIDEO_maxcol
+#define VD_mincol             VIDEO_mincol
+#define VD_maxlin             VIDEO_maxlin
+#define VD_minlin             VIDEO_minlin
+
+#define VD_NORMAL             VIDEO_NORMAL
+#define VD_INTER              VIDEO_INTER
+#define VD_BRIL               VIDEO_BRIL
+#define VD_PRETO              VIDEO_PRETO
+#define VD_AZULTURQ           VIDEO_AZULTURQ
+#define VD_VERDE              VIDEO_VERDE
+#define VD_AZULCEL            VIDEO_AZULCEL
+#define VD_VERMELHO           VIDEO_VERMELHO
+#define VD_LILAZ              VIDEO_LILAZ
+#define VD_MARROM             VIDEO_MARROM
+#define VD_BLANK              VIDEO_BLANK
+#define VD_FUNDO              VIDEO_FUNDO
+#define VD_FRENTE	      VIDEO_FRENTE
+#define VD_FORMATO	      VIDEO_FORMATO
+
+#define VD_VET_H              VIDEO_VET_H
+#define VD_VET_V              VIDEO_VET_V
+#define VD_tprt               VIDEO_tprt
+#define VD_tprt_l	      VIDEO_tprt_l
+#define VD_tprt_c	      VIDEO_tprt_c
+
+#define VD_vertical           VIDEO_vertical
+#define VD_horizontal	      VIDEO_horizontal
+#define VD_vertical_simples   VIDEO_vertical_simples
+#define VD_horizontal_simples VIDEO_horizontal_simples
+#define VD_vertical_dupla     VIDEO_vertical_dupla
+#define VD_horizontal_dupla   VIDEO_horizontal_dupla
+#define VD_plotcarac	      VIDEO_plotcarac
+
+#define VD_mvwindow           VIDEO_mvwindow
+#define VD_MV_DIREITA         VIDEO_MV_DIREITA
+#define VD_MV_ESQUERDA        VIDEO_MV_ESQUERDA
+#define VD_MV_BAIXO           VIDEO_MV_BAIXO
+#define VD_MV_CIMA            VIDEO_MV_CIMA
+#define VD_OPER_QUADRO        VIDEO_OPER_QUADRO
+#define VD_OPER_ATRIB         VIDEO_OPER_ATRIB
+#define VD_MOVE               VIDEO_MOVE
+#define VD_COPIA              VIDEO_COPIA
+#define VD_sobe_jan           VIDEO_sobe_jan
+#define VD_desce_jan	      VIDEO_desce_jan
+#define VD_dir_jan	      VIDEO_dir_jan
+#define VD_esq_jan	      VIDEO_esq_jan
+#define VD_eb_jan	      VIDEO_eb_jan
+#define VD_ec_jan	      VIDEO_ec_jan
+#define VD_db_jan	      VIDEO_db_jan
+#define VD_dc_jan	      VIDEO_dc_jan
+#define VD_sobe_win	      VIDEO_sobe_win
+#define VD_desce_win	      VIDEO_desce_win
+#define VD_dir_win	      VIDEO_dir_win
+#define VD_esq_win	      VIDEO_esq_win
+#define VD_eb_win	      VIDEO_eb_win
+#define VD_ec_win	      VIDEO_ec_win
+#define VD_db_win	      VIDEO_db_win
+#define VD_dc_win	      VIDEO_dc_win
+
+#define VD_opertela           VIDEO_opertela
+#define VD_GRAVACAO           VIDEO_GRAVACAO
+#define VD_LEITURA            VIDEO_LEITURA
+#define VD_LERATRIB           VIDEO_LERATRIB
+#define VD_GRVATRIB           VIDEO_GRVATRIB
+#define VD_lertela            VIDEO_lertela
+#define VD_grvtela            VIDEO_grvtela
+#define VD_leratrib           VIDEO_leratrib
+#define VD_grvatrib           VIDEO_grvatrib
+
+#define VD_ERROPET01          VIDEO_ERROPET01
+#define VD_ERROPET02          VIDEO_ERROPET02
+#define VD_TERROPET01         VIDEO_TERROPET01
+#define VD_TERROPET02         VIDEO_TERROPET02
+
+#define VD_BOX_DUPLA          VIDEO_BOX_DUPLA
+#define VD_BOX_SIMPLES        VIDEO_BOX_SIMPLES
+#define VD_BOX_CARACTER       VIDEO_BOX_CARACTER
+#define VD_box                VIDEO_box
+#define VD_box_dupla          VIDEO_box_dupla
+#define VD_box_simples        VIDEO_box_simples
+#define VD_box_car            VIDEO_box_car
+
+#define VD_quadro             VIDEO_quadro
+#define VD_CLS                VIDEO_CLS
+#define VD_CLEAR              VIDEO_CLEAR
+#define VD_CLEAR_PIC          VIDEO_CLEAR_PIC
+#define VD_CLEAR_COL          VIDEO_CLEAR_COL
+#define VD_CLEAR_EOL          VIDEO_CLEAR_EOL
+#define VD_CLEAR_LIN          VIDEO_CLEAR_LIN
+#define VD_CLEAR_EOC          VIDEO_CLEAR_EOC
+
+#define VD_gerwindow          VIDEO_gerwindow
+#define VD_pop_descwin        VIDEO_pop_descwin
+#define VD_push_descwin       VIDEO_push_descwin
+#define VD_WPOP               VIDEO_WPOP
+#define VD_WPUSH              VIDEO_WPUSH
+#define VD_WFREE              VIDEO_WFREE
+#define VD_WFREE_ALL          VIDEO_WFREE_ALL
+#define VD_WGET               VIDEO_WGET
+#define VD_WMEM               VIDEO_WMEM
+#define VD_WDEL               VIDEO_WDEL
+#define VD_MAXWINDOW          VIDEO_MAXWINDOW
+#define VD_PUSHWIN            VIDEO_PUSHWIN
+#define VD_POPWIN             VIDEO_POPWIN
+#define VD_PUSHATR            VIDEO_PUSHATR
+#define VD_POPATR             VIDEO_POPATR
+#define VD_FREEWIN            VIDEO_FREEWIN
+#define VD_FREEWIN_ALL        VIDEO_FREEWIN_ALL
+#define VD_GETWIN             VIDEO_GETWIN
+#define VD_MEMWINPAR          VIDEO_MEMWINPAR
+#define VD_MEMWINLONG         VIDEO_MEMWINLONG
+#define VD_DELWIN             VIDEO_DELWIN
+#define VD_ERRGERW01          VIDEO_ERRGERW01
+#define VD_ERRGERW02          VIDEO_ERRGERW02
+#define VD_ERRGERW03          VIDEO_ERRGERW03
+#define VD_ERRGERW04          VIDEO_ERRGERW04
+#define VD_ERRGERW05          VIDEO_ERRGERW05
+#define VD_ERRGERW06          VIDEO_ERRGERW06
+#define VD_ERRGERW07          VIDEO_ERRGERW07
+#define VD_ERRGERW08          VIDEO_ERRGERW08
+#define VD_ERRGERW09          VIDEO_ERRGERW09
+#define VD_ERRGERW10          VIDEO_ERRGERW10
+#define VD_ERRGERW11          VIDEO_ERRGERW11
+#define VD_ERRGERW12          VIDEO_ERRGERW12
+#define VD_TERRGERW01         VIDEO_TERRGERW01
+#define VD_TERRGERW02         VIDEO_TERRGERW02
+#define VD_TERRGERW03         VIDEO_TERRGERW03
+#define VD_TERRGERW04         VIDEO_TERRGERW04
+#define VD_TERRGERW05         VIDEO_TERRGERW05
+#define VD_TERRGERW06         VIDEO_TERRGERW06
+#define VD_TERRGERW07         VIDEO_TERRGERW07
+#define VD_TERRGERW08         VIDEO_TERRGERW08
+#define VD_TERRGERW09         VIDEO_TERRGERW09
+#define VD_TERRGERW10         VIDEO_TERRGERW10
+#define VD_TERRGERW11         VIDEO_TERRGERW11
+#define VD_TERRGERW12         VIDEO_TERRGERW12
+
+#define VD_conec_se_dupla     VIDEO_conec_se_dupla
+#define VD_conec_sd_dupla     VIDEO_conec_sd_dupla
+#define VD_conec_ie_dupla     VIDEO_conec_ie_dupla
+#define VD_conec_id_dupla     VIDEO_conec_id_dupla
+#define VD_conec_se_simples   VIDEO_conec_se_simples
+#define VD_conec_sd_simples   VIDEO_conec_sd_simples
+#define VD_conec_ie_simples   VIDEO_conec_ie_simples
+#define VD_conec_id_simples   VIDEO_conec_id_simples
+#define VD_conec_se_carac     VIDEO_conec_se_carac
+#define VD_conec_sd_carac     VIDEO_conec_sd_carac
+#define VD_conec_ie_carac     VIDEO_conec_ie_carac
+#define VD_conec_id_carac     VIDEO_conec_id_carac
+#define VD_conec_col_dupla    VIDEO_conec_col_dupla
+#define VD_conec_col_simples  VIDEO_conec_col_simples
+#define VD_conec_col_carac    VIDEO_conec_col_carac
+#define VD_conec_lin_dupla    VIDEO_conec_lin_dupla
+#define VD_conec_lin_simples  VIDEO_conec_lin_simples
+#define VD_conec_lin_carac    VIDEO_conec_lin_carac
+
+#define VD_TESTE_4_COORD        VIDEO_TESTE_4_COORD
+#define VD_TESTE_2_COORD        VIDEO_TESTE_2_COORD
+#define VD_teste_4              VIDEO_teste_4
+#define VD_teste_cordenadas_x_y VIDEO_teste_cordenadas_x_y
+#define VD_teste_2              VIDEO_teste_2
+
+#define VD_filtro_tabskiptcl    VIDEO_filtro_tabskiptcl
+#define VD_filtro_ent_tcl       VIDEO_filtro_ent_tcl
+#define VD_filtro_buffertcl     VIDEO_filtro_buffertcl
+#define VD_filtro_tclbufini     VIDEO_filtro_tclbufini
+#define VD_filtro_tclbuffin     VIDEO_filtro_tclbuffin
+#define VD_FILTCL_INATIVO       VIDEO_FILTCL_INATIVO
+#define VD_FILTCL_CARACTER	VIDEO_FILTCL_CARACTER
+#define VD_FILTCL_NUMERO	VIDEO_FILTCL_NUMERO
+#define VD_FILTCL_PONTO 	VIDEO_FILTCL_PONTO
+#define VD_FILTCL_SINMAIS	VIDEO_FILTCL_SINMAIS
+#define VD_FILTCL_SINMENOS	VIDEO_FILTCL_SINMENOS
+#define VD_FILTCL_MAIUSC	VIDEO_FILTCL_MAIUSC
+#define VD_FILTCL_MINUSC	VIDEO_FILTCL_MINUSC
+#define VD_FILTCL_TABSKIP	VIDEO_FILTCL_TABSKIP
+#define VD_TAMBUFTCL            VIDEO_TAMBUFTCL
+
+#define VD_ISDIGIT              VIDEO_ISDIGIT
+#define VD_ISCARACTER           VIDEO_ISCARACTER
+
+#define VD_getkey               VIDEO_getkey
+#define VD_getkeyfiltcl         VIDEO_getkeyfiltcl
+
+#define VD_getkbd               VIDEO_getkbd
+#define VD_getkbdfiltcl         VIDEO_getkbdfiltcl
+
+#define VD_lepos                VIDEO_lepos
+#define VD_leposfiltcl          VIDEO_leposfiltcl
+
+#define VD_testefiltcl          VIDEO_testefiltcl
+
+#define VD_testa_tabskip	VIDEO_testa_tabskip
+
+#define VD_getxy                VIDEO_getxy
+
+#define VD_gtxy                 VIDEO_gtxy
+
+#define VD_keypos               VIDEO_keypos
+#define VD_keyposfiltcl         VIDEO_keyposfiltcl
+
+#define VD_setatrib             VIDEO_setatrib
+
+#define VD_restaura_param_cor	VIDEO_restaura_param_cor
+
+#define VD_tcursor		VIDEO_tcursor
+
+#define VD_MTTECLA              VIDEO_MTTECLA
+
+#define VD_NUCLEO_servidor_mspas VIDEO_NUCLEO_servidor_mspas
+
+#define VD_MENU_seleciona_esquerda      VIDEO_MENU_seleciona_esquerda
+
+#define VD_MENU_seleciona_direita       VIDEO_MENU_seleciona_direita
+
+#define VD_MENU_seleciona_anterior      VIDEO_MENU_seleciona_anterior
+
+#define VD_MENU_seleciona_posterior     VIDEO_MENU_seleciona_posterior
+
+#define VD_MENU_seleciona_primeira      VIDEO_MENU_seleciona_primeira
+
+#define VD_MENU_seleciona_ultima        VIDEO_MENU_seleciona_ultima
+
+#define VD_MENU_seleciona_aborta        VIDEO_MENU_seleciona_aborta
+
+#define VD_MENU_seleciona_opcao         VIDEO_MENU_seleciona_opcao
+
+#define VD_MENU_seleciona_mover         VIDEO_MENU_seleciona_mover
+
+#define VD_MENU_seleciona_atributos     VIDEO_MENU_seleciona_atributos
+
+#define VD_MENU_seleciona_pagpos        VIDEO_MENU_seleciona_pagpos
+
+#define VD_MENU_seleciona_pagant        VIDEO_MENU_seleciona_pagant
+
+#define VD_MENU_seleciona_inicio        VIDEO_MENU_seleciona_inicio
+
+#define VD_MENU_seleciona_fim           VIDEO_MENU_seleciona_fim
+
+#define VD_MENU_seleciona_col_anterior  VIDEO_MENU_seleciona_col_anterior
+
+#define VD_MENU_seleciona_col_posterior VIDEO_MENU_seleciona_col_posterior
+
+#define VD_MENU_pega_selecao            VIDEO_MENU_pega_selecao
+
+#define VD_mostra_opcoes                VIDEO_mostra_opcoes
+
+#define VD_movequadro                   VIDEO_movequadro
+
+/*****************************************************************************/
+
+#define VD_free_mem_dos                 VIDEO_free_mem_dos
+
+#define VD_alloc_mem_dos                VIDEO_alloc_mem_dos
+
+#define VD_alloc_mem_adm                VIDEO_alloc_mem_adm
+
+#define VD_free_adm                     VIDEO_free_adm
+
+#define VD_ADMEM_inicializa_alocador    VIDEO_ADMEM_inicializa_alocador
+
+#define VD_ADMEM_inicializa_controle    VIDEO_ADMEM_inicializa_controle
+
+#define VD_ADMEM_localiza               VIDEO_ADMEM_localiza
+
+#define VD_ADMEM_organiza               VIDEO_ADMEM_organiza
+
+#define VD_movbloco                     VIDEO_movbloco
+
+#define VD_copbloco                     VIDEO_copbloco
+
+/*****************************************************************************/
+
+#define VD_alloc_le_parametros          VIDEO_alloc_le_parametros
+
+#define VD_carga_parametros             VIDEO_carga_parametros
+

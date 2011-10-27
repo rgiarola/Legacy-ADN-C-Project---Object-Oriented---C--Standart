@@ -1,0 +1,13 @@
+#
+# Microsoft Quick C makefile for EMS_STAT ( small model )
+#
+.c.obj:
+     qcl /AS /c $*.c
+
+ems_stat.obj: ems_stat.c ems4c.h
+
+ems_err.obj: ems_err.c ems4c.h
+
+ems_stat.exe: ems_stat.obj ems_err.obj ems4c_s.lib
+     link/map ems_stat+ems_err,ems_stat,,ems4c_s.lib;
+

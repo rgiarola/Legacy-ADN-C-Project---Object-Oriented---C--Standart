@@ -1,0 +1,21 @@
+The code in POINTERS.C is intended as a 'fix' for limitations of Visual
+Basic in interfacing with C code DLL's.  Since Visual Basic doesn't support
+a pointer type or a method of getting the address of a function or variable.
+
+The function BPtr2Lng is just a method of getting an address (which VB has 
+but wont give to you) by just casting the address to a long and returning it.
+This function should be used whenever you would normally use the & operator
+in C.
+
+
+Visual Basic uses the Pascal String convention of preceeding the
+string with a count of the number of characters.  Even worse for our
+purposes is the way VB accesses a string.  The address of the string,
+that one would get if the string were referenced in a function without
+the ByVal modifier, is a pointer to an offset in the same segment.  This
+offset is the address of the length member of the string.  This is the reason
+for the 'finagling' represented by the BPtr2Str function.  The function 
+Bptr2Str transforms a VB string (not one derived by DIM String * x but by 
+default or by defining Str$ or Dim String) into a zero terminated C 
+string, i.e. a char[], and returns a far char * to it.
+

@@ -1,0 +1,22 @@
+#define VIDEO_FIM_ARQ           2
+#define VIDEO_INI_ARQ           0
+#define VIDEO_MEIO_ARQ          1
+#define VIDEO_cria(arquivo)                                                \
+              open(arquivo,O_TRUNC|O_CREAT|O_BINARY|O_RDWR,S_IREAD|S_IWRITE)
+#define VIDEO_open_ler(arquivo) _open(arquivo,O_BINARY|O_RDONLY)
+#define VIDEO_open_esc(arquivo) _open(arquivo,O_BINARY|O_WRONLY)
+#define VIDEO_open_add(arquivo) _open(arquivo,O_BINARY|O_APPEND|O_RDWR)
+#define VIDEO_open_io(arquivo)  _open(arquivo,O_BINARY|O_RDWR)
+#define VIDEO_read(desc,buffer,tam)     _read(desc,buffer,tam)
+#define VD_write                        VIDEO_write
+#define VIDEO_write(desc,buffer,tam)    _write(desc,buffer,tam)
+#define VIDEO_close(desc)               _close(desc)
+#define VIDEO_open                      open
+#define VIDEO_lseek                     lseek
+#define VIDEO_unlink                    unlink
+#define VIDEO_lockfile                  lock
+#define VIDEO_unlockfile                unlock
+#define VIDEO_filelength                filelength
+#define VIDEO_access                    access
+#define VIDEO_existe_arquivo(x)         VIDEO_access(x,W(0))
+

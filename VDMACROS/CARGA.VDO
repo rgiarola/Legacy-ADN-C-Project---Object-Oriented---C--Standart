@@ -1,0 +1,126 @@
+/***************************************************************************
+                     ESTRUTURAS DE CONTROLE DE CARGA
+****************************************************************************
+
+****************************************************************************
+            ESTRUTURAS DA TABELA DE ARQUIVOS E DODAS CARREGADOS
+***************************************************************************/
+
+typedef struct
+ {
+  char *nome,       /* nome do objeto*/
+       *reduzido,   /* nome reduzido do elemento*/
+       *buffer,     /* endereco do buffer associado ao objeto*/
+       *dodainic,   /* doda inicial*/
+       *dodafim;    /* doda final*/
+  BYTE numero,      /* numero do objeto referente a tabela do mesmo*/
+       postab;      /* posicao do objeto referente a tabela do mesmo*/
+  INT2 tamanho,     /* tamanho do buffer do objeto*/
+       tipo;        /* tipo do objeto*/
+ }IDE_TABREFERDODA;
+
+/****************************************************************************
+                        ESTRUTURAS DO CABECALHO DE CARGA
+***************************************************************************/
+typedef struct
+ {
+  INT2             numarq,    /* numero de arquivos*/
+                   numind,    /* numero de indices*/
+                   numchv,    /* numero de chaves*/
+                   numdoda,   /* numero de dodas*/
+                   numtab,    /* numero de itens na tabela*/
+                   tambuf,    /* tamanho do buffer de nomes  e dados estaticos*/
+                   offsetbuf; /* offset do buffer em relacaop ao*/
+                              /* arquivo de carga*/
+  IDE_ARQUIVOS     *arquivos; /* pointer da estrutura de arquivos*/
+  IDE_INDEX        *indices;  /* pointer da estrutura de indices*/
+  IDE_CHAVES       *chaves;   /* pointer da estrutura de chaves*/
+  IDE_DODA	   *dodas;    /* pointer da estrutura de dodas*/
+  IDE_TABREFERDODA *bufdodas; /* pointer da estrutura dos objetos carregados*/
+ }VIDEO_PARAMCRGARQ;
+
+/****************************************************************************
+             ESTRUTURAS DE REFERENCIA DOS BUFFER E ESTRUTURA DE DADOS
+***************************************************************************/
+typedef struct
+ {
+  char *referencia, /* item de referencia da tabela de objetos*/
+       **buffer;    /* pointer para a estrutura de dados*/
+ }IDE_TABREFERBUFFER;
+
+/****************************************************************************
+                          ESTRUTURAS DE REFERENCIA DE FUNCAO
+***************************************************************************/
+typedef struct
+ {
+  char *nomefunc;     /* nome da funcao*/
+  INT2 (*userfunc)(); /* endereco da funcao*/
+ }VIDEO_TABFUNCAO;
+
+/*
+typedef struct
+ {
+  INT2                     contimagemsai     ,
+                           contnucampossai   ,
+                           contcampossai     ,
+                           contconssai       ,
+                           contmenssai       ,
+                           contsegchavesai   ,
+                           contconsdbsai     ,
+                           contmenusai       ,
+                           contplanilhasai   ,
+                           conttranspdadossai,
+                           contmanutsai      ,
+                           contbuffersai     ;
+ VIDEO_NUCLEO_SERV         *nutelasai        ;
+ VIDEO_TELA_ENTRADA_DADOS  *telasai          ;
+ VIDEO_IMAGEMTELA          *imagemsai        ;
+ VIDEO_NUCLEO_SERV         *nucampossai      ;
+ VIDEO_CAMPO_TELA          *campossai        ;
+ VIDEO_CAMPO_CONSISTENCIA  *conssai          ;
+ VIDEO_MENSAGEM            *menssai          ;
+ VIDEO_SEG_CHAVE           *segchavesai      ;
+ VIDEO_CONSDB              *consdbsai        ;
+ VIDEO_INFO_MENU           *menusai          ;
+ VIDEO_PESQUISA_PLANILHA   *planilhasai      ;
+ VIDEO_TRANSP_DADOS        *transpdadossai   ;
+ VIDEO_ESTMANUT            *manutsai         ;
+ char                      *buffersai        ;
+}VIDEO_TABCRGTELA;
+*/
+
+typedef struct
+ {
+  INT2                     contimagemsai     ,
+                           contnucampossai   ,
+                           contcampossai     ,
+                           contconssai       ,
+                           contmenssai       ,
+                           contsegchavesai   ,
+                           contconsdbsai     ,
+                           contmenusai       ,
+                           contplanilhasai   ,
+                           conttranspdadossai,
+                           contmanutsai      ,
+			   contfaixasai      ,
+                           contbuffersai     ;
+ VIDEO_NUCLEO_SERV         *nutelasai        ;
+ VIDEO_TELA_ENTRADA_DADOS  *telasai          ;
+ VIDEO_IMAGEMTELA          *imagemsai        ;
+ VIDEO_NUCLEO_SERV         *nucampossai      ;
+ VIDEO_CAMPO_TELA          *campossai        ;
+ VIDEO_CAMPO_CONSISTENCIA  *conssai          ;
+ VIDEO_MENSAGEM            *menssai          ;
+ VIDEO_SEG_CHAVE           *segchavesai      ;
+ VIDEO_CONSDB              *consdbsai        ;
+ VIDEO_INFO_MENU           *menusai          ;
+ VIDEO_PESQUISA_PLANILHA   *planilhasai      ;
+ VIDEO_TRANSP_DADOS        *transpdadossai   ;
+ VIDEO_ESTMANUT            *manutsai         ;
+ VIDEO_CONS_FAIXA	   *faixasai	     ;
+ char                      *buffersai        ;
+ char                      *ptrdisp[10]      ;
+}VIDEO_TABCRGTELA;
+
+
+

@@ -1,0 +1,43 @@
+File VDCRGARQ.C
+void far *VIDEO_alloc_mem_dos(WORD tam)
+//void *VIDEO_super_alloc (unsigned Tamanho,INT2 Modo);
+ if ((VIDEO_bufparamarq = VIDEO_alloc_parametros(
+     VIDEO_mostra_mens_erro_alloc(ALOCACAO_1_CARGAARQ);
+     return(VIDEO_ERRO_carga_alloc_arq_crg);
+     if ((VIDEO_bufparamarq = VIDEO_alloc_parametros(
+         VIDEO_mostra_mens_erro_alloc(ALOCACAO_1_CARGAARQ);
+         return(VIDEO_ERRO_carga_alloc_arq_crg);
+ if ((VIDEO_bufparamarq = VIDEO_alloc_mem_dos(
+     VIDEO_mostra_mens_erro_alloc(ALOCACAO_1_CARGAARQ);
+     return(VIDEO_ERRO_carga_alloc_arq_crg);
+ if ((VIDEO_bufparamarq = VIDEO_super_alloc (
+     VIDEO_mostra_mens_erro_alloc(ALOCACAO_1_CARGAARQ);
+     return(VIDEO_ERRO_carga_alloc_arq_crg);
+     VIDEO_free_alloc_parametros(VIDEO_bufparamarq);
+     VIDEO_free_alloc_parametros(VIDEO_bufparamarq);
+          VIDEO_alloc_parametros(VIDEO_bufparamarq->numdoda*sizeof(IDE_DODA *))) == VD_NULO)
+     VIDEO_mostra_mens_erro_alloc(ALOCACAO_2_CARGAARQ);
+void *VIDEO_super_alloc (unsigned Tamanho,INT2 Modo)
+     if ((Alocador = xalloc (Tamanho, 1))==NULL)    // Tamanho X 1Linha
+         VIDEO_mostra_mens_erro_alloc(ALOCACAO_2_CARGAARQ);
+void *VIDEO_super_alloc (unsigned Tamanho,INT2 Modo)
+     printf ("\n Alloc");
+     if ((Alocador = emmAlloc(Tamanho))<=0)    // Tamanho
+         printf ("\n Erro Alloc"); getch();
+File VDCRGFCR.c
+void *VIDEO_super_alloc (unsigned Tamanho,INT2 Modo);
+     VIDEO_free_alloc_parametros(VIDEO_tabela_doda);
+     VIDEO_free_alloc_parametros(VIDEO_tabela_carga);
+           VIDEO_free_alloc_parametros(work->buffer);
+  para SuperAlloc
+     VIDEO_free_alloc_parametros(VIDEO_bufparamarq);
+ VIDEO_super_alloc (FALSE,FALSE);
+File VDCRGIDB.c
+                    if ((work->buffer = VIDEO_alloc_parametros(
+                        VIDEO_mostra_mens_erro_alloc(ALOCACAO_INICDODABUF);
+                                                          VIDEO_free_alloc_parametros(work->buffer);
+                        return(VIDEO_ERRO_carga_alloc_doda_buffer);
+                                                          VIDEO_free_alloc_parametros(work->buffer);
+File VDCRGIDE.c
+                 VIDEO_free_alloc_parametros(work->buffer);
+                 VIDEO_free_alloc_parametros(work->buffer);

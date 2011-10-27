@@ -1,0 +1,11 @@
+EXPANDED MEMORY MANAGEMENT FOR C
+(EMS4C10.ZIP), July 93, Ver 1.0, <ASP>.
+The EMS4C library implements version 3.2 of
+the LIM (Lotus-Intel-Microsoft) specification
+for expanded memory. It runs with version 3.2
+and 4.0 of the LIM specification. Included
+with the EMS4C library is the EMM4C library
+which allows C programmers to allocate and
+free EMS memory similiar to malloc() and
+free(). By MarshallSoft Computing, Inc. $35.
+

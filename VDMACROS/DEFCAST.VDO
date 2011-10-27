@@ -1,0 +1,217 @@
+#ifndef TRUE
+#define TRUE                     W(1)
+#endif
+
+#ifndef FALSE
+#define FALSE                    W(0)
+#endif
+
+#define C(x)                  ((char                )(x)) /* CAST CHAR*/
+#define B(x)                  ((BYTE                )(x)) /* CAST BYTE*/
+#define I(x)                  ((INT2                )(x)) /* CAST INT*/
+#define UI(x)                 ((unsigned INT2       )(x)) /* CAST UNS INT*/
+#define W(x)                  ((WORD                )(x)) /* CAST WORD*/
+#define L(x)                  ((long int            )(x)) /* CAST LONG*/
+#define UL(x)                 ((unsigned long int   )(x)) /* CAST UNS LONG*/
+#define DW(x)                 ((DWORD               )(x)) /* CAST DWORD*/
+#define F(x)                  ((float               )(x)) /* CAST FLOAT*/
+#define UF(x)                 ((unsigned float      )(x)) /* CAST UNS FLOAT*/
+#define D(x)                  ((double              )(x)) /* CAST DOUBLE*/
+#define UD(x)                 ((unsigned double     )(x)) /* CAST UN DOUBLE*/
+#define LD(x)                 ((long double         )(x)) /* CAST LN DOUBLE*/
+#define ULD(x)                ((unsigned long double)(x)) /* CAST ULN DOUBLE*/
+#define PTR_CAST(x,y)         ((x *) (y))
+#define CAST_BYTE(x)          PTR_CAST(BYTE,x)
+#define CAST_BOOLEAN(x)       PTR_CAST(BOOLEAN,x)
+#define CAST_CHAR(x)          PTR_CAST(char,x)
+#define CAST_INT(x)           PTR_CAST(INT2,x)
+#define CAST_WORD(x)          PTR_CAST(WORD,x)
+#define CAST_LONG(x)          PTR_CAST(long int,x)
+#define CAST_DWORD(x)         PTR_CAST(DWORD,x)
+#define CAST_DOUBLE(x)        PTR_CAST(double,x)
+#define CAST_LDOUBLE(x)       PTR_CAST(long double,x)
+#define PTR_TIPO(x,y)         ((x) *PTR_CAST(x,y))
+#define CBYTE(x)              PTR_TIPO(BYTE,x)
+#define CBOOLEAN(x)           PTR_TIPO(BOOLEAN,x)
+#define CCHAR(x)              PTR_TIPO(char,x)
+#define CINT(x)               PTR_TIPO(INT2,x)
+#define CWORD(x)              PTR_TIPO(WORD,x)
+#define CLONG(x)              PTR_TIPO(long int,x)
+#define CDWORD(x)             PTR_TIPO(DWORD,x)
+#define CFLOAT(x)             PTR_TIPO(float,x)
+#define CDOUBLE(x)            PTR_TIPO(double,x)
+#define CLDOUBLE(x)           PTR_TIPO(long double,x)
+#define CDATET(x)             PTR_TIPO(DATET,x)
+
+/* Acessa o Conteudo de Um Buffer DODA.*/
+#define VD_GETBUF(doda_nome,tipo) (PTR_TIPO(tipo,CTREE_getbuf(doda_nome)))
+#define VD_GETEND(doda_nome,tipo) (PTR_CAST(tipo,CTREE_getbuf(doda_nome)))
+
+
+
+#define VIDEO_NILL(x)         PTR_CAST(x,VIDEO_NULO)
+#define VIDEO_ISDIGIT(x)      (((x) >= '0') && ((x) <= '9'))
+#define VIDEO_ISCARACTER(x)   ((((x) >= 'A') && ((x) <= 'Z')) || \
+			       (((x) >= 'a') && ((x) <= 'z')))
+#define VIDEO_ISCARACMAI(x)   (((x) >= 'A') && ((x) <= 'Z'))
+#define VIDEO_ISCARACMIN(x)   (((x) >= 'a') && ((x) <= 'z'))
+#define VIDEO_ISSPACE(x)      ((x) == C(' '))
+#define VIDEO_ISLIMCAR(x)     (((x) >= 32) && ((x) <= 126))
+
+#define VIDEO_FP_OFF_PTR(x)   FP_OFF(x)
+#define VIDEO_FP_SEG_PTR(x)   FP_SEG(x)
+#define VIDEO_FP_OFF(x)       FP_OFF(x)
+#define VIDEO_MK_FP(seg,off)  MK_FP(seg,off)
+#define VIDEO_NULO            NULL
+#define VIDEO_RESTO(x,y)      (I(x)%I(y))
+
+#define VIDEO_MTTECLA(ascii,scan) W(W(ascii)|W(W(scan)<<8))
+
+#if defined(__COMPACT__) || defined(__LARGE__) || defined(__HUGE__)
+    #define  VIDEO_alloc_parametros      farmalloc //  VIDEO_rastreador_farmalloc                         /
+    #define  VIDEO_free_alloc_parametros farfree   //  VIDEO_rastreador_farfree
+    #define  VIDEO_FP_SEG(x)      FP_SEG(x)
+    #define  VIDEO_alloc          farmalloc // VIDEO_rastreador_farmalloc
+    #define  VIDEO_free           farfree   // VIDEO_rastreador_farfree
+    #define  VIDEO_freemem        farcoreleft
+    #define  VIDEO_ALLOC_MEM(buffer,tam) (buffer=VIDEO_alloc(tam))
+    #define  VIDEO_FREE_ALLOC_MEM(buffer) (VIDEO_free(buffer))
+#else
+    #define  VIDEO_alloc_parametros      malloc
+    #define  VIDEO_free_alloc_parametros free
+    #define  VIDEO_FP_SEG(x)      _DS
+    #define  VIDEO_alloc          malloc
+    #define  VIDEO_free           free
+    #define  VIDEO_freemem        coroleft
+    #define  VIDEO_ALLOC_MEM(buffer,tam) (buffer=VIDEO_alloc(tam))
+    #define  VIDEO_FREE_ALLOC_MEM(buffer) (VIDEO_free(buffer))
+#endif
+
+#define VIDEO_movbloco(dest,font,tam)     memcpy(dest,font,tam)
+#define VIDEO_copbloco(dest,font,tam)     memmove(dest,font,tam)
+#define VIDEO_setmem(dest,tam,car)        memset(dest,car,tam)
+
+#ifdef MS_C
+#define farmalloc  _fmalloc
+#define farfree    _ffree
+#define VD_time    dostime_t
+#define VD_gettime _dos_gettime
+#define VD_settime _dos_settime
+#define VD_timeHor(x) x.hour
+#define VD_timeMin(x) x.minute
+#define VD_timeSeg(x) x.second
+#define VD_timeHsc(x) x.hsecond
+
+#define VD_date    dosdate_t
+#define VD_getdate _dos_getdate
+#define VD_setdate _dos_setdate
+#define VD_dateDay(x) x.day
+#define VD_dateMon(x) x.month
+#define VD_dateYea(x) x.year
+
+#define VD_ffblk	     find_t
+#define VD_findfirst(a,b,c)  dos_findfirst(a,b,c)
+#define VD_findnext	     dos_findnext
+#define ff_reserved(x)	     x.reserved
+#define ff_attrib(x)	     x.attrib
+#define ff_ftime(x)	     x.wr_time
+#define ff_fdate(x)	     x.wr_date
+#define ff_fsize(x)	     x.size
+#define ff_name(x)	     x.name
+#else
+#ifdef LINK_MC
+       #define farmalloc  _fmalloc
+       #define farfree    _ffree
+       #define VD_time    dostime_t
+       #define VD_gettime _dos_gettime
+       #define VD_settime _dos_settime
+       #define VD_timeHor(x) x.hour
+       #define VD_timeMin(x) x.minute
+       #define VD_timeSeg(x) x.second
+       #define VD_timeHsc(x) x.hsecond
+
+       #define VD_date    dosdate_t
+       #define VD_getdate _dos_getdate
+       #define VD_setdate _dos_setdate
+       #define VD_dateDay(x) x.day
+       #define VD_dateMon(x) x.month
+       #define VD_dateYea(x) x.year
+
+       #define VD_dateDia(x) x.day
+       #define VD_dateMes(x) x.month
+       #define VD_dateAno(x) x.year
+
+
+       #define VD_ffblk 	    find_t
+       #define VD_findfirst(a,b,c)  dos_findfirst(a,b,c)
+       #define VD_findnext	    dos_findnext
+       #define ff_reserved(x)	    x.reserved
+       #define ff_attrib(x)	    x.attrib
+       #define ff_ftime(x)	    x.wr_time
+       #define ff_fdate(x)	    x.wr_date
+       #define ff_fsize(x)	    x.size
+       #define ff_name(x)	    x.name
+
+       void far  *_Cdecl _fmalloc (unsigned long __nbytes);
+       void _Cdecl farfree  (void far *__block);
+#else
+       #define VD_time       struct time
+       #define VD_gettime    gettime
+       #define VD_settime    settime
+       #define VD_timeMin(x) x.ti_min
+       #define VD_timeHor(x) x.ti_hour
+       #define VD_timeHsc(x) x.ti_hund
+       #define VD_timeSeg(x) x.ti_sec
+
+       #define VD_date       struct date
+       #define VD_getdate    getdate
+       #define VD_setdate    setdate
+       #define VD_dateDay(x) x.da_day
+       #define VD_dateMon(x) x.da_mon
+       #define VD_dateYea(x) x.da_year
+
+       #define VD_dateDia(x) x.da_day
+       #define VD_dateMes(x) x.da_mon
+       #define VD_dateAno(x) x.da_year
+
+       #define VD_ffblk             ffblk
+       #define VD_findfirst(a,b,c)  findfirst(a,b,c)
+       #define VD_findnext	    findnext
+       #define ff_reserved(x)	    x.ff_reserved
+       #define ff_attrib(x)	    x.ff_attrib
+       #define ff_ftime(x)	    x.ff_ftime
+       #define ff_fdate(x)	    x.ff_fdate
+       #define ff_fsize(x)	    x.ff_fsize
+       #define ff_name(x)	    x.ff_name
+#endif
+#endif
+
+#define VIDEO_CALC_DIGITACAO     B00
+#define VIDEO_CALC_RESSET_DISP   B01
+#define VIDEO_CALC_REDISPLAY     B02
+#define VIDEO_CALC_OPERACAO      B03
+#define VIDEO_CALC_OPEREFET      B04
+#define VIDEO_CALC_NUMERO        B05
+#define VIDEO_CALC_ERRO          B06
+#define VIDEO_CALC_MEMORIA       B07
+#define VIDEO_CALC_ATIVA         B08
+
+#define VIDEO_CALC_SOMA          B(1)
+#define VIDEO_CALC_SUBTRACAO     B(2)
+#define VIDEO_CALC_DIVISAO       B(3)
+#define VIDEO_CALC_MULTIPLICACAO B(4)
+#define VIDEO_CALC_RAIZ          B(5)
+#define VIDEO_CALC_QUADRADO      B(6)
+#define VIDEO_CALC_EXPONECIAL    B(7)
+#define VIDEO_CALC_INVERSAO      B(8)
+#define VIDEO_CALC_PERCENTUAL    B(9)
+
+#define VIDEO_IMPRESSORA_PADRAO  W(4)
+#define VIDEO_ERRO_IMPRESSORA    W(B08)
+#define VIDEO_IMPRESSORA_OK      W(B12)
+#define VIDEO_pausa()            {BYTE LOCAL_ascii,LOCAL_scan;VD_getkbd(&LOCAL_ascii,&LOCAL_scan);}
+#define VIDEO_mem()              {BYTE LOCAL_ascii = 0,LOCAL_scan = 104;VIDEO_display_mem_disp(&LOCAL_ascii,&LOCAL_scan,TRUE);}
+#define VD_mem()                 {BYTE LOCAL_ascii = 0,LOCAL_scan = 104;VIDEO_display_mem_disp(&LOCAL_ascii,&LOCAL_scan,TRUE);}
+#define VIDEO_ACESSO_PROCESSO    1
+#define VIDEO_ACESSO_USUARIO     3
+

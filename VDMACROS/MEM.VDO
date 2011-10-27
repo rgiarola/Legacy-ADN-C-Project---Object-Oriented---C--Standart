@@ -1,0 +1,86 @@
+b/*==========================================================================*/
+
+typedef struct
+ {
+  char VIDEO_conec_se_dupla[2],
+       VIDEO_conec_sd_dupla[2],
+       VIDEO_conec_ie_dupla[2],
+       VIDEO_conec_id_dupla[2],
+       VIDEO_conec_se_simples[2],
+       VIDEO_conec_sd_simples[2],
+       VIDEO_conec_ie_simples[2],
+       VIDEO_conec_id_simples[2],
+       VIDEO_conec_se_carac[2],
+       VIDEO_conec_sd_carac[2],
+       VIDEO_conec_ie_carac[2],
+       VIDEO_conec_id_carac[2],
+       VIDEO_conec_col_dupla,
+       VIDEO_conec_col_simples,
+       VIDEO_conec_col_carac,
+       VIDEO_conec_lin_dupla,
+       VIDEO_conec_lin_simples,
+       VIDEO_conec_lin_carac;
+ }VIDEO_BOX_PARAMETROS;
+
+/*==========================================================================*/
+
+typedef struct
+ {
+  INT2    VIDEO_maxcol,
+         VIDEO_maxlin,
+         VIDEO_minlin,
+         VIDEO_mincol;
+ }VIDEO_DIM_TELA_PARAMETROS;
+
+/*==========================================================================*/
+
+typedef struct
+ {
+  VD_VOID **endvar,
+          *end;
+  WORD    tam;
+ }VIDEO_ADMEM_DESCRITOR;
+
+/*==========================================================================*/
+
+typedef struct
+ {
+  WORD      VIDEO_ADMEM_num_tab,
+            VIDEO_ADMEM_ct_stack,
+            VIDEO_ADMEM_livre,
+            VIDEO_ADMEM_tam_area,
+            VIDEO_ADMEM_num_descmem;
+
+  char      *VIDEO_ADMEM_area_buffer,
+            *VIDEO_ADMEM_topo,
+            *VIDEO_ADMEM_base;
+  VD_VOID   **VIDEO_ADMEM_ultimo;
+
+  VIDEO_ADMEM_DESCRITOR  *VIDEO_ADMEM_area_mem;
+ }VIDEO_ADMEM_PARAMETROS;
+
+/*==========================================================================*/
+
+typedef struct
+ {
+  INT2 VIDEO_num_desc_win;
+  BYTE *VIDEO_pilha_desc_disp_win,
+       *VIDEO_pilha_desc_disp_win_fim,
+       VIDEO_pilha_descritor_usado_win_buffer[200],
+       *VIDEO_pilha_descritor_usado_win,
+       VIDEO_pilha_desc_disp_win_buffer[200];
+  VIDEO_ESTWIN VIDEO_pilha_win[200];
+ }VIDEO_ADM_WINDOW_PARAMETROS;
+
+/*==========================================================================*/
+
+typedef struct
+ {
+  INT2 VIDEO_filtro_ent_tcl,
+      *VIDEO_filtro_buffertcl,
+      *VIDEO_filtro_tclbufini,
+      *VIDEO_filtro_tclbuffin,
+      *VIDEO_filtro_tabskiptcl;
+ }VIDEO_TCL_FILTRO_PARAMETROS;
+
+

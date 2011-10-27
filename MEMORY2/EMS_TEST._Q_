@@ -1,0 +1,13 @@
+#
+# Microsoft Quick C makefile for EMS_TEST ( small model )
+#
+.c.obj:
+     qcl /AS /c $*.c
+
+ems_test.obj: ems_test.c ems4c.h
+
+ems_err.obj: ems_err.c ems4c.h
+
+ems_test.exe: ems_test.obj ems_err.obj ems4c_s.lib
+     link/map ems_test+ems_err,ems_test,,ems4c_s.lib;
+

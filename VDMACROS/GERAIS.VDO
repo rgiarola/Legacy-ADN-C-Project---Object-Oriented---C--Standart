@@ -1,0 +1,71 @@
+/*==========================================================================
+            DEFINICOES DOS TIPOS DE DADOS USADOS NA BLIBLIOTECA
+==========================================================================*/
+
+
+typedef struct
+ {
+  INT2     (*funcao)();
+ }VIDEO_FUNCAO;                       /* tipo de dado funcao*/
+
+/*==========================================================================
+           EXTRUTURA DE CONTROLE DAS FUNCOES DE MANIPULACAO DE TELA
+==========================================================================*/
+typedef struct
+ {
+  INT2    coli,     /* coluna inicial*/
+          colf,     /* coluna final*/
+          lini,     /* linha inicial*/
+          linf;     /* linha final*/
+  VD_VOID *buffer;  /* buffer da janela*/
+ }VIDEO_ESTWIN;
+
+/*===========================================================================
+            ESTRUTURA DE PARAMETROS DE EDICAO DE CAMPO (parcampo)
+===========================================================================*/
+typedef struct
+ {
+  INT2     (*pegacaracter)(),    /* FUNCAO DE LEITURA DE TECLADO           */
+           col,                  /* COLUNA INICIAL DE EDICAO DO CAMPO      */
+           lin,                  /* LINHA INICIAL DE EDICAO DO CAMPO       */
+           tamanho,              /* TAMANHO DO CAMPO                       */
+           tipo,                 /* TIPO DO CAMPO                          */
+           decimais;             /* NUMERO DE DECIMAIS PARA CAMPO NUMERICOM*/
+  WORD	   autos,		 /* AUTOS PARA TRATAMENTO DE CAMPO	   */
+           *tabskip; /* TABELA DE TECLAS DE FINALIZA€AO DE CAMPO AUTOSKIP  */
+  char     *mascara,             /* MASCARA DE EDICAO                      */
+           *buffer;              /* BUFFER DE RETORNO DA LINHA EDITADA     */
+  BYTE     cor;      /*  COR DA LINHA DE EDICAO TODOS OS ATRIBUTOS DE VIDEO*/
+ }VIDEO_EDITA_CAMPO;
+
+/*=========================================================================*/
+
+typedef struct
+ {
+  INT2  col,
+        lin;
+  BYTE  cor;
+  char	*mensagem;
+ }VIDEO_MENSAGEM;
+
+/*=========================================================================*/
+typedef struct
+ {
+  int maximo,
+      minimo,
+      inc   ,
+      tempo1,
+      tempo2,
+      vezes ,
+      loop  ;
+ }ALARME_TIPO;
+
+#define VIDEO_DISPARA_ALARME(x) (x >= 1 && x <= 7) ? VIDEO_alarme_sonoro(VIDEO_tabela_alarme[(x-1)].maximo,  \
+                                                                         VIDEO_tabela_alarme[(x-1)].minimo,  \
+                                                                         VIDEO_tabela_alarme[(x-1)].inc   ,  \
+                                                                         VIDEO_tabela_alarme[(x-1)].tempo1,  \
+                                                                         VIDEO_tabela_alarme[(x-1)].tempo2,  \
+                                                                         VIDEO_tabela_alarme[(x-1)].vezes ,  \
+                                                                         VIDEO_tabela_alarme[(x-1)].loop  )  \
+                                                   :  VIDEO_freq();
+

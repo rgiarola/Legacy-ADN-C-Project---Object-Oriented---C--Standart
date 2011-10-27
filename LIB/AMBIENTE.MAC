@@ -1,0 +1,32 @@
+DRIVE=\APP
+DRIVETC=C:
+LIB=\APP\ADN2\LIB
+TCDIR=\APP\BC45\BIN
+TCCOMP=1
+COMP=BCC
+DIRCOMP=BC
+INCLUDE=..\VDMACROS
+MODELO=-mh -H
+#-2 -ff -f287 -k- -RT- -Z -G
+
+COMPHT =$(TCDIR)\$(COMP)  -Y -Yo $(MODELO) -d -N-       -c -I$(INCLUDE) -D__VIDEO_HH
+COMPHH =$(TCDIR)\$(COMP)  -Y -Yo $(MODELO) -d -N- -Os   -c -I$(INCLUDE) -D__VIDEO_HH
+COMP_HH=$(TCDIR)\$(COMP)  -Y -Yo $(MODELO) -d -N- -Os   -c -I$(INCLUDE) -D__VIDEO_HH
+
+COMP_OV=$(TCDIR)\$(COMP)  -Y -Yo $(MODELO) -d -N- -Os   -c -I$(INCLUDE) -D__VIDEO_HH
+COMP_NO=$(TCDIR)\$(COMP)  -Y -Yo $(MODELO) -d -N- -Os   -c -I$(INCLUDE) -D__VIDEO_HH
+#acima acrescentado Controle Overlay
+
+COMP_PHH=$(TCDIR)\$(COMP) -Y -Yo $(MODELO) -d -N- -Os   -c -I$(INCLUDE) -D__VIDEO_PHH
+
+
+GERLIB= $(TCDIR)\tlib
+
+
+# Microsoft
+# !if $d(MCCOMP)
+# COMP_C=$(DRIVETC)\MC\B
+# COMP_HH=$(COMP_C)\CL /AL /Zp /I\ADN2\VDMACROS /I\MC\I /I\MC\I\S /I\CTREE /I\CTREE\TC /I\RTREE /c /D__VIDEO_HH
+# GERLIB=lib
+# !endif
+

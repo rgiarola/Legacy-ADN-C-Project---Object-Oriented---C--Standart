@@ -1,0 +1,1141 @@
+
+
+                                   EMM Library
+
+
+                                For the C Language
+
+
+                                      (EMM4C)
+
+
+
+                                 USERS MANUAL
+
+
+
+
+
+                                  Version 1.0
+
+                                 July 24, 1993
+
+
+
+
+                        This software is provided as-is.
+                 There are no warranties, expressed or implied.
+
+
+
+
+                              Copyright (C) 1993
+                              All rights reserved
+
+
+
+                              MarshallSoft Computing, Inc.
+                              Post Office Box 4543
+                              Huntsville AL 35815
+
+                              205-881-4630 Voice / FAX
+                              205-880-9748 Support BBS
+
+
+
+                                       _______
+                                  ____|__     |                (R)
+                               --|       |    |-------------------
+                                 |   ____|__  |  Association of
+                                 |  |       |_|  Shareware
+                                 |__|   o   |    Professionals
+                               -----|   |   |---------------------
+                                    |___|___|    MEMBER
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 1
+                              C O N T E N T S
+
+
+
+
+
+         Chapter                                                   Page
+
+         1.0 Introduction..............................................3
+             1.1 Distribution Files....................................3
+             1.2 Compiling the Library.................................4
+             1.3 User Support..........................................4
+             1.4 ASP Ombudsman.........................................4
+             1.5 Installation..........................................5
+         2.0 The EMM4C Library.........................................6
+         3.0 EMM4C Library Functions...................................7
+             3.1 emmInit...............................................7
+             3.2 emmDone...............................................8
+             3.3 emmPages..............................................9
+             3.4 emmAlloc.............................................10
+             3.5 emmFree..............................................11
+             3.6 emmLock..............................................12
+             3.7 emmUnlock............................................13
+             3.8 emmError.............................................14
+         4.0 EMM4C Error Codes........................................15
+         5.0 The EMM4C Test Driver....................................16
+         6.0 Legal Issues.............................................17
+             6.1 Registration.........................................17
+             6.2 License..............................................17
+             6.3 Warranty.............................................17
+         7.0 Revision History.........................................18
+         8.0 Other MarshallSoft Computing Products for C..............18
+             8.1 The Personal Communications Library for C............18
+             8.2 The Personal Protocol Library for C..................19
+             8.3 The LZW Data Compression Library for C...............19
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 2
+         1.0 Introduction
+
+
+         The  EMM4C  library  is  an expanded memory manager which allows C
+         programmers to allocate and free EMS (expanded) memory similiar to
+         malloc() and free() in the standard C runtime library. It requires
+         the use of the EMS4C library,  also  distributed  by  MarshallSoft
+         Computing.   Both  EMM4C  and  EMS4C  require  that your system be
+         configured with expanded (EMS) memory.
+
+         The  source  code  for the EMM4C library is provided in "shrouded"
+         form for shareware distribution. It is distributed  in  this  form
+         rather   than   as   a   library   (.LIB)   file  because  of  the
+         inconsistancies  between  object  files  generated  by   different
+         compilers.  To support several compilers would require a .LIB file
+         for each compiler manufacturer, and sometimes several versions  of
+         the  .LIB  file  are needed for the different versions of the same
+         manufacturers compiler! This problem doesn't occur with  assembler
+         libraries,  which  is  why  EMS4C.LIB  can  be  used  with  all  C
+         compilers.
+
+         You  can  compile this code, but you will have to register with us
+         in order to get the normal (commented) C source code  with  normal
+         variable names.
+
+         1.1 Distribution Files
+
+         EMM4C.H      : EMM4C prototype file.
+         EMM4C.C      : SHROUDED source for the EMM4C library.
+         EMM_TEST.C   : Source for the EMM4C test driver.
+         EMM_TEST._T_ : Borland C & Turbo C makefile for EMM_TEST.
+         EMM_TEST._M_ : Microsoft C makefile for EMM_TEST.
+         EMM_TEST._Q_ : Microsoft Quick C makefile for EMM_TEST.
+         X_EMM_T.BAT  : Batch file to make EMM_TEST with MIX Power C.
+         EMM4C.DOC    : Documentation file.
+
+         Registered users also receive:
+
+         EMM4C.C      : (Unshrouded) source code for the EMM4C library.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 3
+         1.2 Compiling the Library
+
+
+         The  EMM4C  library  is provide in "shrouded" form as discussed in
+         the introduction. However, it can still be compiled like any  other
+         source  file.  In  particular, it is compiled by the makefiles for
+         the test driver program EMM_TEST.C
+
+         Registered  users can compile the unshrouded  version  of  EMM4C.C
+         instead.
+
+
+         1.3 User Support
+
+
+         We  want you to be successful in developing your application using
+         our libraries! We depend on our customers to let us know what they
+         need in a library.  This means we are committed to  providing  the
+         best  libraries  that  we  can.   If  you  have any suggestions or
+         comments, please write to us or give us a call.
+
+         If  you  are having a problem using EMS4C or any of our libraries,
+         call (205) 881-4630 between 5 PM  and  9  PM  CST  Monday  through
+         Friday.  You can call at other times and leave a message, and call
+         back  later during our regular business hours for a reply. You can
+         also FAX us at this same number at any time.
+
+         You  may  also  call our 24 hour BBS (2400 baud, no parity, 8 data
+         bits, 1 stop bit) at any time.  The BBS will  contain  the  latest
+         shareware version of EMS4C, messages, and other related files. All
+         files  are  in standard ZIP format. You can leave a message on the
+         BBS, and we will usually have a reply  ready  for  you  within  24
+         hours.   The dedicated telephone number is 205-880-9748.  Set your
+         modem for 1200 to 9600 baud, 8 data bits, no parity, one stop bit.
+
+         The  MarshallSoft  Computing,  Inc.   newsletter  "Comm  Talk"  is
+         published quarterly.  It discusses various communications problems
+         and  solutions using PCL4C (the communications library) as well as
+         related information such as data compression  issues.   Registered
+         users  receive  a  one  year complimentary subscription when first
+         registering and for each update purchased.   Additional  one  year
+         subscriptions  are  $15  plus $5 for overseas postage (postpaid in
+         US).
+
+
+         1.4 ASP Ombudsman
+
+
+         MarshallSoft  Computing,  Inc.  is  a member of the Association of
+         Shareware Professionals (ASP).  ASP wants to make  sure  that  the
+         shareware principle works for you.  If you are unable to resolve a
+         shareware-related  problem  with  an  ASP member by contacting the
+         member directly, ASP may be able to help. The  ASP  Ombudsman  can
+         help you resolve a dispute or problem with an ASP member, but does
+         not provide technical support for members' products.  Please write
+         to  the  ASP  Ombudsman  at  545  Grover  Road,  Muskegon,  MI USA
+         49442-9427, Fax 616-788-2765, or send  a  CompuServe  message  via
+         CompuServe Mail to ASP Ombudsman 70007,3536.
+
+        EMM4C Users Manual                                     Page 4
+         1.5 Installation
+
+
+         (1)  Microsoft C, Borland & Turbo C, and MIX Power C compilers are
+         supported. However, the code should work with most any C compiler.
+         Before installation of EMM4C, your C compiler  should  already  be
+         installed  on your system and tested. If you are not familiar with
+         makefiles, refer to your compiler manual. If  you  are  using  the
+         interactive environment for Quick C or Turbo C, be sure to compile
+         with the memory model corresponding to the EMS4C library used.
+
+         (2) Make a backup  copy  of  your  distribution  disk.   Put  your
+         original distribution disk in a safe place.
+
+         (3)  Create  a  work  directory  on  your work disk (normally your
+         harddisk). For example, to create a work directory named EMM4C, we
+         first log onto the work disk and then type:
+
+                               MKDIR EMM4C
+
+         (4)  Copy  all the files from your backup copy of the distribution
+         disk to your work directory.  For example, to  copy  from  the  A:
+         drive to your work directory, we type:
+
+                              CD EMM4C
+                              COPY A:*.*
+
+         (5)   Compile the test driver  EMM_TEST.C  and  link  with  the
+         appropriate EMS4C library. For example, to make EMM_TEST.EXE:
+
+             a) Borland Turbo C: Type
+
+                   MAKE -FEMM_TEST._T_
+
+             b) Microsoft C: Type
+
+                   MAKE EMM_TEST._M_
+
+             c) Quick C: Type
+
+                   MAKE EMM_TEST._Q_
+
+             d) MIX Power C: Type
+
+                   X_TEST_S
+
+         You will need the EMS4C library and header file EMS4C.H  from  the
+         EMS4C distribution disk in order to compile EMM4C.C.  You may want
+         to install the EMM4C and EMS4C files in the same directory  rather
+         than separate directories. Refer to EMS4C.DOC for more information
+         on the EMS4C library.
+
+
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 5
+         2.0 The EMM4C Library
+
+
+         The  EMM4C library is built using EMS4C and is designed to be used
+         like the standard C runtime library functions malloc() and free().
+         The only difference is that emmAlloc() returns an  integer  handle
+         that  is  used by emmLock() in order to map the necessary pages to
+         the page frames, and compute an address.
+
+         Since a maximum of 64KB can be mapped at any one time,  regardless
+         of  the  amount  of  EMS  memory  allocated, not all allocated EMS
+         blocks can be locked at any one time. For  example,  if  you  have
+         allocated  four 20MB blocks with emmAlloc(), then you can lock any
+         three at any one time (since 3*20=60 < 64) but not  all  4  (since
+         4*20=80  >  64).   You  determine  which  blocks to map by calling
+         emmLock().
+
+         A brief summary of functions are as follows:
+
+         emmInit   --  Initializes EMM4C module.
+         emmDone   --  Terminates EMM4C module.
+         emmPages  --  Returns EMS allocation statistics.
+         emmAlloc  --  Allocates one or more paragraphs.
+         emmFree   --  Frees  previously allocated EMS memory.
+         emmLock   --  Locks an allocated EMS page(s)
+         emmUnlock --  Unlocks a previous locked EMS page(s).
+         emmError  --  Displays error text.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 6
+         3.0 EMM4C Library Functions
+
+
+                             3.1 emmInit
+
+
+        Function:    Initializes EMM module.
+
+          Syntax:    int emmInit(Pages,Handles)
+                     int Pages;     /* # EMS pages to use */
+                     int Handles;   /* # handles to use */
+
+         Remarks:    The emsInit() function initialized the EMM module. Two
+                     initialization parameters are specified.
+
+                     <Pages>  is  the  number  of EMS pages which EMM is to
+                     manage. This must be less or equal to the total number
+                     of EMS pages available. Do not specify more EMS  pages
+                     than  necessary  as  other  programs  such as drivers,
+                     TSRs, etc. may wish to use EMS memory also.
+
+                     <Handles> is the maximum number of EMS blocks  can  be
+                     allocated  at  any  one  time.  That is, the number of
+                     emmAlloc() calls minus the number of emmFree()  calls.
+                     Again,   don't   specify   more   than   needed  since
+                     conventional memory is used for each handle.
+
+         Returns:    NO_ERROR: No error.
+                     ALREADY_INIT: EMM already initialized.
+                     MALLOC_FAILS: malloc() fails.
+                     BAD_HANDLE: Value of Handle out of range
+                     BAD_PAGE: Value of Page out of range.
+
+         Example:    /* initialize */
+                     int Pages = 10;
+                     int Handles = 25;
+                     ...
+                     if((Code=emmInit(Pages,Handles))<0) emmError(Code);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 7
+                             3.2 emmDone
+
+
+        Function:    Terminates the EMM4C module.
+
+          Syntax:    int emmDone()
+
+         Remarks:    The emmDone() function frees all allocated EMS  pages.
+                     This  function  should  be  called before exiting from
+                     your application or else those EMS pages allocated  by
+                     the  EMM4C  module  are  lost  for  use  by subsequent
+                     programs.
+
+                     If   you   forget   to  call  emmDone()   before  your
+                     application exits, you will have to reboot your system
+                     to regain the EMS pages which were allocated  but  not
+                     freed.
+
+
+         Returns:    NO_ERROR: No error.
+
+         Example:    /* all done */
+                     emmDone();
+                     exit(0);
+
+        See Also:    emmInit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 8
+                             3.3 emmPages
+
+
+        Function:    Returns EMS allocation statistics..
+
+          Syntax:    int emmPages(PagesPtr,ParaPtr)
+                     int *PagesPtr;  /* pointer to # completely free pages */
+                     int *ParaPtr;   /* pointer to # free paragraphs */
+
+         Remarks:     The emmPages function is designed to provide page and
+                     paragraph  allocation  statistics  to the caller.  The
+                     1st argument is used to return  the  number  of  pages
+                     which  were  set aside by emmInit() that have not been
+                     allocated in whole  or  part  by  emmAlloc.   The  2nd
+                     argument  is  used  to  return  the  total  number  of
+                     paragraphs  (16  byte  blocks)  anywhere   among   the
+                     allocated  pages.   There  is  no  statement as to the
+                     contiguousness of the paragraphs.
+
+         Returns:    NO_ERROR: No error.
+                     NOT_INIT: EMM not initialized.
+
+         Example:    int Code;
+                     unsigned int Pages;
+                     unsigned int Paras;
+                     ...
+                     /* get allocation statistics */
+                     Code = emmPages(&Pages,&Paras);
+                     if(Code==0)
+                       {printf("%u pages allocated\n",Pages);
+                        printf("%u paragraphs allocated\n",Paras);
+                       }
+                     else emmError(Code);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 9
+                             3.4 emmAlloc
+
+
+        Function:    Allocates one or more paragraphs.
+
+          Syntax:    int emmAlloc(Size)
+                     unsigned int Size;  /* size in bytes */
+
+         Remarks:     The emmAlloc() function allocates paragraphs (16 byte
+                     blocks) from the pool of pages  (1024  paragraphs  per
+                     page) specified in the emmInit() function call.
+
+                     An integer refered to as a "handle" is returned, which
+                     is  used in subsequent call to emmLock(), emmUnlock(),
+                     and emmFree(). In particular, the handle must be  used
+                     in   calling  emmLock  to  obtain  a  pointer  to  the
+                     paragraphs allocated by emmAlloc().
+
+                     If  a  series  of  emmAlloc()  and emmFree() calls are
+                     made, then EMS memory may become fragmented. That  is,
+                     the  available  remaining page paragraphs (the unit of
+                     allocation) may not form a contiguous block.
+
+         Returns:    NO_ERROR: No error.
+                     NOT_INIT: EMM not initialized.
+                     NO_HANDLES: No handles remaining.
+                     NO_PAGES: No pages remaining.
+                     BAD_SIZE: Value of Size out of range.
+
+         Example:   unsigned int Size;
+                     int Handle;
+                     ...
+                     Size = 50000;
+                     Handle = emmAlloc(Size);
+                     if(Handle>=0)
+                       {printf("%u bytes allocated to handle &d\n",
+                          Size,Handle);
+                       }
+                     else emmError(Code);
+
+        See Also:    emmFree, emmLock.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 10
+                             3.5 emmFree
+
+
+        Function:    Frees  previously allocated EMS memory.
+
+          Syntax:    int emmFree(Handle)
+                     int Handle;  /* handle used for previous emmAlloc */
+
+         Remarks:    The emmFree() function is use to free EMS memory which
+                     was previously allocated with emmAlloc(). Once  freed,
+                     the  contents  of  the  (previously)  allocated blocks
+                     cannot be recovered (with EMM4C module calls).
+
+                     If  a  series  of  emmAlloc()  and emmFree() calls are
+                     made, then EMS memory may become fragmented. That  is,
+                     the  available  remaining page paragraphs (the unit of
+                     allocation) may not form a contiguous block.
+
+         Returns:    NO_ERROR: No error.
+                     NOT_INIT: EMM not initialized.
+                     BAD_HANDLE: Value of Handle out of range
+
+         Example:    int Handle;
+                     int Code;
+                     ...
+                     Code = emmFree(Handle);
+                     if(Code==0) printf("Handle %d is freed\n",Handle);
+                     else emmError(Code);
+
+        See Also:    emmAlloc.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 11
+                             3.6 emmLock
+
+
+        Function:    Locks an allocated EMS page(s)
+
+          Syntax:    int emmLock(Handle,SegmentPtr)
+                     int Handle;       /* Handle to lock */
+                     char *SegmentPtr; /* pointer to segment value */
+
+         Remarks:    The emmLock function is used to get the segment of the
+                     memory block referenced by the handle. The segment  is
+                     used  to  compute  the physical address on a paragraph
+                     boundary within the 4 contguous 16KB page frames.  The
+                     macro  MAKE_FAR_PTR  (defined  in  emm4c.h) or MAKE_FP
+                     (defined by many C compilers) can be used  to  compute
+                     the block address from the segment.
+
+         Returns:    NO_ERROR: No error.
+                     NOT_INIT: EMM not initialized.
+                     NO_FRAMES: No (unmapped) frames remaining.
+                     BAD_HANDLE: Value of Handle out of range.
+
+         Example:    int Handle;
+                     int Code;
+                     unsigned int Segment;
+                     char far *FarPtr;
+                     ...
+                     Code = emmLock(Handle,&Segment);
+                     if(Code==0)
+                       {FarPtr = MK_FP(Segment,0);
+                        ...
+                       }
+                     else emmError(Code);
+
+        See Also:    emmUnlock
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 12
+                             3.7 emmUnlock
+
+
+        Function:    Unlocks a previous locked EMS page(s).
+
+          Syntax:    int emmUnlock(Handle)
+                     int Handle;
+
+         Remarks:    The   emmUnlock()  function  is  used  to  unlock   a
+                     previously  locked EMS block. Recall that only 64KB of
+                     frame space is available.  This means that the largest
+                     single block that can be locked is 64KB.
+
+                     Recall that allocations of more than 16KB always start
+                     on a page boundary. Thus an allocation of 16385  bytes
+                     (16KB  +  1  byte)  will take 1 full page plus the 1st
+                     paragraph of the 2nd page. A second allocation of more
+                     than 16KB will be allocated to a 3rd page, not the 2nd
+                     page.
+
+
+         Returns:    NO_ERROR: No error.
+                     NOT_INIT: EMM not initialized.
+                     BAD_HANDLE: Value of Handle out of range
+
+         Example:    int Code;
+                     int Handle;
+                     ...
+                     Code = emmUnlock(Handle);
+                     if(Code==0) printf("Handle %d unlocked\n",Handle);
+                     else emmError();
+
+        See Also:    emmLock.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 13
+                             3.8 emmError
+
+        Function:    Displays error text.
+
+          Syntax:    int emmError(Code)
+                     int Code;  /* error Code */
+
+         Remarks:      The  emmError()  function  is  used  to display  the
+                     error  text  associated  with  an EMS4S or EMS4C error
+                     code.  It  references  the  emsError()  routine in the
+                     EMS4C library.
+
+
+         Returns:    NO_ERROR: No error.
+
+         Example:    int Code;
+                     ...
+                     Code = emmUnlock(Handle);
+                     if(Code==0) printf("Handle %d unlocked\n",Handle);
+                     else
+                       {
+                        ...
+                        emmError();
+                       }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 14
+         4.0 EMM4C Error Codes
+
+
+         Negative  error  codes  are  defined  for the EMM module (they are
+         different  than  the  error  codes defined for  the  EMS  module).
+         The error symbols are defined in EMM4C.H.
+
+
+                             EMM4C Error Codes
+
+
+         ***********************************************************
+         *   0  *  NO_ERROR     *  No error.                       *
+         *  -1  *  ALREADY_INIT *  EMM already initialized.        *
+         *  -2  *  NOT_INIT     *  EMM not initialized.            *
+         *  -3  *  NO_HANDLES   *  No handles remaining.           *
+         *  -4  *  NO_PAGES     *  No pages remaining.             *
+         *  -5  *  NO_FRAMES    *  No (unmapped) frames remaining. *
+         *  -6  *  MALLOC_FAILS *  malloc() fails.                 *
+         *  -7  *  BAD_SIZE     *  Value of Size out of range.     *
+         *  -8  *  BAD_HANDLE   *  Value of Handle out of range.   *
+         *  -9  *  BAD_PAGE     *  Value of Page out of range.     *
+         ***********************************************************
+
+
+
+                             Cross Reference
+
+
+                    emmUnlock...................
+                    emmLock..................  .
+                    emmFree...............  .  .
+                    emmAlloc...........  .  .  .
+                    emmPages........  .  .  .  .
+                    emmDone......  .  .  .  .  .
+                    emmInit...  .  .  .  .  .  .
+                             .  .  .  .  .  .  .
+                             .  .  .  .  .  .  .
+         *******************************************
+         *  ALREADY_INIT *   X                     *
+         *  NOT_INIT     *         X  X  X  X  X   *
+         *  NO_HANDLES   *            X            *
+         *  NO_PAGES     *            X            *
+         *  NO_FRAMES    *                  X      *
+         *  MALLOC_FAILS *   X                     *
+         *  BAD_SIZE     *            X            *
+         *  BAD_HANDLE   *   X           X  X  X   *
+         *  BAD_PAGE     *   X                     *
+         *******************************************
+
+
+
+
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 15
+         5.0 EMM4C Test Driver
+
+
+         The EMM_TEST program is the EMM4C test driver.  It  exercises  the
+         the  EMM4C library, allocating and freeing blocks of EMS memory in
+         a random sequence. It's purpose is to (1)  demonstrate  how  calls
+         are   made  to  the  EMM4C  functions,  and  (2)  a  test  of  the
+         functionality of the EMM4C library that you can perform yourself.
+
+         The basic algorithm is as follows:
+
+         Loop N times
+            Decide to allocate a new EMS block or free an existing block.
+               If we are going to allocate an EMS block, then
+                  Choose a size (in bytes) to allocate.
+                  Allocate the block.
+                  Fill the block with a "marker" byte.
+               If we are going to free a previously allocated block, then
+                  Choose a previous allocated block not yet freed.
+                  Verify the marker byte value.
+                  Free (de-allocate) the block.
+         End-of-Loop
+
+         To run the test driver, type:
+
+            EMM_TEST <Pages> <Iterations> <MinSize> <MaxSize>
+
+         where
+
+            <Pages>      = the number of EMS pages you wish to manage.
+            <Iterations> = the number of iterations of allocate / free.
+            <MinSize>    = the minimum allocation size.
+            <MaxSize>    = the maximum allocation size.
+
+         For  example, say you have 170 pages of EMS memory in your system,
+         and you wish to run the test driver using 10 pages  (160  KB)  150
+         times,  where  all  allocations  are  between 200 and 25000 bytes.
+         Enter the following:
+
+            EMM_TEST 10 150 200 25000
+
+         To compile the test driver, use one of the provided  makefiles  as
+         described in the installation section.
+
+         You can also use an integrated environment  to  compile  the  test
+         driver.  Place  the  following  files  in  your  project  file for
+         compiling for the small memory model.
+
+                  TEST_EMM.C
+                  EMM4C.C
+                  EMS_ERR.C
+                  EMS4C_S.LIB
+
+         To use another memory model, you will need to replace  EMS4C_S.LIB
+         with  the correct library. Refer to EMS4C.DOC file for information
+         about the EMS4C library.
+
+
+
+        EMM4C Users Manual                                     Page 16
+         6.0 Legal Issues
+
+         6.1 Registration
+
+
+         The  registered version of EMM4C is provided free of charge at the
+         time that the EMS4C library is registered. Notice that  the  EMM4C
+         library requires the EMS4C library.
+
+
+         6.2 License
+
+
+         MarshallSoft Computing, Inc. grants the registered user  of  EMM4C
+         the  right  to  use  the  EMM4C  library  (in  object form) in the
+         development  of  any  software  product  without  any   royalties.
+
+
+         6.3 Warranty
+
+
+         MARSHALLSOFT COMPUTING, INC. DISCLAIMS ALL WARRANTIES RELATING  TO
+         THIS  SOFTWARE,  WHETHER  EXPRESSED  OR IMPLIED, INCLUDING BUT NOT
+         LIMITED TO ANY IMPLIED WARRANTIES OF MERCHANTABILITY  AND  FITNESS
+         FOR  A  PARTICULAR  PURPOSE, AND ALL SUCH WARRANTIES ARE EXPRESSLY
+         AND SPECIFICALLY DISCLAIMED. NEITHER MARSHALLSOFT COMPUTING,  INC.
+         NOR ANYONE ELSE WHO HAS BEEN INVOLVED IN THE CREATION, PRODUCTION,
+         OR  DELIVERY  OF  THIS  SOFTWARE SHALL BE LIABLE FOR ANY INDIRECT,
+
+         CONSEQUENTIAL, OR INCIDENTAL DAMAGES ARISING OUT  OF  THE  USE  OR
+         INABILITY  TO  USE  SUCH  SOFTWARE EVEN IF MARSHALLSOFT COMPUTING,
+         INC.  HAS BEEN ADVISED OF  THE  POSSIBILITY  OF  SUCH  DAMAGES  OR
+         CLAIMS. IN NO EVENT SHALL MARSHALLSOFT COMPUTING, INC.'S LIABILITY
+         FOR ANY SUCH DAMAGES EVER EXCEED THE PRICE PAID FOR THE LICENSE TO
+         USE  THE SOFTWARE, REGARDLESS OF THE FORM OF THE CLAIM. THE PERSON
+         USING  THE  SOFTWARE  BEARS  ALL  RISK  AS  TO  THE  QUALITY   AND
+         PERFORMANCE OF THE SOFTWARE.
+
+         Some  states  do not allow the exclusion of the limit of liability
+         for consequential or incidental damages, so the  above  limitation
+         may not apply to you.
+
+         This  agreement  shall  be  governed  by  the laws of the State of
+         Alabama and shall inure to the benefit of Marshallsoft  Computing,
+         Inc.   and  any successors, administrators, heirs and assigns. Any
+         action or proceeding brought by either  party  against  the  other
+         arising  out of or related to this agreement shall be brought only
+         in a STATE or FEDERAL COURT of competent jurisdiction  located  in
+         Madison County, Alabama. The parties hereby consent to in personam
+         jurisdiction of said courts.
+
+
+
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 17
+         7.0 Revision History
+
+
+         Version 1.0 -- July 24, 1993 -- original release.
+
+
+         8.0 Other MarshallSoft Computing Products for C
+
+
+         Shareware  versions  of  all  MarshallSoft  Computing products are
+         available on our user support BBS 205-880-9748.
+
+
+         8.1 The Personal Communications Library for C
+
+
+         The Personal Communications Library for the C Language (PCL4C)  is
+         an  asynchronous  communications  library designed for experienced
+         software  developers  programming  in  C.   Four   compilers   are
+         supported:  Microsoft  Optimizing  C,  Microsoft  Quick C, Borland
+         Turbo C, and MIX Power  C.   An  IBM  PC/XT/AT  or  compatible  is
+         required.  The PCL features:
+
+         o SMALL, COMPACT, MEDIUM & LARGE memory models.
+         o 33 communications and support functions.
+         o Supports PC/4 and PC/8 Digiboard.
+         o Support for the high performance INS16550 UART.
+         o Supports hardware (RTS/CTS) flow control.
+         o Interrupt driven receiver.
+         o Supports 300 baud to 115,200 baud.
+         o Supports COM1, COM2, COM3, and  COM4.
+         o Adjustable receive queues from 8 bytes to 32 KB.
+         o Control-BREAK error exit.
+         o 17 communications error conditions trapped.
+         o Allows 4 ports to run concurrently.
+         o Complete modem control & status.
+         o Written in assembly language for small size & high speed.
+         o Terminal program featuring XMODEM, YMODEM, & YMODEM-G.
+
+         The Personal Communications Library for C (PCL4C) is available for
+         $55  plus  $3 S&H ($6 S&H overseas). It may be ordered at the same
+         time as the Personal Protocol Library for $65 plus $3.50  S&H  ($7
+         overseas).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 18
+         8.2 The Personal Protocol Library for C
+
+
+         The  Personal  Protocol  Library  (PPL)  consist of a state driven
+         library  which  implements  the  XMODEM,  XMODEM-CRC,   XMODEM-1K,
+         XMODEM-G,  YMODEM,  and  YMODEM-G  file  transfer protocols.  This
+         allows  the  programmer  to  run   multiple   protocol   transfers
+         simultaneously while interacting with the user at the keyboard.
+
+         The  Personal  Protocol Library for C (PPL4C) is available for $35
+         plus $3 S&H ($6 S&H overseas). Both the Communications library and
+         the Protocol library can be ordered together for $65.
+
+         The PPL requires the Personal Protocol Library for  C  (PCL4C)  as
+         described above.
+
+         8.3 The LZW Data Compression Library for C
+
+         LZW4C is an implementation of the LZW (Lempel-Ziv-Welch) algorithm
+         for compressing and decompressing  data.   LZW  does  particularly
+         well on text files, achieving better than a 50 % compression ratio
+         for many files.
+
+         The  LZW  algorithm  is  considered  to be one of the best general
+         purpose algorithms available today.  The  new  high  speed  modems
+         that  employ  on-the-fly  data  compression (such as MNP 5.0 & the
+         V.42 bis international standard) use the LZW algorithm, as well as
+         such well known utility programs such as PKZIP.
+
+         The  LZW  Data Compression Library for C is available for $35 plus
+         $3 S&H ($6 S&H overseas).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        EMM4C Users Manual                                     Page 19
+

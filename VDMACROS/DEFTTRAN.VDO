@@ -1,0 +1,208 @@
+/******************************************************************************
+                  ESTRUTURA DO PARAMETRO DE SERVICO DO SIAD
+******************************************************************************/
+typedef struct
+ {
+  char oper[4],            /* operacao a ser executada  */
+       arq[8];             /* arquivo a ser manipulado  */
+  WORD tam;                /* tamanho da area de dados  */
+ }VIDEO_TRAN_OPERSIAD;
+
+/******************************************************************************
+                 ESTRUTURA DE CONTROLE E ACESSO AO EXTSIAD
+******************************************************************************/
+
+/****************************** SEGMENTO DE CHAVE  ****************************/
+typedef struct
+ {
+  WORD soffset,            /* offset do segmento   */
+       slength;            /* tamanho do segmento  */
+ }VIDEO_TRAN_SEG;
+
+/********************************* ARQUIVO ************************************/
+typedef struct
+ {
+  char           pfilnam[8]; /* nome do arquivo no GRI    */
+  WORD           dfilno,     /* numero interno do arquivo */
+                 dreclen,    /* tamanho do reg. de dados  */
+                 ikeylen,    /* tamanho da chave          */
+                 ikeydup,    /* flag duplicata            */
+                 inumseg;    /* numero de segmentos       */
+  VIDEO_TRAN_SEG *seg;       /* segmentos da chave        */
+ }VIDEO_TRAN_ARQ;
+
+/**************************** PARAMETROS DE CARGA *****************************/
+typedef struct
+ {
+  char           ident[4];   /* nome da area                             */
+  WORD           flaginit,   /* flag de status de inicializacao da area  */
+                 narquivos,  /* numero de arquivos carregados            */
+                 nsegmentos; /* numero de segmentos de chaves carregados */
+  VIDEO_TRAN_ARQ *arquivos;  /* estrutura de arquivos carregados         */
+  VIDEO_TRAN_SEG *segmentos; /* estrutura de segmentos carregados        */
+ }VIDEO_TRAN_PARAM_CARGA;
+
+/****************************************************************************
+                    ESTRUTURA DA DATA DO SISTEMA NA TRANSACAO
+****************************************************************************/
+typedef struct
+ {
+  BYTE  dia,
+        mes;
+  INT2  ano;
+  DWORD data;
+ }VIDEO_TRAN_DATA;
+
+/****************************************************************************
+                    ESTRUTURA DA HORA DO SISTEMA NA TRANSACAO
+****************************************************************************/
+typedef struct
+ {
+  BYTE  hor,
+        min,
+        seg;
+  DWORD hora;
+ }VIDEO_TRAN_HORA;
+
+/****************************************************************************
+      ESTRUTURA HEADER DE CONTROLE DE ACESSO A ARQUIVOS NO SIAD
+      E MANIPULADO APENAS PELO EXTSIAD,
+      NAO E TRASMITIDO PELA REDE,
+      E COLOCADO NO INICIO DE CADA REGISTRO PARA CONTROLE DE LOCK
+****************************************************************************/
+typedef struct
+ {
+  DWORD dias,        /* data em que foi requisitado o lock    */
+        segs;        /* hora em que foi requisitado o lock    */
+  char  terminal[8], /* terminal requisitante                 */
+        buffer[1];   /* buffer de dados                       */
+ }VIDEO_TRAN_BLOQREG;
+
+/****************************************************************************
+              ESTRUTURA DA AREA DE COMUNICA€AO RECEBIDA PELO GRI
+*****************************************************************************/
+typedef struct
+ {
+  long int numbuffer;      /* Numero do buffer enviado na rede          */
+  INT2     servico,        /* Servico requisitado no tratador de buffer */
+           numpacote,      /* Numero do pacote de buffer enviado        */
+           retorno,        /* Retorno da operacao efetuada no gri       */
+           tambuffer;      /* Tamanho do buffer de dados                */
+  char     buffer[1];      /* buffer de dados                           */
+ }VIDEO_TRAN_BUFFER_REDE_REC;
+
+/****************************************************************************
+             ESTRUTURA DA AREA DE PARAMETROS RETORNADOS PELO GRI
+*****************************************************************************/
+typedef struct
+ {
+  char     transacao[3];   /* Transacao disparada                        */
+  DWORD    numbuffer;      /* Numero do buffer enviado na rede           */
+  INT2     servico,        /* Servico requisitado no tratador de buffer  */
+           numpacote,      /* Numero do pacote de buffer enviado         */
+           retorno,        /* Retorno da operacao efetuada no gri        */
+           tambuffer;      /* Tamanho do buffer de dados                 */
+  char     buffer[1];      /* buffer de dados                            */
+ }VIDEO_TRAN_BUFFER_REDE_RET;
+
+/****************************************************************************
+      ESTRUTURA DA AREA DE COMUNICA€AO DO GRI E REFERENCIA DOS SERVICOS
+*****************************************************************************/
+typedef struct
+ {
+  INT2  servico,        /* Servico requisitado no EXTSIAD       */
+        lockserv,       /* Servico de LocK da funcao do EXTSIAD */
+        indice;         /* Indice do arquivo manipulado         */
+  char  terminal[8],    /* Terminal requisitante                */
+        buffer_reg[1];  /* buffer do registro*/
+ }VIDEO_TRAN_SERV_EXTSIAD;
+
+/****************************************************************************
+             ESTRUTURA REFERENCIA AOS ARQUIVOS DEBAIXO DO EXISIAD
+*****************************************************************************/
+typedef struct
+ {
+  INT2               servico,        /* Servico requisitado no EXTSIAD       */
+                     lockserv,       /* Servico de LocK da funcao do EXTSIAD */
+                     indice;         /* Indice do arquivo manipulado         */
+  VIDEO_TRAN_BLOQREG buffer_reg;     /* Buffer do registro manipulado        */
+ }VIDEO_TRAN_ARQ_EXTSIAD;
+
+/****************************************************************************
+        ESTRUTURA DAS TRANSACOES EXECUTADAS PELO PROGRAMA DE APLICACAO
+*****************************************************************************/
+typedef struct
+ {
+  char  transacao[3];
+  INT2  (*functran)();
+ }VIDEO_TRAN_TABFUNC;
+
+/****************************************************************************
+        ESTRUTURA DO HEADER DO REGISTRO DE ARMAZENAMENTO DE BUFFER
+*****************************************************************************/
+typedef struct
+ {
+  char  terminal[8];  /* terminal requisitor         */
+  WORD  numpacote;    /* numero do pacote            */
+  char  transacao[3]; /* transacao chamada           */
+  DWORD numbuffer;    /* numero do buffer            */
+  WORD  tambuffer,    /* tamanho do buffer de dados  */
+        flagfim;      /* flag de ultimo registro     */
+  char  buffer[1];    /* buffer de dados             */
+ }VIDEO_TRAN_BUFFER_WORK;
+
+
+/******************************************************************************
+       ESTRUTURA DE CONTROLE INTERNO DO CORRENTE ISAM RECORD E CHAVES
+******************************************************************************/
+typedef struct
+ {
+  INT2  tamind;         /* tamanho do indice                     */
+  WORD  status;         /* status do indice                      */
+  DWORD dias;           /* dia  em que foi requisitado o lock    */
+  DWORD segs;           /* hora em que foi requisitado o lock    */
+  char  *buffer_chave;  /* buffer para a ultima chave manipulada */
+ }VIDEO_GRI_TABIND;
+
+/******************************************************************************
+           ESTRUTURA DE CONTROLE INTERNO DE INICIALIZACAO DO SIAD
+******************************************************************************/
+typedef struct
+ {
+  BYTE status_carga;     /* flag de inicializacao da carga        */
+ }VIDEO_TRAN_FLAGSTATUS;
+
+/******************************************************************************
+           ESTRUTURA DE CONTROLE INTERNO DE BUFFER DE TRABALHO
+******************************************************************************/
+typedef struct
+ {
+  WORD ptrdisp;        /* proxima posicao disponivel*/
+  char buffer[1];      /* buffer de trabalho        */
+ }VIDEO_TRAN_BUFFER_MEM;
+
+/******************************************************************************
+            ESTRUTURA DE CONTROLE INTERNO DE BUFFER DE MENS. DE ERRO
+******************************************************************************/
+typedef struct
+ {
+  BYTE tiposeg,
+       sinc,
+       comando,
+       formato[2],
+       gri[8],
+       aplic[2],
+       terminal[8];
+ }VIDEO_TRAN_STRMENS;
+
+/******************************************************************************
+                      ESTRUTURA DE CONTROLE INTERNO DE SUBFILE
+******************************************************************************/
+typedef struct
+ {
+  char terminal[8];
+  WORD numsub;
+ }VIDEO_EDITOR_HEADER_SUBFILE;
+
+
+

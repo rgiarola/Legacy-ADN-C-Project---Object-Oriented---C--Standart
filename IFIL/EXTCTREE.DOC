@@ -1,0 +1,74 @@
+// Utilitarios
+CTCMPCHV.C      -> Executa comparacao entre uma estrutura de chave (protocolo
+                   extendido, de manuseio de chaves - VIDEO_SEG_CHAVE) e os
+                   dados contidos no buffer de dados.
+CTCPDODA.C      -> Executa copia de campos DODA (protocolo VIDEO_TRANSP_DADOS).
+CTCPYBUF.C      -> Alterna (copia) buffer's de arquivo.
+CTCOPY.C
+CTDELTMP.C
+CTDLALL.C
+
+
+// Funcoes de I/O - Output.
+CTDLREC .C      -> Exclui o corrente registro (Current Isam Record) do arquivo
+                   especificado.
+CTADREC.C       -> Grava um novo registro em um arquivo.
+CTADVREC.C
+CTREWREC.C      -> Atualiza (regrava) registro de um arquivo.
+CTRWVREC.C
+
+// Funcoes de I/O - Input.
+CTFIND.C        -> Funcao generica para execucao de leituras.
+CTREAD.C        -> Le especificado registro.
+CTRDVLEN C
+CTGTEREC.C      -> Le o maior ou igual registro de indice.
+CTLTEREC.C      -> Le o menor ou igual registro do indice.
+
+CTFRSREC.C      -> Le o primeiro registro de arquivo (ou indice).
+CTPRVREC.C      -> Le o anterior registro do indice.
+CTLSTREC.C      -> Le o ultimo registro de um arquivo (ou indice).
+CTNXTREC.C      -> Le o proximo registro do indice.
+
+CTSETFRS.C      -> Conceito de leitura parcial; le o primeiro registro que
+                   satisfaz o criterio.
+CTSETNXT.C      -> Le o proximo registro que satisfaz o criterio.
+CTSETPRV.C      -> Le o anterior registro que satisfaz o criterio.
+CTSETLST.C      -> Le o ultimo registro que satisfaz o criterio.
+CTTABSET.C      -> Tabelas e variaveis para controle de funcoes de leitura
+                   parcial (SET's).
+
+
+// Funcoes de Inicializacao.
+CTOPEN.C        -> Abre todos os arquivos ISAM, apontados pela estrutura
+                   ATIVO_IFIL.
+CTOPEN2  C
+CTISCRIA C
+CTISOPEN C
+CTTEMP   C
+PCREAT.C        -> Cria arquivos de arquivo de parametros.
+PINIT.C         -> Inicializa o sistema para uso do CTREE, apartir de arquivo de
+                   parametros.
+CTINIT.C        -> Funcao "login" do sistema, para utilizacao do ctree.
+
+
+
+// Funcoes de Suporte para operacoes anteriores.
+GETDODA.C       -> Consegue um ponteiro para a estrutura de uma variavel na
+                   tabela DODA.
+GETIFIL.C       -> Consegue um ponteiro para a estrutura de arquivo na tabela
+                   ISAM/IFIL.
+CTINBUF.C       -> Incializa o buffer de dados de um arquivo.
+CTFILBUF.C      -> Consegue um ponteiro para um dos buffer's do arquivo.
+CTFILNM.C       -> Dado o nome do arquivo, consegue o numero ctree do arquivo.
+CTKEYNM.C       -> Dado o nome do indice, consegue o numero ctree do indice.
+CTTMPFIL.C      -> Dado o numero temporario do arquivo, consegue o numero ctree
+                   do arquivo de dados.
+CTTMPKEY.C      -> Dado o numero temporario do indice, consegue o numero ctree
+                   do indice de dados.
+CTKEYFIL.C      -> Dado o numero temporario do indice, consegue o numero ctree
+                   do arquivo de dados.
+CTGETCHV.C      -> Monta (consegue) a estrutra chave do buffer de dados.
+
+CTGETBUF.C
+
+

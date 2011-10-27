@@ -1,0 +1,107 @@
+/****************************************************************************
+                       ESTRUTURA DE CONTROLE DA ARVORE
+*****************************************************************************
+ 
+*****************************************************************************
+                       ESTRUTURA DO ELEMENTO DA ARVORE
+****************************************************************************/
+struct VIDEO_ARVORE_ELEMENTO
+ {
+  BYTE                         coluna,    /*coluna real de display do elemento*/
+                               tamanho,   /*tamanho do elemento*/
+                               fimlinha,  /*flag final de linha*/
+                               fimbloco;  /*flag final de bloco*/
+  char                         *elemento; /*elemento de displagem*/
+  struct VIDEO_ARVORE_ELEMENTO *posterior,/*elemento posterior da linha*/
+                               *anterior, /*elemento anterior da linha*/
+                               *poslin,   /*elemento posterior da coluna*/
+                               *antlin;   /*elemento anterior da coluna*/
+  char                         *linha;    /*pointer para linha do elemento*/
+  INT2                         servico;   /*servico associado ao elemento*/
+  BOOLEAN                      pesquisado;/*flag utilizado na varredura das*/
+                                          /*linhas de coneccao*/
+ };
+
+
+/***************************************************************************
+                       ESTRUTURA DA LINHA DA ARVORE
+***************************************************************************/
+struct VIDEO_ARVORE_LINHA
+ {
+  BYTE                         linha;     /*linha real de display*/
+  struct VIDEO_ARVORE_ELEMENTO *elemento; /*estrutura do elemento de display*/
+  struct VIDEO_ARVORE_LINHA    *anterior, /*linha anterior*/
+                               *posterior;/*linha posterior*/
+ };
+
+
+/***************************************************************************
+                            ESTRUTURA DO RAIZ DA ARVORE
+***************************************************************************/
+
+typedef struct
+ {
+  INT2                         (*accept_arvore)();/*func de accept na arvore*/
+  BYTE                         coli,             /*col. inicial da janela*/
+                               colf,             /*col. final da janela*/
+                               lini,             /*lin. inicial da janela*/
+                               linf,             /*lin. final da janela*/
+                               coli_offset,
+                               lini_offset,
+                               coli_arvore,      /*col. inicial da arvore*/
+                               colf_arvore,      /*col. final da arvore*/
+                               lini_arvore,      /*lin. inicial da arvore*/
+                               linf_arvore,      /*lin. final da arvore*/
+                               tamespaco;        /*tamanho do espaco das celulas*/
+  INT2                         servico;          /*servico selecionado*/
+  BYTE                         maxcol,           /*maior coluna da arvore*/
+                               maxlin,           /*maior linha da arvore*/
+                               cor_fundo,        /*cor de fundo*/
+                               cor_barras,       /*cor das barras*/
+                               cor_titulo,       /*cor de titulo*/
+                               cor_rodape,       /*cor do rodape*/
+                               cor_linhas,       /*cor das linhas       */
+                               cor_opcoes,       /*cor das opcoes ITENS */
+                               cor_elemento,     /*cor do item selecionado ITENS*/
+                               cor_selelem,      /*cor das opcoes  PROMPT*/
+			       cor_scrowbar,	 /*cor do scrowbar*/
+                               cor_setas,        /*cor da setas do scrowbar*/
+                               ascii,scan;
+  char			       cararv,		 /*caracter de fundo da arvore*/
+			       carbar,		 /*caracter de fundo das men.*/
+			       carscrow;	 /*caracter do scrowbar.*/
+  BOOLEAN                      flagdispprompt,   /*flag de display do prompt*/
+                               flagdisparvore,   /*flag de display da arvore*/
+                               flagdisplinha,    /*flag de display da linha*/
+                               flagdispmoldura,  /*flag de display de moldura*/
+                               flagremontarvore, /*flag re remontagem da arvore*/
+                               flagmontarvore,   /*flag de montagem da arvore*/
+                               flagsalva,        /*flag de popwin e poshwin*/
+                               flagconectcol;    /*flag de coneccao de colunas.*/
+  struct VIDEO_ARVORE_LINHA    *linha_atual,     /*linha atual*/
+                               *linha_inicial,   /*linha inicial*/
+                               *linha_final,     /*linha final*/
+                               *linha_initela,   /*linha inicial da janela*/
+                               *linha_fintela;   /*linha final da janela*/
+  struct VIDEO_ARVORE_ELEMENTO *elemento;        /*elemento atual selecionado*/
+  struct VIDEO_ARVORE_UNIDADE  *blocos;          /*blocos de montagem da arvore*/
+  char                         *titulo,          /*titulo da arvore*/
+                               *rodape;          /*rodape da arvore*/
+  char                         *nomehelp;        /*numero do help*/
+  INT2                         (*userfunc)();    /*Funcao de usuario*/
+  BOOLEAN                      flagfuncao;       /*Flag de Disparo.*/
+  INT2                         flagarvore;       /*Opcionais Configura‡”es*/
+ }VIDEO_ARVORE_ESTRUTURA;
+
+/***************************************************************************
+                ESTRUTURA DOS ITENS A SER MONTADOS EM ARVORE
+***************************************************************************/
+struct VIDEO_ARVORE_UNIDADE
+ {
+  char                        *item;      /*iten de display*/
+  INT2                        servico;    /*servico do item*/
+  struct VIDEO_ARVORE_UNIDADE *subitens;  /*subitens vinculados ao itens*/
+  INT2                        salto;      /*linhas para salto*/
+ };
+
+

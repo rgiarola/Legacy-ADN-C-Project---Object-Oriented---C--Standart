@@ -1,0 +1,75 @@
+/*****************************************************************************
+                  TABELA DE CONTROLE DE CORRENTE ISAM RECORD
+*****************************************************************************/
+extern VIDEO_GRI_TABIND *GRI_buffer_chave_ind;
+
+/*****************************************************************************
+                   VARIAVEIS DE ERROS DE ACESSO AOS ARQUIVOS
+*****************************************************************************/
+/*
+extern COUNT            isam_err,isam_fil,
+                        uerr_cod;
+*/
+/*****************************************************************************
+        VARIAVEIS DE CONTROLE DE NUMERO DE BUFFER ENVIADO A REDE
+*****************************************************************************/
+extern long int         VIDEO_GRI_numbufrede;
+
+/*****************************************************************************
+            VARIAVEIS DE CONTROLE DE SITUACAO DE LOCK DE REGISTRO
+*****************************************************************************/
+extern WORD             VIDEO_GRI_STATUS_LOCK;
+
+/*****************************************************************************
+                   VARIAVEIS DE CONTROLE DO HANDLE DO CEP
+*****************************************************************************/
+extern INT2             VIDEO_GRI_desc_cep;
+
+/*****************************************************************************
+                  VARIAVEL DE ARMAZENAMENTO DA ESTRUTURA IFIL.
+*****************************************************************************/
+extern IDE_ARQUIVOS     *ATIVO_IFIL[];
+
+/*****************************************************************************
+                 VARIAVEL DE ARMAZENAMENTO DA ESTRUTURA DODA
+*****************************************************************************/
+extern IDE_DODA         *ATIVO_DODA;    /* Variavel de armazenamento da estrura DODA.*/
+
+/*****************************************************************************
+               VARIAVEL DE ARMAZENAMENTO DO NOME CEP DO TERMINAL
+*****************************************************************************/
+extern char             VIDEO_GRI_terminal[];
+
+/*****************************************************************************
+          VARIAVEL DE ARMAZENAMENTO DA ESTRUTURA DE ARQUIVOS TEMPORARIOS
+*****************************************************************************/
+extern CT_TMP_NOMES     *CT_arquivos_temporarios;     /* Controle Arquivos Temporarios.*/
+
+/*****************************************************************************
+        VARIAVEL DE ARMAZENAMENTO DO TEMPO DE TIME OUT DE LOCK EM REGISTRO
+*****************************************************************************/
+extern long int         VIDEO_GRI_timelock;
+
+/*****************************************************************************
+                    VARIAVEL DE ARMAZENAMENTO DO DIAS NO MES
+*****************************************************************************/
+extern BYTE             VIDEO_GRI_tabdias[];
+
+/*****************************************************************************
+               VARIAVEL DE SET DA APLICACAO NA BUSCA DE REGISTRO
+*****************************************************************************/
+extern WORD             VIDEO_GRI_taminset,
+
+/*****************************************************************************
+                    DESCRITORES DOS ARQUIVOS DE CARGA DE TELAS
+*****************************************************************************/
+                        VIDEO_GRI_descdat,
+                        VIDEO_GRI_descidx,
+
+/*****************************************************************************
+                        VARIAVEL DE CONTROLE DE SUBFILES
+*****************************************************************************/
+                        VIDEO_GRI_num_subfile;
+
+
+

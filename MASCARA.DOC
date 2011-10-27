@@ -1,0 +1,39 @@
+
+9         numerico limpa com zero
+Z,z,B,b   numerico limpa com espacos
+
+E     letras maiusculas
+e     letras minusculas
+L     letras maiusculas e minusculas
+
+U     letras maiusculas mais espaco
+u     letras minusculas mais espaco
+l     letras maiusculas e minusculas mais espaco
+
+C     letras maiusculas mais numeros
+c     letras minusculas mais numeros
+O     letras maiusculas e minusculas mais numeros
+
+F     letras maiusculas mais numeros mais espaco
+f     letras minusculas mais numeros mais espaco
+H     letras maiusculas e minusculas mais numeros mais espaco
+
+X     de 32 a 126 menos letras minusculas
+x     de 32 a 126 menos letras maiusculas
+Q     de 32 a 126
+
+T     de 32 a 126 menos letras minusculas menos numeros
+t     de 32 a 126 menos letras maiusculas menos numeros
+q     de 32 a 126 menos numeros
+
+G     qualquer caracter
+
+@ identifica macro de repeticao
+
+exemplo
+
+"@3Z@10UXXq" expandida "ZZZUUUUUUUUUUXXq"
+
+a expancao e efetuada internamente
+
+

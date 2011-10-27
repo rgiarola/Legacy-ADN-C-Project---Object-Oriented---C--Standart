@@ -1,0 +1,36 @@
+/*=========================================================================*/
+typedef struct
+ {
+  INT2    (*MENU_pega_opcao)(), /*Funcao Tratadora do Servico.*/
+          coli,colf,            /*Coluna inicial/final.*/
+          lini,linf,            /*Linha inicial/final.*/
+          numop,numpag,         /*Numero de Opcoes/Numero de Paginas.*/
+          opsel,colatu,         /*Opcao Selecionada/Coluna Display Atual.*/
+          col,lin,              /*Coluna Opcao/Linha Opcao.*/
+          opini,colpag,         /*Opcao Inicial da Pagina.*/
+          numlin,tamcol,        /**/
+          opselec,tamdispop,    /**/
+          (*funcserv)();        /**/
+  char    **opcoes;             /**/
+
+  BYTE    cor_opcao,            /**/
+          cor_selecao,          /**/
+          cor_moldura,          /**/
+          cor_sombra;           /**/
+
+  BOOLEAN flagdispcol,          /**/
+          flagdispop,           /**/
+          flagmoldura;          /**/
+
+  BYTE    tipomoldura,          /**/
+          caracmoldura;         /**/
+  char    *nomehelp,
+          *userserv,
+          *usermenu,
+          *userele,
+          *titulo;
+  BOOLEAN flaguser;
+  }VIDEO_INFO_MENU;
+
+#define VIDEO_TECLA_ESCAPE_MENU(x) (PTR_CAST(VIDEO_NUCLEO_SERV,PTR_CAST(VIDEO_ESTMANUT,x)->strtelacrg)->VIDEO_servrec)
+

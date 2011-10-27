@@ -1,0 +1,132 @@
+
+/*
+
+    definicoes dos codigos das teclas
+
+*/
+#define VD_TAB                  9
+#define TABSCAN                15
+#define ENTERSCAN              28
+#define ESCAPESCAN             1
+#define ESCAPE                 27
+#define ENTER                  13
+#define CTRL_ENT               10
+#define DESCE                  80
+#define SOBE                   72
+#define HOME                   71
+#define PGUP                   73
+#define PGDN                   81
+#define DIREITA                77
+#define ESQUERDA               75
+#define END                    79
+#define INS                    82
+#define DEL                    83
+#define BAKSP                  8
+#define CTRLBAKSP              127
+#define BAKSPSCAN              14
+#define BAKSPACE               8
+
+#define ALT_Q                  I(16)
+#define ALT_W                  I(17)
+#define ALT_E                  I(18)
+#define ALT_R                  I(19)
+#define ALT_T                  I(20)
+#define ALT_Y                  I(21)
+#define ALT_U                  I(22)
+#define ALT_I                  I(23)
+#define ALT_O                  I(24)
+#define ALT_P                  I(25)
+#define ALT_A                  I(30)
+#define ALT_S                  I(31)
+#define ALT_D                  I(32)
+#define ALT_F                  I(33)
+#define ALT_G                  I(34)
+#define ALT_H                  I(35)
+#define ALT_J                  I(36)
+#define ALT_K                  I(37)
+#define ALT_L                  I(38)
+#define ALT_Z                  I(44)
+#define ALT_X                  I(45)
+#define ALT_C                  I(46)
+#define ALT_V                  I(47)
+#define ALT_B                  I(48)
+#define ALT_N                  I(49)
+#define ALT_M                  I(50)
+
+#define ALT_F1                 I(104)
+#define ALT_F2                 I(105)
+#define ALT_F3                 I(106)
+#define ALT_F4                 I(107)
+#define ALT_F5                 I(108)
+#define ALT_F6                 I(109)
+#define ALT_F7                 I(110)
+#define ALT_F8                 I(111)
+#define ALT_F9                 I(112)
+#define ALT_F10                I(113)
+
+#define ALT_1                  I(120)
+#define ALT_2                  I(121)
+#define ALT_3                  I(122)
+#define ALT_4                  I(123)
+#define ALT_5                  I(124)
+#define ALT_6                  I(125)
+#define ALT_7                  I(126)
+#define ALT_8                  I(127)
+#define ALT_9                  I(128)
+#define ALT_0                  I(129)
+#define ALT_MAIS               I(131)
+#define ALT_MENOS              I(130)
+
+#define SHIFT_F1               I(84)
+#define SHIFT_F2               I(85)
+#define SHIFT_F3               I(86)
+#define SHIFT_F4               I(87)
+#define SHIFT_F5               I(88)
+#define SHIFT_F6               I(89)
+#define SHIFT_F7               I(90)
+#define SHIFT_F8               I(91)
+#define SHIFT_F9               I(92)
+#define SHIFT_F10              I(93)
+
+#define CTRL_F1                I(94)
+#define CTRL_F2                I(95)
+#define CTRL_F3                I(96)
+#define CTRL_F4                I(97)
+#define CTRL_F5                I(98)
+#define CTRL_F6                I(99)
+#define CTRL_F7                I(100)
+#define CTRL_F8                I(101)
+#define CTRL_F9                I(102)
+#define CTRL_F10               I(103)
+
+#define F1                     I(59)
+#define F2                     I(60)
+#define F3                     I(61)
+#define F4                     I(62)
+#define F5                     I(63)
+#define F6                     I(64)
+#define F7                     I(65)
+#define F8                     I(66)
+#define F9                     I(67)
+#define F10                    I(68)            
+
+#define CTRL_PRTSC             I(114) 
+#define CTRL_ESQ               I(115) 
+#define CTRL_DIR               I(116) 
+#define CTRL_END               I(117) 
+#define CTRL_PGDN              I(118) 
+#define CTRL_HOME              I(119) 
+#define CTRL_PGUP              I(132) 
+#define TCL_MAIS               I(78)
+#define TCL_MENOS              I(74)
+
+/* CARACTERES EXTENDIDOS DA APLICACAO*/
+#define SHIFT_PGDN             W(0XFF)
+#define SHIFT_PGUP             W(0XFE)
+#define SCAN_Y                 I(21)
+#define CTRL_Y                 I(25)
+#define SCAN_SPOOL             W(0XFD)
+#define ASCII_SPOOL            W(0XFD)
+#define LETRA_MENU             W(0XFC)
+
+

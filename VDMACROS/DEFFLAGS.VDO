@@ -1,0 +1,18 @@
+
+#define VIDEO_DOS_FLAG_CARRY           B00
+#define VIDEO_DOS_FLAG_PARIDADE        B02
+#define VIDEO_DOS_FLAG_AUXILIAR        B04
+#define VIDEO_DOS_FLAG_ZERO            B06
+#define VIDEO_DOS_FLAG_SINAL           B07
+#define VIDEO_DOS_FLAG_TRAP            B08
+#define VIDEO_DOS_FLAG_INTERRUPCOES    B09
+#define VIDEO_DOS_FLAG_DIRECAO         B10
+#define VIDEO_DOS_FLAG_OVERFLOW        B11
+#define VIDEO_TECLADO_INSERCAO         VD_B7
+#define VIDEO_TECLADO_CAPSLOCK         VD_B6
+#define VIDEO_TECLADO_NUMLOCK          VD_B5
+#define VIDEO_TECLADO_SCROLLLOCK       VD_B4
+#define VIDEO_TECLADO_ALT              VD_B3
+#define VIDEO_TECLADO_CONTROL          VD_B2
+#define VIDEO_TECLADO_SHIFTESQ         VD_B1
+#define VIDEO_TECLADO_SHIFTDIR         VD_B0

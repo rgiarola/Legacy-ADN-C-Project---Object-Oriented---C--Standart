@@ -1,0 +1,19 @@
+
+extern VIDEO_TRAN_TABFUNC     VIDEO_TRAN_tabfunctran[];
+extern INT2                   VIDEO_EXTSIAD_isam_err,
+                              VIDEO_EXTSIAD_isam_fil,
+                              VIDEO_EXTSIAD_isam_err;
+extern VIDEO_PARAMCRGARQ      *VIDEO_bufparamarq;
+/*
+extern COUNT                  isam_fil,
+                              isam_err,
+                              uerr_cod;
+ */
+extern DWORD                  *VIDEO_TRAN_curifil,
+                              *VIDEO_TRAN_flags;
+extern VIDEO_TRAN_BUFFER_WORK *VIDEO_TRAN_work;
+extern VIDEO_TRAN_BUFFER_MEM  *VIDEO_TRAN_buffer;
+extern long int               VIDEO_TRAN_timelock;
+extern BYTE                   VIDEO_TRAN_tabdias[];
+
+

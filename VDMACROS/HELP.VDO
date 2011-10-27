@@ -1,0 +1,17 @@
+typedef struct
+ {
+  INT2     (*accept_visual)(),
+           (*visual_opcoes)(),
+           numlin , coli     ,
+           colf   , lini     ,
+           linf   , linvisual,
+           lintela, desc     ,
+           refcol , descindex;
+  WORD     flags;
+  long int pos_ini, lido     ;
+  VIDEO_ESTMANUT *telavisual ;
+  char     *titulo,*linhaaux ,
+           *arqtmp,*nomevisual,
+           *linha[1] ;
+ }VIDEO_VISUAL_CONTROLE;
+

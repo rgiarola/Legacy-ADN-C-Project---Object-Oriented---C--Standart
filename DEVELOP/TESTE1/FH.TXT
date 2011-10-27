@@ -1,0 +1,3195 @@
+//  This is the load file for the FairCom Help database.
+//
+//  Errors must be in the following format:
+//
+//  Error number  Error mnemonic  Product code
+//  Error message.
+//       <Blank line>
+//
+//  Updated:  9/27/96
+
+0 NO_ERROR CTREE
+Successful operation.
+
+1 PUSR_ERR RTREE
+Userfn returned non-zero.
+
+2 KDUP_ERR CTREE
+Key value already exists in index.
+
+3 KMAT_ERR CTREE
+Could not delete target key value since recbyt does not match
+associated data record position in index.
+
+4 KDEL_ERR CTREE
+Could not find target key value in index. No deletion performed.
+
+5 KBLD_ERR CTREE
+Cannot call DeleteKeyBlind with an index which supports duplicate
+keys.
+
+6 BJMP_ERR CTREE
+c-tree() function jump table error.
+
+7 TUSR_ERR CTREE
+Process has been marked for termination.  Could be caused by having an open transaction that spans more than four log files.  If so either shorten transaction or increase size of log files (see configuration option LOG_SPACE in Server Admin. Guide or #define MINLOGSPACE in Programmer's Reference - Data Integrity chapter).
+
+10 SPAC_ERR CTREE
+InitCTree() parameters require too much space.  A memory allocation failed during the c-tree initialization.    A memory allocation failed during the c-tree initialization.  You may need to reduce some of the values (bufs, fils or sects) in your initialization statement (InitCTree, InitISAM, etc.).
+
+11 SPRM_ERR CTREE
+Bad InitCTree() parameter(s): either bufs < 3, idxs < 0, sect < 1, or dats < 0.
+
+12 FNOP_ERR CTREE
+Could not open file: not there or locked. Either file does not
+exist, filnam points to incorrect file name, or file is locked by
+another process. Get errno which is stored in c-tree global
+variable sysiocod and look up in compiler documentation or errno.h.
+When, in server mode, FNOP_ERR is caused by conflicting open requests
+the value of sysiocod will be set to FCNF_COD (-8). For example: your
+open failed because another process had the file open in exclusive
+mode. When, in server mode version 6.05.26a or later, the FNOP_ERR
+was caused by a device access error the sysiocod value will be set
+to FDEV_COD (-9).
+
+13 FUNK_ERR CTREE
+OpenIFile() cannot determine type of file. Files from version
+4.3 or earlier must be converted using utility program ctcv43
+before they can be accessed by a c-tree 6.0 or newer program. 
+After converting the data use rebuild to create new indices.
+
+14 FCRP_ERR CTREE
+File appears corrupt at open. This occurs when a process exits
+without properly closing, via CloseIFile(), CloseISAM() etc., a
+file it has modified. Rebuild file using utility program ctrbld
+or function RebuildIFile().
+
+15 FCMP_ERR CTREE
+Data file has been compacted (ctcmpc), but not cleared through a 
+rebuild. Rebuild data file (but do not force rebuild) using
+utility program ctrbld or function RebuildIFile().
+
+16 KCRAT_ERR CTREE
+Could not create index file. Either no space is available on
+disk or filnam points to improper name. Get errno which is
+stored in c-tree global variable sysiocod and look up in compiler
+documentation or errno.h. When, in server mode version 6.05.26a or
+later, the KCRAT_ERR was caused by a device access error the
+sysiocod value will be set to FDEV_COD (-9).
+
+17 DCRAT_ERR CTREE
+Could not create data file. Either no space is available on disk
+or filnam points to improper name. Get errno which is stored in
+c-tree global variable sysiocod and look up in compiler
+documentation or errno.h. When, in server mode version 6.05.26a or
+later, the DCRAT_ERR was caused by a device access error the
+sysiocod value will be set to FDEV_COD (-9).
+
+18 KOPN_ERR CTREE
+Tried to create existing index file.
+
+19 DOPN_ERR CTREE
+Tried to create existing data file.
+
+20 KMIN_ERR CTREE
+Key length too large for node size. There must be room for at
+least three key values per node. The node size is given by sect
+* 128 where sect is the third InitCTree() parameter.
+
+21 DREC_ERR CTREE
+Cannot create fixed length data file with record length smaller
+than five.
+
+22 FNUM_ERR CTREE
+File number out of range: 0 <= filno < fils where fils is second
+InitCTree() parameter. This error may occur if c-tree has not
+been initialized (via InitISAM(), OpenISAM(), CreateISAM() or
+InitCTree()).
+
+23 KMEM_ERR CTREE
+Illegal index member info.
+
+24 FCLS_ERR CTREE
+Could not close file. Usually indicates that memory has been
+clobbered.
+
+25 KLNK_ERR CTREE
+Bad link in deleted node list. Rebuild file.
+
+26 FACS_ERR CTREE
+File number (datno, keyno, or filno) is not in use.
+
+27 LBOF_ERR CTREE
+Data record position before first actual data record. If recbyt
+is correct, then data file header record may be incorrect. If so,
+rebuild data file.
+
+28 ZDRN_ERR CTREE
+AddKey() called with recbyt = 0.
+
+29 ZREC_ERR CTREE
+Data file routine called with recbyt = 0.
+
+30 LEOF_ERR CTREE
+recbyt exceeds logical end of file. If recbyt is correct, then
+data file header record may be incorrect. If so, rebuild data
+file. Could be caused by having a single-user (NOTFORCE) application
+sharing files with other applications.
+
+31 DELFLG_ERR CTREE
+Next record in delete chain of a fixed record length data file
+does not have first byte set to ff (hex). Data file header record
+may be corrupt; if so, rebuild data file. This corruption could
+have been caused by improper locking on a delete or a rewrite.
+It is possible that the C255 constant is incorrect. Compile and
+execute cttest to determine proper setting for C255 constant in
+ctcmpl.h. If cttest has you change the constant value rebuild
+c-tree and your application.
+
+32 DDRN_ERR CTREE
+Attempt to delete data record twice.
+
+33 DNUL_ERR CTREE
+Attempted to use NULL recptr in call to ReadData(),
+ReReadRecord(), ReReadVRecord(), WriteData() or WriteVData(). 
+Probably a bad recptr in your index file. Try a rebuild.
+
+34 PRDS_ERR CTREE
+Could not find correct predecessor node. Should not show up in a
+single user system. Indicates that an index insertion was
+interrupted before completion. Rebuild index.
+
+35 SEEK_ERR CTREE
+lseek failed in function ctio (ctclib.c). Possible causes are:
+out of disk space, corrupted record position in file, or
+corrupted file descriptor. In multiuser non-unix could be caused
+by not having dummy lock as file 0. Get errno which is stored in
+c-tree global variable sysiocod and look up in compiler
+documentation or errno.h.
+
+36 READ_ERR CTREE
+read failed in function ctio (ctclib.c). Possible cause:
+corrupted data record position in file. Get errno which is
+stored in c-tree global variable sysiocod and look up in compiler
+documentation or errno.h.
+
+37 WRITE_ERR CTREE
+write failed in function ctio (ctclib.c). Possible causes are:
+out of disk space, corrupted record position in file, or
+corrupted file descriptor. Get errno which is stored in c-tree
+global variable sysiocod and look up in compiler documentation or
+errno.h.
+
+38 VRTO_ERR CTREE
+Could not convert a virtually opened file to an actually opened
+file. Get errno which is stored in c-tree global variable
+sysiocod and look up in compiler documentation or errno.h. Almost
+always caused by changing current working directory from within
+program when using files with relative paths. If you must change
+the current working directory using absolute path names will
+usually eliminate this error.
+
+39 FULL_ERR CTREE
+The four byte data record position (or node position) address
+space has been exhausted.
+
+40 KSIZ_ERR CTREE
+Buffers are too small for nodes. Node size was larger when index
+was created. In non-server mode the node size is controlled with
+the sect setting (sect is third InitCTree() parameter). In
+client-server mode node size is controlled with the PAGE_SIZE
+configuration parameter on the server. sects * 128 should equal
+PAGE_SIZE.
+
+41 UDLK_ERR CTREE
+Could not unlock data record. If dummy lock file is in use, be
+sure it is file 0 and has a file mode of 3 (FIXED | PERMANENT | SHARED).
+
+42 DLOK_ERR CTREE
+Could not obtain data record lock. In a DOS system, be sure that
+the network is up and share is loaded. Get errno which is stored
+in c-tree global variable sysiocod and look up in compiler
+documentation or errno.h.
+
+43 FVER_ERR CTREE
+Current configuration parameters are inconsistent with the
+configuration parameters at the time of file creation. Trying to
+access a 4.x file using 6.x. High-low low-high incompatibility.
+Using a parameter file when PARMFILE has not been set in
+ctoptn.h.
+
+44 OSRL_ERR CTREE
+Data file serial number overflow.
+
+45 KLEN_ERR CTREE
+Key length exceeds MAXLEN parameter. Change MAXLEN in ctopt2.h
+and recompile c-tree or use a shorter key.
+
+46 FUSE_ERR CTREE
+File number is already in use. Trying to open a file that is
+already open. Doing an open after a create (create also opens the
+file). Could be caused by having fils set too low in your
+InitISAM(). Could be caused by having improper setting for PERC_
+#define in ctoptn.h (compile and run cttest to check setting).
+If cttest has you make changes rebuild c-tree and your application.
+
+
+47 FINT_ERR CTREE
+c-tree has not been initialized. When using the ISAM functions
+you must use one of the ISAM initialization functions, not the
+lowlevel InitCTree().
+
+48 FMOD_ERR CTREE
+A function has been called for the wrong type of file: e.g., a
+variable record length function is called for a fixed record
+length data file. Possibly using incorrect file number.
+
+49 FSAV_ERR CTREE
+Could not save file. Could not write file directory updates to
+disk during file extension. Get errno which is stored in c-tree
+global variable sysiocod and look up in compiler documentation or
+errno.h.
+
+50 LNOD_ERR CTREE
+Could not lock index file node. If DOS/Windows make sure
+share.exe is loaded. If a dummy lock file is in use, be sure it
+has a file mode of 3 (FIXED | PERMANENT | SHARED).
+
+51 UNOD_ERR CTREE
+Could not unlock index file node. If a dummy lock file is in
+use, be sure it has a file mode of 3 (FIXED | PERMANENT |
+SHARED).
+
+52 KTYP_ERR CTREE
+Can not use variable-length keys if VARLKEYS has not been defined
+in ctoptn.h. After making any changes to ctoptn.h c-tree must be
+recompiled. This error could also be caused by using an invalid
+key type. Key types 1, 2, and 3 which were supported by c-tree
+version 4.3C and earlier are not supported in later versions.
+
+53 FTYP_ERR CTREE
+The file's file mode is inconsistent with the compile time
+options selected in ctoptn.h. Can not use a transaction processed
+file if TRANPROC has not been defined in ctoptn.h. Can not use a
+variable-length file if VARLDATA has not been defined in
+ctoptn.h. Can not use a superfile if CTSUPER has not been defined
+in ctoptn.h. After making any changes to ctoptn.h c-tree must be
+recompiled.
+
+54 REDF_ERR CTREE
+Attempt to write a read-only file.
+
+55 DLTF_ERR CTREE
+Could not delete file. Has another process gained control of the
+file?
+
+56 DLTP_ERR CTREE
+File must be opened with an EXCLUSIVE file mode for delete.
+
+57 DADV_ERR CTREE
+Proper lock is not held (CHECKLOCK/READ).
+
+58 KLOD_ERR CTREE
+LOADKEY called with incorrect key number. You cannot continue.
+
+59 KLOR_ERR CTREE
+LOADKEY called with key out of order. You may skip this key and
+continue.
+
+60 KFRC_ERR CTREE
+Percent out of range.
+
+61 CTNL_ERR CTREE
+NULL fcb detected during I/O.
+
+62 LERR_ERR CTREE
+File must be opened exclusively.
+
+63 RSER_ERR CTREE
+Start file / log file serial number error.
+
+64 RLEN_ERR CTREE
+Checkpoint past end of log file. Probably due to a mismatch
+between the S0000000.FCS (or S0000001.FCS) file and the
+Lxxxxxxx.FCS files.  Prior to version 6.04.24 - File name
+too long in log file.
+
+65 RMEM_ERR CTREE
+Not enough memory during transaction processing.
+
+66 RCHK_ERR CTREE
+Log file entry failed to find checkpoint. Usually caused by
+using an active transaction log (L*.FCS) for a ctfdmp or ctrdmp
+without first stopping and restarting the server. The stopping
+and restarting causes a checkpoint to be added to the log.
+
+67 RENF_ERR CTREE
+Could not rename file.
+
+68 LALC_ERR CTREE
+Could not allocate memory for control list.
+
+69 BNOD_ERR CTREE
+Node does not belong to index. Index has become corrupted. Try
+rebuilding. If this error is coming from the rebuild process on a
+variable-length file the internal space management index has
+probably become corrupted. Running a compact on the data file
+will rebuild this internal index. Be sure to rebuild after
+compaction or use CompactIFile() function to do both.
+
+70 TEXS_ERR CTREE
+Transaction already pending.
+
+71 TNON_ERR CTREE
+No active transaction.
+
+72 TSHD_ERR CTREE
+No space for shadow buffer. Out of memory.
+
+73 TLOG_ERR CTREE
+LOGFIL encountered during shadow only.
+
+74 TRAC_ERR CTREE
+Recovery: two active transactions for user.
+
+75 TROW_ERR CTREE
+Recovery: bad transaction owner.
+
+76 TBAD_ERR CTREE
+Recovery: bad transaction type.
+
+77 TRNM_ERR CTREE
+Recovery: file name too long.
+
+78 TABN_ERR CTREE
+Transaction abandoned: too many log extents or dynamic dump wait
+exhausted.
+
+79 FLOG_ERR CTREE
+Could not log file opn/cre/cls/del.
+
+80 BKEY_ERR CTREE
+NULL target or bad keyno.
+
+81 ATRN_ERR CTREE
+Transaction allocation error.
+
+82 UALC_ERR CTREE
+User allocation error. No memory available to allocate.
+
+83 IALC_ERR CTREE
+ISAM allocation error.  Unable to allocate memory.
+
+84 MUSR_ERR CTREE
+Maximum users exceeded. You have exceeded either the user limit
+of your server or server configuration option USERS in ctsrvr.cfg
+whichever is lower.
+
+85 LUPD_ERR CTREE
+Attempt to reduce write lock to read lock after update.
+
+86 DEAD_ERR CTREE
+Dead lock detected.
+
+87 QIET_ERR CTREE
+System not quiet: files in use.
+
+88 LMEM_ERR CTREE
+Linked list memory allocation error.
+
+89 TMEM_ERR CTREE
+Memory allocation during transaction processing.
+
+90 NQUE_ERR CTREE
+Could not create queue.
+
+91 QWRT_ERR CTREE
+Queue write error.
+
+92 QMRT_ERR CTREE
+Queue memory error during write.
+
+93 QRED_ERR CTREE
+Queue read error.
+
+94 PNDG_ERR CTREE
+Pending error: cannot save or commit transaction.
+
+95 STSK_ERR CTREE
+Could not start task. You have exceeded either the user limit of
+your server or server configuration option USERS in ctsrvr.cfg
+whichever is lower.
+
+96 LOPN_ERR CTREE
+Start-file/log open error.
+
+97 SUSR_ERR CTREE
+Bad user handle.
+
+98 BTMD_ERR CTREE
+Bad transaction mode.
+
+99 TTYP_ERR CTREE
+Transaction type / filmod conflict. Usually trying to update a TRANPROC
+file without having done a Begin(). Could be from doing a Begin(ENABLE)
+in a program where ISAM functions are not enabled.
+
+100 ICUR_ERR CTREE
+No current ISAM record for data file isam_fil.
+
+101 INOT_ERR CTREE
+Could not satisfy ISAM search request for index isam_fil.
+
+102 INOD_ERR CTREE
+ISAM parameter file does not exist. Be sure that filnam
+parameter points to correct name. isam_fil value is undefined.
+Could not open ISAM parameter file.
+
+103 IGIN_ERR CTREE
+Could not read ISAM parameter file Initialization record. 
+isam_fil is undefined. Be sure that parameter file is not empty.
+Be sure that the correct short integer input conversion character
+has been specified in ctoptn.h by compiling and running cttest.
+If cttest has you change the value you must recompile c-tree
+and your application.
+
+104 IFIL_ERR CTREE
+Too many data files and indices in ISAM parameter file. Change
+ctMAXFIL in ctoptn.h and recompile c-tree. If this is a client-
+server application increase c-tree global variable ctmaxparm
+(default is 50). isam_fil is undefined.
+
+105 IUND_ERR CTREE
+Could not undo a rejected ISAM update. Data file must be
+rebuilt. (During the rebuild, look for records with rejected
+duplicate key values.) This error is associated with c-tree V4.3
+or earlier. 
+
+106 IDRI_ERR CTREE
+Could not read ISAM parameter file Data File Description record
+for data file number isam_fil. Be sure that the number of
+paramaters in the parameter file is consistent with RTREE setting
+in ctoptn.h. If RTREE is defined in ctoptn.h extra parameters
+are required on the data and index lines of the parameter file.
+Since the servers are compiled with RTREE defined they require
+these extra parameters as well.
+
+107 IDRK_ERR CTREE
+Too many indices for data file number isam_fil in ISAM parameter
+file. Change MAX_DAT_KEY in ctopt2.h and rebuild c-tree or reduce
+number of keys.
+
+108 IMKY_ERR CTREE
+keyno for index file member out of sequence. keyno must equal
+host index file keyno plus member number. 
+
+109 IKRS_ERR CTREE
+Too many key segments defined in ISAM parameter file for index
+number isam_fil. Be sure that parameter file is consistent with
+RTREE setting in ctoptn.h. If RTREE is defined in ctoptn.h extra
+parameters are required on the data and index lines of the
+parameter file. Since the servers are compiled with RTREE defined
+they require these extra parameters as well. If this is not the
+case change MAX_KEY_SEG in ctopt2.h and rebuild c-tree or reduce
+the number of key segments you are using.
+
+110 ISRC_ERR CTREE
+Could not read ISAM parameter file Key Segment Description record
+for index number isam_fil. Be sure that parameter file is
+consistent with RTREE setting in ctoptn.h. If RTREE is defined in
+ctoptn.h extra parameters are required on the data and index
+lines of the parameter file. Since the servers are compiled with
+RTREE defined they require these extra parameters as well.
+
+111 IKRI_ERR CTREE
+Could not read ISAM parameter file Index File Description record. 
+isam_fil indicates the relative index number for an unspecified
+data file. Be sure that parameter file is consistent with RTREE
+setting in ctoptn.h. If RTREE is defined in ctoptn.h extra
+parameters are required on the data and index lines of the
+parameter file. Since the servers are compiled with RTREE defined
+they require these extra parameters as well.
+
+112 IPND_ERR CTREE
+LockISAM(ENABLE) found pending locks. This is caused by calling
+LockISAM() with a mode of ENABLE twice without having called with
+a mode of FREE or SUSPEND.
+
+113 INOL_ERR CTREE
+No memory for user lock table.
+
+114 IRED_ERR CTREE
+First byte of fixed-length data record found by ISAM routine
+equals delete flag (hex FF) or resource flag (hex FE). Usually
+caused by having a numeric field in the first position of a
+fixed-length data record.
+
+115 ISLN_ERR CTREE
+Sum of key segment lengths does not match key length for index
+number isam_fil. If the duplicate flag is set you must remember
+to add 4 bytes to the total key length. Be sure that parameter
+file is consistent with RTREE setting in ctoptn.h. If RTREE is
+defined in ctoptn.h extra parameters are required on the data and
+index lines of the parameter file. Since the servers are compiled
+with RTREE defined they require these extra parameters as well.
+
+116 IMOD_ERR CTREE
+Bad mode parameter.
+
+117 IMRI_ERR CTREE
+Could not read ISAM parameter file Index Member record. Be sure
+that parameter file is consistent with RTREE setting in ctoptn.h.
+If RTREE is defined in ctoptn.h extra parameters are required on
+the data and index lines of the parameter file. Since the servers
+are compiled with RTREE defined they require these extra
+parameters as well.
+
+118 SKEY_ERR CTREE
+NextInSet() or PreviousInSet() called with keyno which does not
+match keyno in last call to FirstInSet() or LastInSet().
+
+119 SKTY_ERR CTREE
+FirstInSet() called for index with wrong key type.
+
+120 RRLN_ERR CTREE
+Data record length exceeds rebuild max. Not enough dynamic
+memory for record buffer in ctrbld.c.
+
+121 KBUF_ERR CTREE
+Tried to update data with ctISAMKBUFhdr on. On versions prior to
+6.5A check file cterrc.h for 121 definition.
+
+122 RMOD_ERR CTREE
+Attempt to change between fixed and variable length records
+during rebuild. Once a data file is created, its record length
+characteristic cannot be changed.
+
+123 RVHD_ERR CTREE
+Variable-length data record is not preceded by a valid record
+mark. The file has apparently been corrupted. If this is a 
+fixed-length file you probably have a record with a value in the
+first byte that makes c-tree think it is a variable-length record
+or a resource. These values are 0xff, 0xfe or 0xfa. Remember that
+you can not store a numeric value in the first byte of a
+fixed-length record.
+
+124 INIX_ERR CTREE
+Number of indices in index file does not match IFIL structure in
+call to OpenIFile().
+
+125 IINT_ERR CTREE
+c-tree is already initialized via a previous call to InitISAM(),
+OpenISAM(), CreateISAM() or InitCTree().
+
+126 ABDR_ERR CTREE
+Bad directory path get.
+
+127 ARQS_ERR CTREE
+Could not send request. Fatal communications error. Reestablish
+communication with the server and begin again.
+
+128 ARSP_ERR CTREE
+Could not receive answer. Fatal communications error. 
+Reestablish communication with the server and begin again.
+
+129 NINT_ERR CTREE
+c-tree not initialized.
+
+130 AFNM_ERR CTREE
+NULL file name pointer in OpenIFile() or OpenCtFile().
+
+131 AFLN_ERR CTREE
+File name length exceeds message size.
+
+132 ASPC_ERR CTREE
+No room for application message buffer.
+
+133 ASKY_ERR CTREE
+Could not identify server or server is not active.
+
+134 ASID_ERR CTREE
+Could not get server's message id.
+
+135 AAID_ERR CTREE
+Could not allocate application id.
+
+136 AMST_ERR CTREE
+Could not get application message status.
+
+137 AMQZ_ERR CTREE
+Could not set application message size.
+
+138 AMRD_ERR CTREE
+Could not get rid of application message.
+
+139 ABNM_ERR CTREE
+Badly formed file name.
+
+140 VMAX_ERR CTREE
+Variable record length exceeds 65,529 bytes.
+
+141 AMSG_ERR CTREE
+Required message size exceeds maximum.
+
+142 SMXL_ERR CTREE
+Application MAXLEN in ctopt2.h > server's MAXLEN.
+
+143 SHND_ERR CTREE
+Communications handler not installed.
+
+144 QMEM_ERR CTREE
+Application could not identify output queue.
+
+145 SCSF_ERR CTREE
+No message space. Was login ok? Could not find COMM software.
+
+146 VDLK_ERR CTREE
+Could not update available space information in variable record
+length data file. Try rebuild.
+
+147 VDLFLG_ERR CTREE
+Record pointed to by available space information is not marked
+deleted in variable record length data file. Try rebuild.
+
+148 VLEN_ERR CTREE
+Attempt to write a variable length record into a file position
+which is too small for the record. WriteVData() cannot fit record
+at recbyt. If you are using ISAM level functions this could
+indicate a corrupt space management index. Try rebuild.
+
+149 VRLN_ERR CTREE
+Variable record length passed to AddVRecord() is less than
+minimum record length established at file creation.
+
+150 SHUT_ERR CTREE
+Server is shutting down.
+
+151 STRN_ERR CTREE
+Could not shut down. Transactions pending.
+
+152 LEXT_ERR CTREE
+Could not extend logfile.
+
+153 VBSZ_ERR CTREE
+Buffer in call to variable length read function is too small for
+the variable length record.
+
+154 VRCL_ERR CTREE
+Attempt to read (ReReadVRecord()) a zero length record from a
+variable record length data file. 
+
+155 SYST_ERR CTREE
+Native system failure.
+
+156 NTIM_ERR CTREE
+Monitor timed-out without event.
+
+158 VFLG_ERR CTREE
+Attempt to read (ReReadVRecord()) a record not marked active.
+
+159 VPNT_ERR CTREE
+Zero data record position in variable record length function.
+Could also be caused by having a file defined with transaction
+processing when transaction processing has not been enabled.
+
+160 ITIM_ERR CTREE
+Multi-user interference: key value changed between index search
+and subsequent data record read. Or more likely: index file and
+data file key information do not match. Possible causes are:
+corrupt data or index records or numeric in first position on a
+fixed-length record. If this data file is being ported from
+another machine or compiler check high-low incompatibility
+and/or byte alignment of numeric fields.
+
+161 SINA_ERR CTREE
+User appears inactive.
+
+162 SGON_ERR CTREE
+Server has gone away. Probably running out of system semaphores.
+
+163 SFRE_ERR CTREE
+No more room in server lock table.
+
+164 SFIL_ERR CTREE
+File number out of range.
+
+165 SNFB_ERR CTREE
+No c-tree file control block available. Increase number of files
+allocated in init statement. In client-server mode may also have
+to increaase FILES parameter in ctsrvr.cfg file.
+
+166 SNMC_ERR CTREE
+No more c-tree file control blocks in server.
+
+167 SRQS_ERR CTREE
+Could not read request.
+
+168 SRSP_ERR CTREE
+Could not send answer.
+
+169 TCRE_ERR CTREE
+Create file already opened (in recovery).
+
+170 SFUN_ERR CTREE
+Bad function number at server.
+
+171 SMSG_ERR CTREE
+Application message size exceeds server size.
+
+172 SSPC_ERR CTREE
+Could not allocate server message buffer.
+
+173 SSKY_ERR CTREE
+Could not identify server.
+
+174 SSID_ERR CTREE
+Could not get server message id.
+
+175 SAMS_ERR CTREE
+Server could not allocate user message area.
+
+176 SMST_ERR CTREE
+Could not get server message status.
+
+177 SMQZ_ERR CTREE
+Could not set message server message size.
+
+178 SINM_ERR CTREE
+Unexpected file number assigned to [si] in recovery.
+
+179 SOUT_ERR CTREE
+Server is at full user capacity.
+
+180 IKRU_ERR CTREE
+Could not read r-tree symbolic index name.
+
+181 IKMU_ERR CTREE
+Could not get dynamic memory for r-tree symbolic index name.
+
+182 IKSR_ERR CTREE
+fils > (MAXFIL - ctRT_FILES) where: fils is number of files
+specified in c-tree initialization; MAXFIL is maximum number of
+files c-tree can have open specified in ctopt2.h (default 50);
+ctRT_FILES is the number of file handles r-tree will be allowed
+to use specified in ctopt2.h (default 3). If any changes are
+made to ctopt2.h you must recompile c-tree and your application.
+
+183 IDRU_ERR CTREE
+Could not read file field number values.
+
+184 ISDP_ERR CTREE
+Attempt to reallocate set space.
+
+185 ISAL_ERR CTREE
+Not enough memory for additional sets or batches.
+
+186 ISNM_ERR CTREE
+Set number out of range.
+
+187 IRBF_ERR CTREE
+Null buffer in rtread.c.
+
+188 ITBF_ERR CTREE
+Null target buffer in rtread.c.
+
+189 IJSK_ERR CTREE
+JOINS_TO skip.
+
+190 IJER_ERR CTREE
+JOINS_TO error.
+
+191 IJNL_ERR CTREE
+JOINS_TO null fill.
+
+192 IDSK_ERR CTREE
+IS_DETAIL_FOR skip.
+
+193 IDER_ERR CTREE
+IS_DETAIL_FOR error.
+
+194 IDNL_ERR CTREE
+IS_DETAIL_FOR null fill condition in r-tree.
+
+195 IDMU_ERR CTREE
+Could not get dynamic memory for data field symbolic name.
+
+196 ITML_ERR CTREE
+Exceeded RETRY_LIMIT in RTREAD.C.
+
+197 IMEM_ERR CTREE
+Could not get memory for ifil block.
+
+198 BIFL_ERR CTREE
+Improper ifil block. There appears to be a null pointer in the
+IFIL, IIDX, or ISEG structures. Can also be caused by having
+application compiled with different compiler alignment than c-
+tree library.
+
+199 NSCH_ERR CTREE
+Schema not defined for data file.
+
+200 200 CTREE
+Neither HIGH_LOW nor LOW_HIGH is defined in ctoptn.h. Compile
+and run cttest to determine which setting is correct for your
+machine. Add the proper define to ctoptn.h and recompile c-tree
+and your application.
+
+201 201 CTREE
+Both HIGH_LOW and LOW_HIGH are defined in ctoptn.h. Compile and
+run cttest to determine which setting is correct for your
+machine. Remove the incorrect define from ctoptn.h and recompile
+c-tree and your application.
+
+202 202 CTREE
+Neither FPUTFGET (multi-user) nor NOTFORCE (single-user) is
+defined in ctoptn.h. Add the proper define to ctoptn.h and
+recompile c-tree.
+
+203 203 CTREE
+Both FPUTFGET (multi-user) and NOTFORCE (single-user) are defined
+in ctoptn.h. Remove the incorrect define from ctoptn.h and
+recompile c-tree.
+
+206 206 CTREE
+Update flag inconsistency between index file header and buffer
+status information.
+
+207 207 CTREE
+Corrupt node found in nodser function.
+
+208 208 CTREE
+Updated (but not written) node found in FPUTFGET disk I/O mode. 
+Usually result of memory corruption.
+
+209 209 CTREE
+nodpnt routine called for a duplicate leaf node. Usually result
+of memory corruption.
+
+210 210 CTREE
+Undefined key type found in compar. Usually result of memory
+corruption.
+
+211 211 CTREE
+Negative number of key values indicated in node. Could be the result of a disk problem, try rebuild. Usually result of memory corruption. 
+
+212 212 CTREE
+No leaf node found during FirstKey() operation. Could be the result of a disk problem, try rebuild.
+Usually result of memory corruption.
+
+213 213 CTREE
+No leaf node found during LastKey() operation. Could be the result of a disk problem, try rebuild.
+Usually result of memory corruption.
+
+214 214 CTREE
+Corrupt tree found in fndkey. Could be the result of a disk problem, try rebuild.
+Usually result of memory corruption.
+
+215 215 CTREE
+No leaf node found in fndkey. Could be the result of a disk problem, try rebuild.
+Usually result of memory corruption.
+
+216 216 CTREE
+Attempt to save node with negative number of key values. Usually
+results from memory corruption.
+
+217 217 CTREE
+Attempt to transfer key values between buffers for two different
+index files. Usually result of memory corruption.
+
+218 218 CTREE
+Corrupt tree found in AddKey(). Could be the result of a disk problem, try rebuild.
+Usually result of memory corruption.
+
+219 219 CTREE
+No leaf node found in AddKey(). Could be the result of a disk problem, try rebuild.
+Usually result of memory corruption.
+
+220 220 CTREE
+Corrupt tree found in DeleteKey(). Could be the result of a disk problem, try rebuild.
+Usually result of memory corruption.
+
+221 221 CTREE
+No leaf node found in DeleteKey(). Could be the result of a disk problem, try rebuild.
+Usually result of memory corruption.
+
+222 222 CTREE
+Undefined file access flag found: filacs member of file control
+structure must be set to 'y' (active), 'v' (active, but
+temporarily closed), or 'n' (not active). Usually result of
+memory corruption.
+
+225 225 CTREE
+VARLDATA not defined in ctoptn.h. Select VARLDATA option and
+recompile ctaddk.c. Usually result of memory corruption.
+
+226 226 CTREE
+Undefined key segment translation mode. Usually result of memory
+corruption.
+
+227 227 CTREE
+While extending the size of a fixed record length data file,
+delete flags could not be written into new (but unused) records
+at the end of the file. Usually result of memory corruption.
+
+228 228 CTREE
+Expected deleted record mark not found while collapsing
+consecutive deleted areas. Usually result of memory corruption.
+
+230 230 CTREE
+B-Tree node has conflicting member number value during write
+operation. Usually result of memory corruption.
+
+231 231 CTREE
+B-tree node has conflicting member number value during read
+operation. Usually result of memory corruption.
+
+232 232 CTREE
+Attempt to expand non-existent compressed key value. Usually
+result of memory corruption.
+
+233 233 CTREE
+Illegal value for key compression bytes. Usually result of
+memory corruption.
+
+235 235 CTREE
+Illegal comparison value during node insert. Try an index
+rebuild. If this does not resolve problem it could be result of
+memory corruption.
+
+236 236 CTREE
+Illegal key value shift detected with compressed keys. Usually
+result of memory corruption.
+
+237 237 CTREE
+Attempt to get an index node at byte offset zero. Run cttest to
+confirm c-tree is properly configured for your machine. If
+cttest has you make changes rebuild c-tree and your application.
+More often result of memory corruption.
+
+238 238 CTREE
+Illegal key value shift detected with compressed keys. Usually
+result of memory corruption.
+
+239 239 CTREE
+Variable key expansion request without VARLKEYS defined in
+ctoptn.h. If changes are made to ctoptn.h c-tree must be
+recompiled.
+
+240 240 CTREE
+Exceeded maximum b-tree levels. Increase MAXLEV in ctopt2.h and
+recompile c-tree or increase number of node sectors.
+
+301 PSYN_ERR RTREE
+Syntax error.
+
+302 PSTK_ERR RTREE
+Parse stack overflow.
+
+303 PUST_ERR RTREE
+User stack overflow.
+
+304 PEOI_ERR RTREE
+End of input stream.
+
+305 PRED_ERR RTREE
+Bad case in reduce.
+
+306 PILL_ERR RTREE
+Illegal term in scan.
+
+307 PLEN_ERR RTREE
+Max symbol length exceeded. Increase MAX_TOK_LEN in rtpars.h and
+recompile r-tree.
+
+308 PDUP_ERR RTREE
+Reduction called twice.
+
+309 PROV_ERR RTREE
+Program script overflow.
+
+310 PSMB_ERR RTREE
+Undefined SYMBOL.
+
+311 PCLS_ERR RTREE
+Undefined class character.
+
+312 PKEY_ERR RTREE
+Index key required.
+
+313 PMEM_ERR RTREE
+Not enough memory for dynamic alloc: virt or routine.
+
+314 PVAL_ERR RTREE
+Attempt to convert a class other than field or virtual to a value
+for prog script.
+
+315 PCMP_ERR RTREE
+Incompatible operands.
+
+316 PSTR_ERR RTREE
+String operand not allowed.
+
+317 PCLU_ERR RTREE
+Class member undefined.
+
+318 PACC_ERR RTREE
+Improper accumulator usage.
+
+319 PCVL_ERR RTREE
+Unexpected cvalue type.
+
+320 PNUM_ERR RTREE
+Non string value in concatenate.
+
+321 PRST_ERR RTREE
+Runtime stack overflow.
+
+322 PCON_ERR RTREE
+Not enough memory for concatenate.
+
+323 PCST_ERR RTREE
+Unexpected number of concatenate.
+
+324 PBAC_ERR RTREE
+Bad action in run_prog.
+
+325 PFUN_ERR RTREE
+Undefined ROUTINE ().
+
+326 PRFN_ERR RTREE
+Undefined function number in rtuser.c.
+
+327 PGRP_ERR RTREE
+End of group SIGNAL.
+
+328 PFIL_ERR RTREE
+File naming error.  The file name in the script must be exactly as defined in the IFIL structure or parameter file.  The names are case sensitive.
+
+329 PFRL_ERR RTREE
+File relationship error.
+
+330 PRVL_ERR RTREE
+Range value sequence error.
+
+331 PSMM_ERR RTREE
+Set memory error.
+
+332 PVER_ERR RTREE
+Compiled script incompatable with current r-tree/c-tree versions.
+
+333 PSNG_ERR RTREE
+Compiled script: MAX_DSTRNG changed since script compilation.
+
+334 PMEX_ERR RTREE
+Set function conflict with file hierarchy.
+
+335 PREX_ERR RTREE
+Illegal reversed virtual. More than one pass for set function.
+
+336 PRFO_ERR RTREE
+Could not open report file.
+
+337 PRFB_ERR RTREE
+Could not allocate report script buffer.
+
+338 PDYM_ERR RTREE
+Could not allocate dynamic memory.
+
+339 PMHR_ERR RTREE
+Mixed file hierarchies.
+
+340 PFLV_ERR RTREE
+Too many file levels.
+
+341 PFHR_ERR RTREE
+Too many file sub-hierarchies.
+
+342 PEXL_ERR RTREE
+EXS level < MN_LEVEL: Set function applied to top of hierarchy.
+
+343 PNFM_ERR RTREE
+Run-time numeric format error '?????'.
+
+344 PLSH_ERR RTREE
+SELECT / SORT incompatible.
+
+345 PSSH_ERR RTREE
+SORT segments incompatible.
+
+346 PDVZ_ERR RTREE
+Divide by zero.
+
+347 PSRO_ERR RTREE
+Could not create SORT IDX.
+
+348 PXST_ERR RTREE
+Could not allocate memory for set function.
+
+349 PFST_ERR RTREE
+String required in function.
+
+350 PFNM_ERR RTREE
+Numeric required in function.
+
+351 PDSY_ERR RTREE
+Data field name not in DODA.
+
+352 PRDY_ERR RTREE
+Symbol already defined.
+
+353 PFRQ_ERR RTREE
+FREQUENCY has more than 1 argument.
+
+354 PPIN_ERR RTREE
+Positive integer required.
+
+355 PDMX_ERR RTREE
+Too many bytes for DSTRING.
+
+356 PDTE_ERR RTREE
+Date required as function input.
+
+357 PLNG_ERR RTREE
+Long required as function input.
+
+358 PLEV_ERR RTREE
+Image level out of range.
+
+359 PFNA_ERR RTREE
+Accumulator can not be function argument.
+
+360 PFRM_ERR RTREE
+Symbols do not match formats.
+
+361 PEND_ERR RTREE
+End of report SIGNAL.
+
+362 PSVL_ERR RTREE
+Not enough values for format.
+
+363 PDEV_ERR RTREE
+Output device error.
+
+364 PRTN_ERR RTREE
+Bad field type in DODA.
+
+365 PSEG_ERR RTREE
+Illegal sort segment.
+
+366 PSTI_ERR RTREE
+RTSTATUS inconsistency.
+
+367 POCS_ERR RTREE
+Could not open compiled file.
+
+368 PMMI_ERR RTREE
+Memory model inconsistency.
+
+369 PDOI_ERR RTREE
+Data object inconsistency.
+
+370 PKWI_ERR RTREE
+Keyword inconsistency.
+
+371 PCLN_ERR RTREE
+Compiler rec length error.
+
+372 PCRD_ERR RTREE
+Could not read object file.
+
+373 PCDM_ERR RTREE
+Dynamic memory failure.
+
+374 PALS_ERR RTREE
+Alias error.
+
+375 PSPC_ERR RTREE
+Format specification error.
+
+376 PWWA_ERR RTREE
+Active word wrap.
+
+377 PWWN_ERR RTREE
+Too many active word wraps.
+
+378 PWWT_ERR RTREE
+Bad type for word wrap.
+
+379 PVTY_ERR RTREE
+Virtual type mismatch.
+
+380 PFDB_ERR RTREE
+Function requires DOUBLE.
+
+400 RCRE_ERR CTREE
+Resource already enabled.
+
+401 RNON_ERR CTREE
+Resources not enabled. Resource header pointer (reshdr) in file
+header is null.
+
+402 RXCL_ERR CTREE
+File must be exclusive to enable resources.
+
+403 RZRO_ERR CTREE
+Empty resource id.
+
+404 RBUF_ERR CTREE
+Output buffer too small.
+
+405 RDUP_ERR CTREE
+Resource id already added.
+
+406 RCSE_ERR CTREE
+Bad resource search mode.
+
+407 RRED_ERR CTREE
+Attempt to get non-resource info. A record in the resource chain
+does not begin with 0xFEFE. You may have to go to a backup file.
+
+408 RNOT_ERR CTREE
+Resource not found.
+
+409 LKEP_ERR CTREE
+Not in use: available.
+
+410 USTP_ERR CTREE
+User not active.
+
+411 BSUP_ERR CTREE
+Not a superfile.
+
+412 LCIP_ERR CTREE
+WRL to WXL commit promote pending(CIL). Attempt to create open
+superfile member.
+
+413 SDIR_ERR CTREE
+Superfile host not opened.  When doing OpenFileWithResource() on a superfile
+member be sure to specify the superfile name extension ie:
+suprfile.dat!member.dat.
+
+414 SNST_ERR CTREE
+Cannot nest superfiles.
+
+415 SADD_ERR CTREE
+Illegal AddKey() to superfile.
+
+416 SDEL_ERR CTREE
+Illegal DeleteKeyBlind() to superfile.
+
+417 SPAG_ERR CTREE
+Cache page size error. The sect setting specified in the open
+is different, probably smaller, than the sect setting with
+which the file was created. With transaction processing: if
+PAGE_SIZE (server) or sect parameter in init (non-server) has
+been modified you will also need to delete or rename all the .FCS files.
+
+418 SNAM_ERR CTREE
+Superfile created with maximum name length exceeding current
+maximum. Increase MAX_NAME (default 255) in ctopt2.h and
+recompile c-tree or reduce your name length. The name length
+includes the fully qualified path.
+
+419 SRCV_ERR CTREE
+Host superfile does not support recovery.
+
+420 TPND_ERR CTREE
+Key update with pending transaction. You have tried to update
+an index node that is currently locked by another transaction.
+
+421 BTFL_ERR CTREE
+Filter not yet supported. You probably have an invalid value in
+the mode parameter of a DoBatch() call.
+
+422 BTFN_ERR CTREE
+Function not supported. You probably have an invalid value in
+the mode parameter of a DoBatch() call.
+
+423 BTIC_ERR CTREE
+Incomplete batch. You specified BAT_COMPLETE in a DoBatch()
+call.
+
+424 BTAD_ERR CTREE
+Add list error. Unable to allocate memory. Memory may be exhausted
+or you may have a memory overwrite of some sort.
+
+425 BTIP_ERR CTREE
+Batch already in progress. You made a call to DoBatch() to open
+a new batch before you completed the prior one. Make a call with
+a mode of BAT_CAN first.
+
+426 BTNO_ERR CTREE
+No batch active. You are calling DoBatch() with a mode of
+BAT_CAN or BAT_NEXT while no batch is active.
+
+427 BTST_ERR CTREE
+Status info already returned. You are making two consecutive
+DoBatch() calls looking just for status information.
+
+428 BTMT_ERR CTREE
+No more info, batch cancelled.
+
+429 BTBZ_ERR CTREE
+Bufsiz too small for a single record. You need a larger buffer
+for this file.
+
+430 BTRQ_ERR CTREE
+Request is empty or inconsistent.
+
+431 LAGR_ERR CTREE
+Aggregate/serialization lock denied.
+
+432 FLEN_ERR CTREE
+Fixed length string requires length in DODA.
+
+433 SSCH_ERR CTREE
+Segment definition inconsistent with schema. Probably specifying a schema field number higher than the number of fields in your DODA. Make sure the numfld parameter is correct in PutDODA call. Also remember if numfld is X the schema fields will be numbered 0 thru X-1.
+
+434 DLEN_ERR CTREE
+Very long def block not supported.
+
+435 FMEM_ERR CTREE
+File def memory error.
+
+436 DNUM_ERR CTREE
+Bad def number.
+
+437 DADR_ERR CTREE
+defptr NULL during GETDEFBLK.
+
+438 DZRO_ERR CTREE
+Requested def blk is empty. Resource not found.
+
+439 DCNV_ERR CTREE
+No conversion routine for Definition Block.
+
+440 DDDM_ERR CTREE
+Dynamic dump already in progress.
+
+441 DMEM_ERR CTREE
+No memory for dynamic dump file buffer.
+
+442 DAVL_ERR CTREE
+One or more files not available for dump.
+
+443 DSIZ_ERR CTREE
+File length discrepancy.
+
+444 DCRE_ERR CTREE
+Could not create file during dump recovery.
+
+445 SDAT_ERR CTREE
+Not enough data to assemble key value. Key value on fixed field
+going beyond end of record or end of fixed portion. (i.e., key
+defined to begin at byte 20 and is 10 bytes long but record
+length is only 25 bytes.) Key value on variable field that does
+not exist. (i.e., key defined over the third variable-length
+field but only two variable-length fields exist in the record.)
+
+446 BMOD_ERR CTREE
+Bad key segment mode.
+
+447 BOWN_ERR CTREE
+Only the file's owner can perform requested operation.
+
+448 DEFP_ERR CTREE
+Permission to set file definition denied.
+
+449 DADM_ERR CTREE
+ADMIN has opened file. Cannot delete file.
+
+450 LUID_ERR CTREE
+Invalid user id.
+
+451 LPWD_ERR CTREE
+Invalid password.
+
+452 LSRV_ERR CTREE
+Server could not process user/acct information.
+
+453 NSRV_ERR CTREE
+No such server.
+
+454 NSUP_ERR CTREE
+Service not supported.
+
+455 SGRP_ERR CTREE
+User does not belong to group.
+
+456 SACS_ERR CTREE
+Group access denied.
+
+457 SPWD_ERR CTREE
+File password invalid.
+
+458 SWRT_ERR CTREE
+Write permission not granted.
+
+459 SDLT_ERR CTREE
+File delete permission denied.
+
+460 SRES_ERR CTREE
+Resource not enabled.
+
+461 SPER_ERR CTREE
+Bad permission flag.
+
+462 SHDR_ERR CTREE
+No directory found in superfile.
+
+463 UQID_ERR CTREE
+File does not have unique Server/File number.
+
+464 IISM_ERR CTREE
+ISAM level logon not performed.
+
+465 IINI_ERR CTREE
+Incremental Index: dnumidx < 1.
+
+466 IIDT_ERR CTREE
+Incremental Index: dfilno not a ISAM file.
+
+467 IINM_ERR CTREE
+Incremental Index: aidxnam NULL for 1st.
+
+468 IITR_ERR CTREE
+Incremental Index: active transaction not allowed.
+
+469 NGIO_ERR CTREE
+Negative I/O request.
+
+470 LGST_ERR CTREE
+Guest logons disabled.
+
+471 471 CTREE
+Error deleting sortwork file.
+
+472 472 CTREE
+Error creating unique name.
+
+473 473 CTREE
+Error opening first dummy file.
+
+474 474 CTREE
+Too few handles available - minimum 3.
+
+475 475 CTREE
+Error closing dummy file. 
+
+476 476 CTREE
+Error unlinking dummy file.
+
+477 477 CTREE
+Error getting first data area.
+
+478 478 CTREE
+sinit phase not previously performed - srelease.
+
+479 479 CTREE
+sreturn phase already started.
+
+480 480 CTREE
+No records in data buffers.
+
+481 481 CTREE
+sint phase not previously performed - sreturn.
+
+482 482 CTREE
+Not enough memory.
+
+483 483 TREE
+No valid record pointers in merge buffers.
+
+484 484 CTREE
+Error opening sortwork file. c-tree will use some additional
+file handles for sorting during a rebuild. The number used is
+defined by MAX_HANDLES in ctsort.h. Make sure the number of files
+allocated is sufficient to allow for these extra files to be
+opened. The file allocation is specified by the number of indices
+allocated in the first line of your pfile or the fils parameter
+in InitISAM().
+
+485 485 CTREE
+Error creating sortwork.00x file. c-tree will use some additional
+file handles for sorting during a rebuild. The number used is
+defined by MAX_HANDLES in ctsort.h. Make sure the number of files
+allocated is sufficient to allow for these extra files to be
+opened. The file allocation is specified by the number of indices
+allocated in the first line of your pfile or the fils parameter
+in InitISAM(). Could also be insufficient priviliges to create
+files in directory #defined to WORK_DRIVE_OR_PATH.
+
+486 486 CTREE
+No records fit in output buffer.
+
+487 487 CTREE
+Error reading sortwork file.
+
+488 488 CTREE
+Bytes in buffer not equal merge buffer size.
+
+489 489 CTREE
+Error adjusting file pointer.
+
+490 490 CTREE
+Error closing sortwork.00x.
+
+491 491 CTREE
+Error closing sortwork file.
+
+492 492 CTREE
+Error deleting sortwork file.
+
+493 493 CTREE
+Error renaming sortwork.00x.
+
+494 494 CTREE
+Error closing output file.
+
+495 495 CTREE
+Error creating output file. c-tree will use some additional file
+handles for sorting during a rebuild. The number used is defined
+by MAX_HANDLES in ctsort.h. Make sure the number of files
+allocated is sufficient to allow for these extra files to be
+opened. The file allocation is specified by the number of indices
+allocated in the first line of your pfile or the fils parameter
+in InitISAM().
+
+496 496 CTREE
+Insufficient disk space.
+
+498 NLOG_ERR CTREE
+Old log file found during log create.
+
+499 FIDD_ERR CTREE
+Mismatch between recovery log and file id.
+
+4F1 ERR_4F1 DTREE
+DT_RWREC - First byte of record is a delete flag.
+
+500 SQLINIT_ERR CTREE
+Server could not initialize SQL engine.
+
+501 SQLCONNECT_ERR CTREE
+Could not initialize SQL for a user.
+
+502 SQL_REQUEST_ERROR CTREE
+Could not access SQL master info.
+
+503 SQL_INVALID_CONTINUE CTREE
+Could not continue SQL request.
+
+504 NSQL_ERR CTREE
+Server does not support SQL.
+
+505 USQL_ERR CTREE
+User profile does not enable SQL.
+
+506 SRFL_ERR CTREE
+Could not open save-restore file.
+
+507 SRIO_ERR CTREE
+Could not process save-restore file.
+
+508 SRIN_ERR CTREE
+Save restore inconsistency.
+
+509 DSRV_ERR CTREE
+Duplicate server.
+
+510 RFCK_ERR CTREE
+Active chkpnt at start of roll-forward.
+
+511 ILOP_ERR CTREE
+Index nodes form illegal loop: rebuild.
+
+512 DLOP_ERR CTREE
+Data file loop detected.
+
+513 SBLF_ERR CTREE
+FPUTFGET (multi-user) does not support SuperfilePrepassXtd().
+
+514 CQUE_ERR CTREE
+Queue has been closed.
+
+515 OIFL_ERR CTREE
+Cannot convert old IFIL structure.
+
+516 GNUL_ERR CTREE
+ctNOGLOBALS structure not allocated.
+
+517 GNOT_ERR CTREE
+'regid' is not registered.
+
+518 GEXS_ERR CTREE
+'regid' is already registered.
+
+519 IEOF_ERR CTREE
+Index logical EOF error. Should not be returned in multi-user
+non-server (FPUTFGET) mode. There was a problem in V6.4B that
+could cause this error to be returned in FPUTFGET mode.
+
+520 HTRN_ERR CTREE
+Attempt to update index with inconsistent transaction number. Can
+happen when log files have been deleted and then a data file is
+opened within a transaction, which is not allowed. See Begin() in
+c-tree Plus Function Reference Guide.
+
+521 BMAL_ERR CTREE
+Could not allocate memory for the streettalk login message
+buffer.
+
+522 STID_ERR CTREE
+Userid in INTISAM does not match current login id.
+
+530 LMTC_ERR CTREE
+Client does not match server.
+
+531 BREP_ERR CTREE
+Index reorg entry error.
+
+532 ASAV_ERR CTREE
+TRANSAV called with AUTOSAVE on.
+
+533 MTRN_ERR CTREE
+File header high-water-mark overflow.
+
+534 OTRN_ERR CTREE
+Transaction number overflow.
+
+535 REGC_ERR CTREE
+c-tree not registered. Call RegisterCtree.
+
+538 PIOT_ERR CTREE
+Client-side bad function array type.
+
+539 BFIL_COD CTREE
+Actually -539, sysiocod when file does not appear to contain any valid
+information.
+
+540 PNUL_ERR CTREE
+Unexpected null parameter has been passed.
+
+541 LWRT_ERR CTREE
+Transaction log cannot be written.
+
+542 MCRE_ERR CTREE
+Could not create mirror file.
+
+543 MOPN_ERR CTREE
+Could not open mirror file.
+
+544 MCLS_ERR CTREE
+Could not close mirror file.
+
+545 MDLT_ERR CTREE
+Could not delete mirror file.
+
+546 MWRT_ERR CTREE
+Could not write to mirror file.
+
+547 MSAV_ERR CTREE
+Could not save mirror file.
+
+548 MRED_ERR CTREE
+Could not read header in mirror file.
+
+549 MHDR_ERR CTREE
+Mismatch between mirror headers.
+
+550 MSKP_ERR CTREE
+Attempt to open primary without mirror: or'ing in a file mode of
+MIRROR_SKP permits a primary to be opened without this error.
+
+551 MNOT_ERR CTREE
+File already opened without mirror.
+
+555 PREA_ERR CTREE
+Could not read primary, switching.
+
+556 PWRT_ERR CTREE
+Could not write primary, switching.
+
+557 CWRT_ERR CTREE
+Could not write mirror, suspend mirroring.
+
+558 PSAV_ERR CTREE
+Could not save primary, switching.
+
+559 CSAV_ERR CTREE
+Could not save mirror, suspend mirroring.
+
+560 SMON_ERR CTREE
+Only one of each monitor at a time.
+
+561 DDMP_BEG CTREE
+SYSMON: dynamic dump begins.
+
+562 DDMP_END CTREE
+SYSMON: dynamic dump ends.
+
+563 DDMP_ERR CTREE
+SYSMON: dynamic dump ends (errors).
+
+570 RCL1_ERR CTREE
+At the end of automatic recovery, the following condition was
+detected which requires cleanup before continuing. The specifics
+are reported on in CTSTATUS.FCS: Incomplete compression.
+
+571 RCL2_ERR CTREE
+At the end of automatic recovery, the following condition was
+detected which requires cleanup before continuing. The specifics
+are reported on in CTSTATUS.FCS: Index rebuild required.
+
+572 RCL3_ERR CTREE
+At the end of automatic recovery, the following conditions were
+detected which require cleanup before continuing. The specifics
+are reported on in CTSTATUS.FCS: 1)Incomplete compression.
+2)Index rebuild required.
+
+573 RCL4_ERR CTREE
+At the end of automatic recovery, the following condition was
+detected which requires cleanup before continuing. The specifics
+are reported on in CTSTATUS.FCS: Primary\mirror out-of-sync. 
+Copy good file over bad.
+
+574 RCL5_ERR CTREE
+At the end of automatic recovery, the following conditions were
+detected which require cleanup before continuing. The specifics
+are reported on in CTSTATUS.FCS: 1)Incomplete compression.
+2)Primary\mirror out-of-sync. Copy good file over bad.
+
+575 RCL6_ERR CTREE
+At the end of automatic recovery, the following conditions were
+detected which require cleanup before continuing. The specifics
+are reported on in CTSTATUS.FCS: 1)Index rebuild required.
+2)Primary\mirror out-of-sync. Copy good file over bad.
+
+576 RCL7_ERR CTREE
+At the end of automatic recovery, the following conditions were
+detected which require cleanup before continuing. The specifics
+are reported on in CTSTATUS.FCS: 1)Incomplete compression.
+2)Index rebuild required. 3)Primary\mirror out-of-sync. Copy good
+file over bad.
+
+590 NCON_ERR CTREE
+Could not find ISAM context ID.
+
+591 OCON_ERR CTREE
+Old context ID. Call CLSICON().
+
+592 ECON_ERR CTREE
+Context ID already exists.
+
+595 CLEN_ERR CTREE
+varlen too small in PUTCIDX.
+
+596 CMIS_ERR CTREE
+Missing information.
+
+597 CINI_ERR CTREE
+Could not initialize expression.
+
+598 CVAL_ERR CTREE
+Could not evalutate condtional expression.
+
+5E1 ERR_5E1 DTREE
+DTPMENUS - Space Allocation Error.
+
+5E2 ERR_5E2 DTREE
+DTPMENUS - Menu Call type must follow input criteria.
+
+5E3 ERR_5E3 DTREE
+DTPMENUS - Must enter Compare Criteria.
+
+5E4 ERR_5E4 DTREE
+DTPMENUS - Must enter Call Text.
+
+5E5 ERR_5E5 DTREE
+DTPMENUS - CURSOR=symbol..symbol not in DODA.
+
+5E6 ERR_5E6 DTREE
+DTPMENUS - Field compare symbol not in DODA.
+
+5E7 ERR_5E7 DTREE
+DTPMENUS - Must define USES_IMAGE first.
+
+5F1 ERR_5F1 DTREE
+DT_MENUS - Invalid MENUS number.
+
+5F2 ERR_5F2 DTREE
+DT_MENUS - Invalid Image number.
+
+600 CTHD_ERR CTREE
+No more client threads.
+
+601 VRFY_ERR CTREE
+ctVERIFY detected problems with idx.
+
+602 CMEM_ERR CTREE
+No memory for system lock table.
+
+610 HNUL_ERR CTREE
+CTHIST on index file: target==NULL.
+
+611 HLOG_ERR CTREE
+CTHIST could not access log.
+
+612 HSTR_ERR CTREE
+CTHIST must be called with ctHISTfirst.
+
+613 HONE_ERR CTREE
+CTHIST can only access data or index.
+
+614 HMAP_ERR CTREE
+No valid ISAM map from index to data.
+
+615 HIDX_ERR CTREE
+Can not get index info from data filno.
+
+616 HACT_ERR CTREE
+CTHIST cannot be called during a transaction.
+
+617 HNOT_ERR CTREE
+Did not find target.
+
+618 HENT_ERR CTREE
+Bad log entry. Log scan terminated.
+
+619 HZRO_ERR CTREE
+CTHIST on data file: recbyt==0.
+
+620 HSIZ_ERR CTREE
+busiz too small.
+
+621 HTYP_ERR CTREE
+Transaction type not expected.
+
+622 HMID_ERR CTREE
+Must reset CTHIST first.
+
+623 HMEM_ERR CTREE
+Not enough memory for CTHIST.
+
+624 HNET_ERR CTREE
+Net change only applies to specific match of key or record position.
+
+625 HMTC_ERR CTREE
+Must specify exactly one matching criteria (user & node may be
+combined).
+
+626 HUND_ERR CTREE
+Encountered an UNDTRAN going forward: must completely restart this
+CTHIST sequence.
+
+627 HUNK_ERR CTREE
+Unknown type of request.
+
+628 HFIL_ERR CTREE
+Must specify filno.
+
+629 HTFL_ERR CTREE
+Could not initialize internal file ID.
+
+633 NPLN_ERR CTREE
+Null plen (pointer to size).
+
+634 NLEN_ERR CTREE
+Negative length specified.
+
+635 TSYC_ERR CTREE
+Could not create thread sync object.
+
+636 TSYF_ERR CTREE
+Thread sync object 'get' failed.
+
+637 TSYR_ERR CTREE
+Thread sync object 'rel' failed.
+
+638 TQUE_ERR CTREE
+Queue message truncated to fit.
+
+639 TZRO_ERR CTREE
+Semaphore must be initialized with count > 0.
+
+640 TINT_ERR CTREE
+Semaphore already initialized.
+
+641 TSYX_ERR CTREE
+Thread sync object 'cls' failed.
+
+6C1 ERR_6C1 DTREE
+DT_REFMT - Space Allocation error.
+
+6C2 ERR_6C2 DTREE
+DT_REFMT - Could not Open Source file.
+
+6C3 ERR_6C3 DTREE
+DT_REFMT - DODA Length Does not match Source File.
+
+6C4 ERR_6C4 DTREE
+DT_REFMT - Source file not a data file.
+
+6C5 ERR_6C5 DTREE
+DT_REFMT - Source file Corrupt at open.
+
+6C6 ERR_6C6 DTREE
+DT_REFMT - Could not read File header info.
+
+6C7 ERR_6C7 DTREE
+DT_REFMT - Could not read variable-length record six byte header.
+
+6C8 ERR_6C8 DTREE
+DT_REFMT - Source record READ error.
+
+6C9 ERR_6C9 DTREE
+DT_REFMT - Write of Null Header failed after format.
+
+6CA ERR_6CA DTREE
+DT_REFMT - Desination Found to be Fixed when rebulding Variable.
+
+6CB ERR_6CB DTREE
+DT_REFMT - Desination Found to be Variable when rebulding Fixed.
+
+6CC ERR_6CC DTREE
+DT_REFMT - Copy from source to destination failed.
+
+6CD ERR_6CD DTREE
+DT_REFMT - Could not create/open new destination file.
+
+6D1 ERR_6D1 DTREE
+DT_DFINI - Invalid Default Number.
+
+6D2 ERR_6D2 DTREE
+DT_DFINI - Memory Allocation error on extract.
+
+6E1 ERR_6E1 DTREE
+DT_RTREE - r-tree number not defined.
+
+6E2 ERR_6E2 DTREE
+DT_RTREE - Associated IMAGE not found.
+
+6E3 ERR_6E3 DTREE
+DT_RTREE - r-tree not found in extracted subset.
+
+6E5 ERR_6E5 DTREE
+DT_RTREE - Could not allocate space for extract.
+
+6E6 ERR_6E6 DTREE
+DT_RTREE - Could not open script work file.
+
+6E7 ERR_6E7 DTREE
+DT_RTREE - Could not open base script file.
+
+6F1 ERR_6F1 DTREE
+DTPRTREE - Could not allocate space for r-tree def.
+
+6F2 ERR_6F2 DTREE
+DTPRTREE - Could not allocate space for relations.
+
+6F3 ERR_6F3 DTREE
+DTPRTREE - Invalid definition keyword -define USES_IMAGE(?) or
+-define USES_SCRIPT(?).
+
+6F4 ERR_6F4 DTREE
+DTPRTREE - Must define USES_IMAGE and RUN_MSG USES_SCRIPT
+properly. Check for valid image number or that you have not
+defined both keywords properly.
+
+6F5 ERR_6F5 DTREE
+DTPRTREE - Invalid r-tree keyword.
+
+6F6 ERR_6F6 DTREE
+DTPRTREE - Field symbol name not found in DODA. 
+
+6F7 ERR_6F7 DTREE
+DTPRTREE - FIELD defined not on IMAGE defined. 
+
+6F8 ERR_6F8 DTREE
+DTPRTREE - Could not allocate space for text.
+
+6F9 ERR_6F9 DTREE
+DTPRTREE - One of the following keyword has a syntax error:
+USES_IMAGE(??) USES_SCRIPT(??) REPORT_PROGRAM(??) CALL_TYPE(??).
+
+6FA ERR_6FA DTREE
+DTPRTREE - Must define substitution text.
+
+6FB ERR_6FB DTREE
+DTPRTREE - Invalid Call Type.
+
+7C1 ERR_7C1 DTREE
+DTPTABLE - Space Allocation Error.
+
+7C2 ERR_7C2 DTREE
+DTPTABLE - Syntax Error. Disk representation and screen
+representation must be defined before fields.
+
+7D1 ERR_7D1 DTREE
+DT_GHELP - Token used to get help text not defined in help text
+file.
+
+7D2 ERR_7D2 DTREE
+DT_GHELP - File Open error. One of the needed files could not be
+opened. see uerr_cod. 
+
+7E1 ERR_7E1 DTREE
+DT_BHELP - Could Not Open help text file.
+
+7E2 ERR_7E2 DTREE
+DT_BHELP - Could Create new index file. see uerr_cod.
+
+801 ERR_801 DTREE
+DTPIFILS - Unable to allocate IFILS structures.
+
+802 ERR_802 DTREE
+DTPIFILS - Unable to allocate IIDXS structures.
+
+803 ERR_803 DTREE
+DTPIFILS - Unable to allocate ISEGS structures.
+
+804 ERR_804 DTREE
+DTPIFILS - Unable to allocate DODA structures.
+
+805 ERR_805 DTREE
+DTPIFILS - Syntax error - Must have IFILS symbol.
+
+806 ERR_806 DTREE
+DTPIFILS - Field defined as key segment not in DODA.
+
+807 ERR_807 DTREE
+DTPIFILS - Field defined first or last field not in DODA.
+
+808 ERR_808 DTREE
+DTPIFILS - Field defined as first variable length field is not in
+DODA.
+
+809 ERR_809 DTREE
+DTPIFILS - Must define KEY_NAME before defining DUPS_OK.
+
+80A ERR_80A DTREE
+DTPIFILS - Error using TEMP definition block. Either already in
+use or not enough memory.
+
+80B ERR_80B DTREE
+DTPIFILS - Field length defined larger than max field length
+defined by DT_FLDLN in dt_typdf.h 
+
+80C ERR_80C DTREE
+DTPIFILS - Field Already Defined in DODA. Cannot be defined more
+than once.
+
+811 ERR_811 DTREE
+DT_IFILS - Invalid first field name.
+
+812 ERR_812 DTREE
+DT_IFILS - Invalid last field name.
+
+813 ERR_813 DTREE
+DT_IFILS - First and last field out of order.
+
+814 ERR_814 DTREE
+DT_IFILS - offset id for segment not between first and last
+fields of file.
+
+815 ERR_815 DTREE
+DT_IFILS - Key field defined in vlen portion of record is not a
+string.
+
+816 ERR_816 DTREE
+DT_IFILS - No files are defined. Could not open any. Make sure
+you have called DT_SETTY(1). 
+
+817 ERR_817 DTREE
+DT_IFILS - Could not allocate dtree's extended IFILS structure.
+Not enough memory.
+
+821 ERR_821 DTREE
+DTPCALCS - Space Allocation Error.
+
+822 ERR_822 DTREE
+DTPCALCS - Expression too long for postfix convertion - change
+DTMXWORK in DTPCALCS.
+
+841 ERR_841 DTREE
+DTPHELPP - Space Allocation Error.
+
+842 ERR_842 DTREE
+DTPHELPP - Syntax Error. Help text or token must be defined
+before fields.
+
+843 ERR_843 DTREE
+DTPHELPP - Syntax Error. USES_SFL not defined correctly.
+
+851 ERR_851 DTREE
+DT_HELPP - Could not initialize help text subfile.
+
+852 ERR_852 DTREE
+DT_HELPP - Subfile defined for help text not found.
+
+853 ERR_853 DTREE
+DT_HELPP - Sorry No Help Avalable.
+
+891 ERR_891 DTREE
+DT_DODTS - Could not open base script.
+
+892 ERR_892 DTREE
+DT_DODTS - Could not write temporary d-tree script.
+
+893 ERR_893 DTREE
+DT_DODTS - Could not open user script.
+
+901 ERR_901 DTREE
+DT_DORTS - Could not write new r-tree script.
+
+902 ERR_902 DTREE
+DT_DORTS - Could not open d-tree script.
+
+903 ERR_903 DTREE
+DT_DORTS - Could not find master screen.
+
+921 ERR_921 DTREE
+DT_DFIMG - Image number passed is not defined.
+
+922 ERR_922 DTREE
+DT_DFIMG - Could not allocate memory for extract.
+
+951 ERR_951 DTREE
+DTPMAPIT - Must have an even number of fields defined.
+
+952 ERR_952 DTREE
+DTPMAPIT - Could not allocate space for MAP relate.
+
+953 ERR_953 DTREE
+DTPMAPIT - Invalid Source Token - Not field name or CALCS name.
+
+954 ERR_954 DTREE
+DTPMAPIT - copy length longer than child field.
+
+955 ERR_955 DTREE
+DTPMAPIT - Must Define VALID Map Type.
+
+956 ERR_956 DTREE
+DTPMAPIT - destination field symbol name not found in DODA. 
+
+957 ERR_957 DTREE
+DTPMAPIT - destination field symbol name not on screen.
+
+961 ERR_961 DTREE
+DT_MAPIT - Could not allocate space for extract.
+
+962 ERR_962 DTREE
+DT_MAPIT - Destination is a subfile field. Subfile has not been
+initialized. 
+
+968 968 CTREE
+Multiple unlock request error.
+
+969 969 CTREE
+Combined operation error.
+
+970 970 CTREE
+Error establishing block: existing block. If on 4.3 be sure all
+patches have been installed.
+
+974 974 CTREE
+Unblocking unknown block type. If on 4.3 be sure all patches have
+been installed.
+
+975 975 CTREE
+Error establishing unknown block type. If on 4.3 be sure all
+patches have been installed.
+
+976 976 CTREE
+Error unblocking file extension operation. If on 4.3 be sure all
+patches have been installed.
+
+977 977 CTREE
+Error unblocking write operation. If on 4.3 be sure all patches
+have been installed.
+
+978 978 CTREE
+Error unblocking read operation. If on 4.3 be sure all patches
+have been installed.
+
+979 979 CTREE
+Error checking for blocking condition. If on 4.3 be sure all
+patches have been installed.
+
+980 980 CTREE
+Server lock list error.
+
+981 981 CTREE
+Server lock list error.
+
+982 982 CTREE
+Server lock list error.
+
+983 983 CTREE
+Server lock list error.
+
+984 984 CTREE
+Could not add lock to server lock list.
+
+992 992 CTREE
+Illegal chnacs in CreateIndexFile() at server.
+
+993 993 CTREE
+Illegal chnacs in CreateDataFile() at server.
+
+994 994 CTREE
+Illegal chnacs in OpenFile() at server for index members.
+
+996 996 CTREE
+Illegal chnacs in OpenFile() at server.
+
+997 997 CTREE
+getctf function cannot find available FCB.
+
+998 998 CTREE
+getctm function cannot find a set of FCB's to link.
+
+A11 ERR_A11 DTREE
+DTCATINC - Unable to initlize display subfile.
+
+A12 ERR_A12 DTREE
+DTCATINC - Display subfile number not defined.
+
+A13 ERR_A13 DTREE
+DTCATINC - Invalid index subfile number.
+
+A14 ERR_A14 DTREE
+DTCATINC - Invalid segment subfile number.
+
+A15 ERR_A15 DTREE
+DTCATINC - Invalid fields or column subfile number.
+
+A16 ERR_A16 DTREE
+DT_DDICT - Could not allocate IFIL space.
+
+A17 ERR_A17 DTREE
+DTCATINC - Could not allocate IIDX space.
+
+A18 ERR_A18 DTREE
+DTCATINC - Could not allocate ISEG space.
+
+A19 ERR_A19 DTREE
+DT_DDICT - Could not allocate text space.
+
+A1A ERR_A1A DTREE
+DTCATINC - Could not open temp text work file.
+
+A1B ERR_A1B DTREE
+DTCATINC - DTCATDOD Error. See uerr_cod.
+
+A21 ERR_A21 DTREE
+DTCATPAR - Could not open temp text work file.
+
+A22 ERR_A22 DTREE
+DTCATPAR - Could not initlize work subfile.
+
+A23 ERR_A23 DTREE
+DTCATPAR - Work subfile not defined.
+
+A24 ERR_A24 DTREE
+DTCATPAR - Could not find index subfile.
+
+A25 ERR_A25 DTREE
+DTCATPAR - Could not find segment subfile.
+
+A26 ERR_A26 DTREE
+DTCATPAR - Could not find column subfile.
+
+A27 ERR_A27 DTREE
+DTCATPAR - DTCATDOD error. See uerr_cod.
+
+A28 ERR_A28 DTREE
+DTCATPAR - field name used in index definition not found in file
+definition.
+
+A31 ERR_A31 DTREE
+DTCATDOD - Invalid subfile number.
+
+A32 ERR_A32 DTREE
+DTCATDOD - Could not allocate space for DODA.
+
+A33 ERR_A33 DTREE
+DTCATDOD - Could not allocate space for DODA name tx.
+
+A51 ERR_A51 DTREE
+DTCATADI - Program/Version not found in Program Dictionary.
+
+A52 ERR_A52 DTREE
+DTCATADI - Program has no Relationships in RELATE Dictionary.
+
+A53 ERR_A53 DTREE
+DTCATADI - Unable to load group definitions from group file.
+
+A58 ERR_A58 DTREE
+DTCATADI - Delete of Relate Dictionary record failed. See
+uerr_cod.
+
+A59 ERR_A59 DTREE
+DTCATADI - Delete of Program Dictionary record failed - see
+uerr_cod. 
+
+A5B ERR_A5B DTREE
+DTCATADI - Program Has No Relationships in ABILITY Dictionary.
+
+A61 ERR_A61 DTREE
+DTCATCSP - Could not open work file.
+
+1000 ERR_1000 DTREE
+DTPFIELD - Could not allocate MEMO field structures.
+
+1001 ERR_1001 DTREE
+DTPFIELD - Symbolic name not found in DODA.
+
+1002 ERR_1002 DTREE
+DTPFIELD - Invalid Input Attribute.
+
+1003 ERR_1003 DTREE
+DTPFIELD - Invalid Output Attribute.
+
+1004 ERR_1004 DTREE
+DTPFIELD - Syntax Error Found.
+
+1005 ERR_1005 DTREE
+DTPFIELD - Pointer not pointing to a valid field.
+
+1006 ERR_1006 DTREE
+DTPFIELD - Could not Allocate Parse space.
+
+1007 ERR_1007 DTREE
+DTPFIELD - No Image with same number found.
+
+1008 ERR_1008 DTREE
+DTPFIELD - No Field to Image relationships. Possible problem: If
+using GROUPS make sure a DODA is defined in some means (IFILS
+keyword is one way).
+
+1009 ERR_1009 DTREE
+DTPFIELD - Relationship pointer Incremented too Far: You have
+more fields defined in the FIELD section then there are in the
+associated IMAGE section. 
+
+100A ERR_100A DTREE
+DTPFIELD - Invalid user-defined function or Invalid field symbol
+name.
+
+100B ERR_100B DTREE
+DTPFIELD - Could not allocate memory for mask text.
+
+100C ERR_100C DTREE
+DTPFIELD - Syntax error in mask definition.
+
+100D ERR_100D DTREE
+DTPFIELD - Could not allocate space for DODA symbol names.
+
+100E ERR_100E DTREE
+DTPFIELD - Could not allocate space for new DODA with appended
+fields.
+
+100F ERR_100F DTREE
+DTPFIELD - Did not define a field symbol for every field defined
+in the image. 
+
+1011 ERR_1011 DTREE
+DTPHOOKS - Memory Allocation Error.
+
+1012 ERR_1012 DTREE
+DTPHOOKS - Must define valid hook location or invalid condition
+or invalid DODA field symbol name. If using dt_gpars to parse a group you must be sure the DTSFUNCT table in dt_gpars.c matches the one in your program.
+
+1013 ERR_1013 DTREE
+DTPHOOKS - Invalid Field Name for cur_field.
+
+1014 ERR_1014 DTREE
+DTPHOOKS - Invalid Function name.
+
+1015 ERR_1015 DTREE
+DTPHOOKS - Invalid Image Name for cur_image.
+
+1016 ERR_1016 DTREE
+DTPHOOKS - Invalid Keystroke for cur_keybd.
+
+1017 ERR_1017 DTREE
+DTPHOOKS - Invalid subfile for cur_subfl.
+
+1018 ERR_1018 DTREE
+DTPHOOKS - Invalid scann for cur_scann.
+
+1031 ERR_1031 DTREE
+DT_FLATI - Could not open error log file.
+
+1032 ERR_1032 DTREE
+DT_FLATI - Could not open flat file.
+
+1041 ERR_1041 DTREE
+DT_FLATO - Could not open flat file.
+
+1051 ERR_1051 DTREE
+DT_GPOUT - Could not write group to disk.
+
+1052 ERR_1052 DTREE
+DT_GPOUT - Could not write Control record.
+
+1053 ERR_1053 DTREE
+DT_GPOUT - Ability record has a zero length.
+
+1054 ERR_1054 DTREE
+DT_GPOUT - Unable to delete old definition.
+
+1055 ERR_1055 DTREE
+DT_GPOUT - Memory allocation error. Not enough memory to create
+DODA work space.
+
+1056 ERR_1056 DTREE
+DT_GPOUT - Fatal DODA problem. All DODA defintions must have
+option, counter and terminator.
+
+1061 ERR_1061 DTREE
+DTCATDIF - Could not open work file.
+
+1071 ERR_1071 DTREE
+DT_GPINN - Could not allocate memory for group record.
+
+1072 ERR_1072 DTREE
+DT_GPINN - SIZEOF for ability type found to be zero. Make sure
+that DT_SETTY(1) was called. 
+
+1073 ERR_1073 DTREE
+DT_GPINN - Could not read master control record.
+
+1074 ERR_1074 DTREE
+DT_GPINN - No Abilitys found in file for this group. If data
+dictionary ability check to ensure that file(s) has been posted
+to the catalog. File names and versions are case sesitive. 
+
+1081 ERR_1081 DTREE
+DTPGROUP - Could not allocate memory for group.
+
+1082 ERR_1082 DTREE
+DTPGROUP - Invalid Optional Definition.
+
+1101 ERR_1101 DTREE
+DT_PARSE - Could not open d-tree Script File. Is DTRESOURCE
+environment variable set properly? There is a read.me that tells
+how to set it.
+
+1102 ERR_1102 DTREE
+DT_PARSE-no valid keyword found in script.
+
+1103 ERR_1103 DTREE
+DT_PARSE - calloc for parsing buffer allocation. Out of memory.
+
+1203 1203 CTREE
+Both NOTFORCE (single-user) and FPUTONLY are defined in ctoptn.h. 
+FPUTONLY is not supported in c-tree Plus V6.0 or newer. Use
+NOTFORCE and a file mode including WRITETHRU to force updates (on
+a file-by-file basis) to disk. DO NOT USE WRITETHRU WITH A FILE
+SUPPORTING TRANSACTION LOGGING. Correct your define in ctoptn.h
+and recompile c-tree.
+
+1351 ERR_1351 DTREE
+DT_GPDEL - Could not read master control record.
+
+1352 ERR_1352 DTREE
+DT_GPDEL - No Abilitys found in file for this group.
+
+1353 ERR_1353 DTREE
+DT_GPDEL - Could not open group disk file.
+
+1361 ERR_1361 DTREE
+DT_GPGRP - Could not allocate space for ability.
+
+1371 ERR_1371 DTREE
+DTPDDICT - Could not allocate space for ability.
+
+1372 ERR_1372 DTREE
+DTPDDICT - Syntax error in DATA_DICTIONARY ability.
+
+1381 ERR_1381 DTREE
+DTPFILTR - Could not allocate memory for FILTR.
+
+1382 ERR_1382 DTREE
+DTPFILTR - Syntax Error: Invalid field name or Invalid
+User Defined Function
+
+1391 ERR_1391 DTREE
+DT_FILTR - Invalid filter id.
+
+1392 ERR_1392 DTREE
+DT_FILTR - Data file number to be used for read not a valid file
+number.
+
+1393 ERR_1393 DTREE
+DT_FILTR - First available file number for index is zero. 
+Increase number of files in InitCTree() call.
+
+1401 ERR_1401 DTREE
+DTPCONFG - Sytax error. Must define CONFIG keyword.
+
+1402 ERR_1402 DTREE
+DTPCONFG - Memory Allocation Error. Not enough memory to allocate
+definition. 
+
+1403 ERR_1403 DTREE
+DTPCONFG - Sytax error. Invalid COLOR defined.
+
+1411 ERR_1411 DTREE
+DT_VALUE - Field symbol not found in DODA. Check the field symbol
+name. This may occur when macros such as
+DST,DSC,DUC,DSI,DUI,DSL,DUL,DSF,DDF, etc. are used.
+
+1412 ERR_1412 DTREE
+DT_VALUE - Wrong macro used for this field. Make sure the macro
+used pertains to this field type. 
+
+1413 ERR_1413 DTREE
+DT_VALUE - Field does not have a data address set. Be sure that
+DT_ALIGN has been called. (doda->fadr is null).
+
+1421 ERR_1421 DTREE
+DTPSERCH - No FILE definitions found in SEARCH section.
+
+1422 ERR_1422 DTREE
+DTPSERCH - Could not allocate memory for SEARCH definition.
+
+1431 ERR_1431 DTREE
+DT_SERCH - Invalid SEARCH reference number.
+
+1432 ERR_1432 DTREE
+DT_SERCH - The reference subfile does not exist.
+
+1433 ERR_1433 DTREE
+DT_SERCH - Field defined for BY_FIELD not found in DODA.
+
+1434 ERR_1434 DTREE
+DT_SERCH - Could not detemine file number. Check file names in
+script and make sure files are opened. 
+
+1435 ERR_1435 DTREE
+DT_SERCH - IS_DETAIL_FOR "file" could not be found.
+
+1436 ERR_1436 DTREE
+DT_SERCH - Could not find parent subfile for child.
+
+1441 ERR_1441 DTREE
+DT_BUFER - Invalid data file number. Could not find first field
+in DODA. Make sure DT_ALIGN has been called. 
+
+1443 ERR_1443 DTREE
+DT_BUFER - Cannot Change Buffer. No buffer reference number found
+(bufnum). Extra Buffer has not been allocated.
+
+1444 ERR_1444 DTREE
+DT_BUFER - Cannot Free Current Buffer. Must do Change buffer
+operation first.
+
+1445 ERR_1445 DTREE
+DT_BUFER - Not enough memory for buffer control structures.
+
+1446 ERR_1446 DTREE
+DT_BUFER - Internal Error. Buffer control structure pointers
+found to be NULL.
+
+1451 ERR_1451 DTREE
+DTMIMAGE - Could not allocate space for IMAGE, DTMFIELD FIELD,
+CONST or RELAT or DDICT DTMCONST structure DT_DFUDD.
+
+1452 ERR_1452 DTREE
+DTMCONST - Invalid IMAGE number. DTMFIELD - 
+
+1453 ERR_1453 DTREE
+DTMIMAGE - Could not assign IMAGE name to GENRL table.
+
+1454 ERR_1454 DTREE
+DT_DFUIF - First and/or Last field name defined in IFIL structure
+not found in DODA. 
+
+1601 ERR_1601 DTREE
+DTPIMAGE - Could not Allocate Parse space.
+
+1602 ERR_1602 DTREE
+DTPIMAGE - Invalid Optional Feature.
+
+1603 ERR_1603 DTREE
+DTPIMAGE - Could not allocate space for DODA.
+
+1604 ERR_1604 DTREE
+DTPIMAGE - Could not allocate space for DODA symbolic names text.
+
+1605 ERR_1605 DTREE
+DTPIMAGE - INPUT_ADVANCE option invalid. If you have defined a
+USER_DEFINED function, make sure it is in your USER_DEFINED
+FUNCTION TABLE.
+
+1606 ERR_1606 DTREE
+DTPIMAGE - There must be a space between input field and constant
+field.
+
+1607 ERR_1607 DTREE
+DTPIMAGE - Background or Forground attribute invalid.
+
+1608 ERR_1608 DTREE
+DTPIMAGE - DT_GENRL Failed: Could not add entry to general table.
+
+1609 ERR_1609 DTREE
+DTPIMAGE - Right Column Defined On Screen is greater than MAX
+defined screen width DTSCRWID in dt_typdf.h (cannot be beyond
+column 80).
+
+160A ERR_160A DTREE
+DTPIMAGE - Uneven number of frame corners found.
+
+160B ERR_160B DTREE
+DTPIMAGE - Could not allocate work space to parse special frame
+processing.
+
+160C ERR_160C DTREE
+DTPIMAGE - Could add frame name to GENRL table memory allocation
+error.
+
+160D ERR_160D DTREE
+DTPIMAGE - INPUT_ADVANCE Error. The #define DTMXINPNO in
+dt_typdf.h defines the max number of INPUT_ADVANCE keystokes
+allowed. You have more than this many defined on this IMAGE.
+Either increase DTMXINPNO and re-compile or remove some
+of your INPUT_ADVANCE definitions from this image.
+
+160E ERR_160E DTREE
+DTPIMAGE - IMAGE defined more than once.
+
+1801 ERR_1801 DTREE
+DT_GENRL - Called with invalid table.
+
+1802 ERR_1802 DTREE
+DT_GENRL - Could not allocate space for symbolic names.
+
+1803 ERR_1803 DTREE
+DT_GENRL - Could not allocate space for symbolic name text.
+
+1901 ERR_1901 DTREE
+DT_IMGOT - Invalid image number.
+
+1902 ERR_1902 DTREE
+DT_IMGOT - Image has no fields.
+
+1903 ERR_1903 DTREE
+DT_IMGOT - Could not open print file.
+
+1904 ERR_1904 DTREE
+DT_IMGOT - Tried to Use TEMPP type that is already in use.
+
+1905 ERR_1905 DTREE
+DT_IMGOT - Could not allocate TEMPP type space for print screen
+option.
+
+1966 1966 SRVR
+On server recovery try increasing FILES in ctsrvr.cfg. Could also be a corrupted superfile.
+If application does not use superfiles the problem could be FAIRCOM.FCS.
+
+1B01 ERR_1B01 DTREE
+DT_SFLNW - Could not allocate space for new subfil.
+
+1D01 ERR_1D01 DTREE
+DT_SFCLD - Invalid Parent subfile.
+
+1D02 ERR_1D02 DTREE
+DT_SFCLD - Invalid Child subfile.
+
+1D03 ERR_1D03 DTREE
+DT_SFCLD - Parent not yet allocated.
+
+1D04 ERR_1D04 DTREE
+DT_SFCLD - DT_SFHLD fail during child load.
+
+1E01 ERR_1E01 DTREE
+DT_SFCAD - Invalid Parent subfile.
+
+1E02 ERR_1E02 DTREE
+DT_SFCAD - Parent not yet allocated.
+
+1E03 ERR_1E03 DTREE
+DT_SFCAD - Invalid child subfile.
+
+1E04 ERR_1E04 DTREE
+DT_SFCAD - Child not yet allocated.
+
+2203 2203 CTREE
+Both FPUTFGET (multi-user) and FPUTONLY are defined in ctoptn.h. 
+FPUTONLY is not supported in c-tree Plus V6.0 or newer. Use
+NOTFORCE and a file mode including WRITETHRU to force updates (on
+a file-by-file basis) to disk. DO NOT USE WRITETHRU WITH A FILE
+SUPPORTING TRANSACTION LOGGING. Correct your define in ctoptn.h
+and recompile c-tree.
+
+2301 ERR_2301 DTREE
+DT_CLEAR - Invalid screen coordinates.
+
+2401 ERR_2401 DTREE
+DT_LOCAT - Invalid screen coordinates.
+
+2501 ERR_2501 DTREE
+DT_FLDIN - Input longer than DT_FLDLN.
+
+2601 ERR_2601 DTREE
+DT_IMGIN - Invalid image number.
+
+2602 ERR_2602 DTREE
+DT_IMGIN - image has no fields.
+
+2901 ERR_2901 DTREE
+DT_INITL - First and last field name not found in DODA.
+
+3101 ERR_3101 DTREE
+DT_VLOUT - Could not allocate enough space for variable length
+packed buffer.
+
+3102 ERR_3102 DTREE
+DT_VLOUT - Could not find first variable length field in DODA. 
+Make sure that fixed record portion matches record length.
+
+3301 ERR_3301 DTREE
+DT_UNPAK - Could not find first variable length field in DODA. 
+Make sure that fixed record portion matches record length.
+
+3401 ERR_3401 DTREE
+DT_DOINT - null dt_sfp[datno] - record buffers have not been
+initlized must run DT_ALIGN.
+
+3701 ERR_3701 DTREE
+DT_DELET - Delete position beyond end of string.
+
+3702 ERR_3702 DTREE
+DT_DELET - Trying to delete too many characters.
+
+3801 ERR_3801 DTREE
+DTPPRMPT - Could not allocate space for prompt.
+
+3802 ERR_3802 DTREE
+DTPPRMPT - Could not allocate space for relations.
+
+3803 ERR_3803 DTREE
+DTPPRMPT - Invalid keyword - define USES_IMAGE(?).
+
+3804 ERR_3804 DTREE
+DTPPRMPT - Image number/name not defined correctly.
+
+3805 ERR_3805 DTREE
+DTPPRMPT - Key symbol name not in ISAM definition.
+
+3806 ERR_3806 DTREE
+DTPPRMPT - Field symbol name not found in DODA.
+
+3807 ERR_3807 DTREE
+DTPPRMPT - FIELD defined not on IMAGE defined.
+
+3808 ERR_3808 DTREE
+DTPPRMPT - Could not allocate space for prefix.
+
+3809 ERR_3809 DTREE
+DTPPRMPT - Scann Number not defined or no index names where
+recongnized during parse. Are your files defined?
+
+380A ERR_380A DTREE
+DTPPRMPT - Scann Number must be defined before target fields.
+
+3901 ERR_3901 DTREE
+DTPSCANN - Could not allocate space for SCANN.
+
+3902 ERR_3902 DTREE
+DTPSCANN - Invalid SCANN option defined.
+
+3903 ERR_3903 DTREE
+DTPSCANN - IMAGE_OUT image number not a defined IMAGE.
+
+3904 ERR_3904 DTREE
+DTPSCANN - Must have valid IMAGE_ROL imageno.
+
+3905 ERR_3905 DTREE
+DTPSCANN - Must have valid IMAGE_INP imageno.
+
+3906 ERR_3906 DTREE
+DTPSCANN - Image number used for IMAGE_ADD is not a valid image.
+
+3907 ERR_3907 DTREE
+DTPSCANN - Image number used for IMAGE_ZOOM is not a valid image.
+
+4001 ERR_4001 DTREE
+DT_PRMPT - Prompt number not defined.
+
+4002 ERR_4002 DTREE
+DT_PRMPT - Associated IMAGE not found.
+
+4003 ERR_4003 DTREE
+DT_PRMPT - Prompt not found in extracted subset.
+
+4004 ERR_4004 DTREE
+DT_PRMPT - Target fields not found for target build.
+
+4005 ERR_4005 DTREE
+DT_PRMPT - Could not allocate space for extract.
+
+4101 ERR_4101 DTREE
+DT_SCANN - Scan number not defined by SCAN.
+
+4102 ERR_4102 DTREE
+DT_SCANN - IMAGE_OUT display failed.
+
+4103 ERR_4103 DTREE
+DT_SCANN - EQLREC failed on previously displayed record.
+
+4104 ERR_4104 DTREE
+DT_SCANN - Invalid FILTER name used on SCAN.
+
+4105 ERR_4105 DTREE
+DT_SCANN - Could not allocate message block.
+
+4106 ERR_4106 DTREE
+DT_SCANN - Scan has not yet been used. Cannot reprocess last
+scan.
+
+4501 ERR_4501 DTREE
+DT_XTRCT - Could not allocate extract space.
+
+4601 ERR_4601 DTREE
+DTPCONST - Image number for constant not defined.
+
+4602 ERR_4602 DTREE
+DTPCONST - Token not a valid constant or attribute.
+
+4603 ERR_4603 DTREE
+DTPCONST - Invalid output attribute.
+
+4604 ERR_4604 DTREE
+DTPCONST - Attribute does not refer to any constant or you have
+defined more attibutes than allowed per the #define DT_MXOAT in
+dt_typdf.h.
+
+4605 ERR_4605 DTREE
+DTPCONST - Could not allocate space for extract.
+
+4701 ERR_4701 DTREE
+DT_IMGMV - imageno not a defined IMAGE.
+
+4901 ERR_4901 DTREE
+DT_SCGET - EQLREC FAILED.
+
+5401 ERR_5401 DTREE
+DT_COMPL - Could not rewrite text file.
+
+5501 ERR_5501 DTREE
+DTPSUBFL - Could not allocate space for subfile definition.
+
+5502 ERR_5502 DTREE
+DTPSUBFL - Could not allocate space for relationships.
+
+5503 ERR_5503 DTREE
+DTPSUBFL - Parse is expecting to see a subfile keyword - syntax
+error.
+
+5504 ERR_5504 DTREE
+DTPSUBFL - Parse cannot determine which subfile keyword is being
+parsed - syntax error.
+
+5505 ERR_5505 DTREE
+DTPSUBFL - SFL_IMAGE or SFL_TITLE number/name not defined
+correctly. IMAGE must be defined BEFORE SUBFILE in SCRIPT.
+
+5506 ERR_5506 DTREE
+DTPSUBFL - Invalid Number for MAX_RECORDS value.
+
+5507 ERR_5507 DTREE
+DTPSUBFL - Invalid Number for SFL_LINES value. 
+
+5508 ERR_5508 DTREE
+DTPSUBFL - SFL_IMAGE must be define before SFL_TARGET.
+
+5509 ERR_5509 DTREE
+DTPSUBFL - SFL_RECORDS must be define before SFL_TARGET.
+
+5510 ERR_5510 DTREE
+DTPSUBFL - SFL_LINES must be define before SFL_TARGET.
+
+5511 ERR_5511 DTREE
+DTPSUBFL - Key symbol name not in ISAM definition.
+
+5512 ERR_5512 DTREE
+DTPSUBFL - Syntax error - looking for Key symbol name.
+
+5513 ERR_5513 DTREE
+DTPSUBFL - Field symbol name not found in DODA.
+
+5514 ERR_5514 DTREE
+DTPSUBFL - Only one SFL_TARGET definition allowed.
+
+5515 ERR_5515 DTREE
+DTPSUBFL - SFL_MAP Field symbol name not found in DODA.
+
+5516 ERR_5516 DTREE
+DTPSUBFL - SFL_MAP length longer than child field.
+
+5517 ERR_5517 DTREE
+DTPSUBFL - SFL_TARGET must define target field or prefix.
+
+5518 ERR_5518 DTREE
+DTPSUBFL - SFL_MUSTHAVE field not found in DODA.
+
+5519 ERR_5519 DTREE
+DTPSUBFL - SFL_BOUNDARY field not found in DODA.
+
+5520 ERR_5520 DTREE
+DTPSUBFL - SFL_PARENT - sfl parent not defined.
+
+5521 ERR_5521 DTREE
+DTPSUBFL - SFL_ATTR - invalid subfile attribute.
+
+5522 ERR_5522 DTREE
+DTPSUBFL - SFL_ATTR - Keystoke for SFL_TOGGLE or WORD_WRAP_TOGGLE
+invalid.
+
+5523 ERR_5523 DTREE
+DTPSUBFL - SFL_VBLOCK - Symbol must be either a valid field name
+or a valid VBLOCK type.
+
+5524 ERR_5524 DTREE
+DTPSUBFL - SFL_VBLOCK - syntax error. Must define Field Symbol
+before VBLOCK type.
+
+5525 ERR_5525 DTREE
+DTPSUBFL - SFL_VBLOCK - syntax error. Must define SFL_TARGET
+before SFL_VBLOCK.
+
+5526 ERR_5526 DTREE
+DTPSUBFL - SFL_VBLOCK - Too many cast points. The max number of
+cast points supported by subfiles is defined in "dt_typdf.h" with
+#define DTMXCASTS. You have defined more than this in your
+script. Either check script syntax or increase the value of
+DTMXCASTS. If you increase this value recompile your d-tree
+library.
+
+5527 ERR_5527 DTREE
+DTPSUBFL - SFL_VBLOCK - Cannot define more than one FIRST_BLOCK
+or must define FIRST_BLOCK. 
+
+5528 ERR_5528 DTREE
+DTPSUBFL - SFL_VBLOCK - Cannot define more than one BLOCK_COUNT
+or must define BLOCK_COUNT.
+
+5601 ERR_5601 DTREE
+DT_SFLLD - Could not allocate space for subfile.
+
+5602 ERR_5602 DTREE
+DT_SFLLD - Memory Block Option is Invalid.
+
+5603 ERR_5603 DTREE
+DT_SFLLD - Could not Create Disk Subfile.
+
+5604 ERR_5604 DTREE
+DT_SFLLD - call to c-tree NextInSet failed.
+
+5801 ERR_5801 DTREE
+DT_SFLAD - Could not allocate space for extract.
+
+5802 ERR_5802 DTREE
+DT_SFLAD - Could not allocate space for extract.
+
+5803 ERR_5803 DTREE
+DT_SFLAD - Error on DT_ADREC.
+
+5901 ERR_5901 DTREE
+DT_SFHLD - Invalid subfile number.
+
+5902 ERR_5902 DTREE
+DT_SFHLD - Could not allocate extract space.
+
+5903 ERR_5903 DTREE
+DT_SFHLD - Could not allocate memory control block.
+
+5904 ERR_5904 DTREE
+DT_SFHLD - Occur Number out of range.
+
+5905 ERR_5905 DTREE
+DT_SFHLD - VBLOCK subfile error: Could not find the address of
+the variable-length record buffer.
+
+5906 ERR_5906 DTREE
+DT_SFHLD - No File Blocks. Increase the extra parameter in your
+call to DT_IFILS.
+
+6001 ERR_6001 DTREE
+DT_SFHDL - Invalid subfile number.
+
+6002 ERR_6002 DTREE
+DT_SFHDL - Subfile not allocated.
+
+6003 ERR_6003 DTREE
+DT_SFHDL - Number of records loaded into subfile not same as the
+number that where deleted.
+
+6101 ERR_6101 DTREE
+DT_SFHAD - Invalid subfile number.
+
+6102 ERR_6102 DTREE
+DT_SFHAD - Subfile not allocated.
+
+6103 ERR_6103 DTREE
+DT_SFHAD - Vblock DT_ADREC failed.
+
+6201 ERR_6201 DTREE
+DT_SFLOT - Invalid subfile number.
+
+6202 ERR_6202 DTREE
+DT_SFLOT - Subfile not allocated.
+
+6203 ERR_6203 DTREE
+DT_SFLOT - Must pass record number.
+
+6204 ERR_6204 DTREE
+DT_SFLOT - Record number greater than max records.
+
+6205 ERR_6205 DTREE
+DT_SFLOT - Imvalid image number for subfile.
+
+6206 ERR_6206 DTREE
+DT_SFLOT - Child subfile number invalid.
+
+6207 ERR_6207 DTREE
+DT_SFLOT - Parent rcdno is > child occurances.
+
+6208 ERR_6208 DTREE
+DT_SFLOT - Could not read subfile record.
+
+6401 ERR_6401 DTREE
+DT_SUBFL - Invalid Subfile Number.
+
+6402 ERR_6402 DTREE
+DT_SUBFL - Subfile Not Allocated.
+
+6403 ERR_6403 DTREE
+DT_SUBFL - Invalid Image define for Subfile.
+
+6404 ERR_6404 DTREE
+DT_SUBFL - Could not allocate temporary save space.
+
+6601 ERR_6601 DTREE
+DTPEDITS - Could not allocate EDITS structure.
+
+6602 ERR_6602 DTREE
+DTPEDITS - Could not allocate memory for EDITS text.
+
+6603 ERR_6603 DTREE
+DTPEDITS - Could not allocate EDITS's RELAT memory.
+
+6604 ERR_6604 DTREE
+DTPEDITS - Edit type must follow edit text.
+
+6605 ERR_6605 DTREE
+DTPEDITS - Edit Type must follow field name.
+
+6606 ERR_6606 DTREE
+DTPEDITS - Must enter message text.
+
+6607 ERR_6607 DTREE
+DTPEDITS - Field not found on associated image.
+
+6608 ERR_6608 DTREE
+DTPEDITS - DUPKEY or VALIDATE edit must have key number or name.
+
+6609 ERR_6609 DTREE
+DTPEDITS - DUPKEY or VALIDATE key symbol length too short. ex:
+key symbol="ky" and the key number it represents is "100". The
+"ky" is only 2 digits, the "100" is 3 digits. Due to memory
+allocation this is invalid.
+
+6701 ERR_6701 DTREE
+DT_EDITS - Memory Allocation error on extract.
+
+6702 ERR_6702 DTREE
+DT_EDITS - No valid IMAGE found for field with error.
+
+6801 ERR_6801 DTREE
+DT_ALIGN - Calculated address not same as DODA.
+
+6802 ERR_6802 DTREE
+DT_ALIGN - First and last field name not found in DODA.
+
+6803 ERR_6803 DTREE
+DT_ALIGN - Record length in IFIL not correct.
+
+6804 ERR_6804 DTREE
+DT_ALIGN - Could Not Allocate Field Memory.
+
+7101 ERR_7101 DTREE
+DTPKEYBD - Could not allocate space for key sequence.
+
+7102 ERR_7102 DTREE
+DTPKEYBD - Syntax error in termcap definition.
+
+7103 ERR_7103 DTREE
+DTPKEYBD - DT_MXSEQ not large enough in dt_typdf.h.
+
+7201 ERR_7201 DTREE
+DT_KEYBD - Could not open termcap file. Is DTRESOURCE
+environment variable set properly? There is a read.me that tells
+how to set it.
+
+7202 ERR_7202 DTREE
+DT_KEYBD - Terminal not found in termcap file. Is DTRESOURCE
+environment variable set properly? There is a read.me that tells
+how to set it.
+
+7203 ERR_7203 DTREE
+DT_KEYBD - Could not allocate temp parsing space. Out of memory.
+
+7701 ERR_7701 DTREE
+DTPDFALT - Could not allocate DFALT structure space. Out of
+memory.
+
+7702 ERR_7702 DTREE
+DTPDFALT - Could not allocate memory for DFALT text. Out of
+memory.
+
+7703 ERR_7703 DTREE
+DTPDFALT - Could not allocate DFALT's RELAT space. Out of
+memory.
+
+7704 ERR_7704 DTREE
+DTPDFALT - Error - Valid Default type must follow field name.
+
+7705 ERR_7705 DTREE
+DTPDFALT - Syntax Error - Invalid field symbol name.
+
+7801 ERR_7801 DTREE
+DT_DFALT - Memory Allocation error on extract.
+
+7901 ERR_7901 DTREE
+DT_NSERT - Position to insert character is past end of string.
+
+8502 8502 SERVR
+TCP/IP communications error.
+
+8505 8505 SERVR
+Input type is undefined. Possibly due to a communications
+problem.
+
+8801 ERR_8801 DTREE
+DT_STALN - COUNT, UCOUNT or POINTER are not correctly sized. 
+Call FairCom.
+
+8802 ERR_8802 DTREE
+DT_STALN - This machine addresses 32 bit words (not bytes). Call
+FairCom.
+
+8803 ERR_8803 DTREE
+DT_STALN - This machine addresses words. (not bytes). Call
+FairCom.
+
+9477 9477 SERVR
+Index file error. Modified in 6.04.21 or later servers.
+
+9495 9495 SERVR
+Index file error. Try rebuilding index file.
+

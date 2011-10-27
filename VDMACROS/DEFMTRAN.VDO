@@ -1,0 +1,333 @@
+#define VIDEO_SIAD_CHAVEDUP TRUE
+
+/****************************************************************************
+                 MACROS DOS SERVICOS EXECUTADOS PELO SIAD
+****************************************************************************/
+#define VIDEO_SIAD_FIND_IGUAL_NOR         "LC "
+#define VIDEO_SIAD_FIND_IGUAL_DUP         "LP "
+#define VIDEO_SIAD_FIND_MAIOR_IGUAL       "LCM"
+#define VIDEO_SIAD_FIND_MENOR_IGUAL       "LCN"
+#define VIDEO_SIAD_FIND_PROXIMO           "LS "
+#define VIDEO_SIAD_FIND_ANTERIOR          "LSA"
+#define VIDEO_SIAD_FIND_START_NORM        "LI "
+#define VIDEO_SIAD_FIND_START_MAIOR_IGUAL "LIM"
+#define VIDEO_SIAD_INCLUIR                "I  "
+#define VIDEO_SIAD_EXCLUIR                "E  "
+#define VIDEO_SIAD_ATUALIZAR              "A  "
+
+/****************************************************************************
+            MACROS DOS SERVICOS EXECUTADOS PELO EXTSIAD
+****************************************************************************/
+#define VIDEO_EXTSIAD_LOCK_ANT               B15  /* LocK em Reg anterior*/
+#define VIDEO_EXTSIAD_LOCK_POS               B14  /* LocK em Reg atual*/
+#define VIDEO_EXTSIAD_ULOCK_ANT              B13  /* Unlock em Reg anterior*/
+#define VIDEO_EXTSIAD_ULOCK_POS              B12  /* UnlocK em Reg atual*/
+#define VIDEO_EXTSIAD_DESPRESA_LOCK          B11  /* Despresa Lock de Reg*/
+#define VIDEO_EXTSIAD_TESTA_LOCK             B10  /* Testa lock de Reg*/
+#define VIDEO_EXTSIAD_LOCK_REG		     B09  /* lock de Reg*/
+
+#define VIDEO_EXTSIAD_FIND_IGUAL             0
+#define VIDEO_EXTSIAD_FIND_IGUAL_DUP         1
+
+#define VIDEO_EXTSIAD_FIND_MAIOR             2
+#define VIDEO_EXTSIAD_FIND_MAIOR_IGUAL       3
+
+#define VIDEO_EXTSIAD_FIND_MENOR             4
+#define VIDEO_EXTSIAD_FIND_MENOR_IGUAL       5
+
+#define VIDEO_EXTSIAD_FIND_PROXIMO           6
+#define VIDEO_EXTSIAD_FIND_NXSET             7
+
+#define VIDEO_EXTSIAD_FIND_ANTERIOR          8
+#define VIDEO_EXTSIAD_FIND_PRSET             9
+
+#define VIDEO_EXTSIAD_FIND_PRIMEIRO          10
+#define VIDEO_EXTSIAD_FIND_FRSET             11
+
+#define VIDEO_EXTSIAD_FIND_ULTIMO            12
+#define VIDEO_EXTSIAD_FIND_LSSET             13
+
+#define VIDEO_EXTSIAD_INCVREC                14
+#define VIDEO_EXTSIAD_INCLUSAO               15
+
+#define VIDEO_EXTSIAD_EXCLUSAO               16
+
+#define VIDEO_EXTSIAD_ALTERACAO_COMUM        17
+#define VIDEO_EXTSIAD_ALTERACAO_CHAVE        18
+#define VIDEO_EXTSIAD_ALTERACAO              19
+
+#define VIDEO_EXTSIAD_REREAD                 20
+#define VIDEO_EXTSIAD_REREADVREC             21
+
+#define VIDEO_EXTSIAD_ALTVREC                22
+#define VIDEO_EXTSIAD_ALTVREC_COMUM          23
+#define VIDEO_EXTSIAD_ALTVREC_CHAVE          24
+
+#define VIDEO_EXTSIAD_FIND_EXISTE            25
+
+#define VIDEO_EXTSIAD_FIND_MEISET            26
+#define VIDEO_EXTSIAD_FIND_MESET             27
+
+#define VIDEO_EXTSIAD_FIND_MAISET            28
+#define VIDEO_EXTSIAD_FIND_MASET             29
+
+
+/****************************************************************************
+ TRANSACOES DE SERVICOS A SER EXECUTADOS PELO PROGRAMA DE APLICACAO
+ DA0    Executa todas as funcoes do Extctree
+        FIND      com LocK UnlocK e Despreso de Lock
+        INCLUSAO  com LocK UnlocK e Despreso de Lock
+        EXCLUSAO  com LocK UnlocK e Despreso de Lock
+        ALTERACAO com LocK UnlocK e Despreso de Lock
+
+ DA1    Executa as funcoes de GERAR VISAO TEMPORARIA de Subfile
+ DA2    Executa as funcoes de APAGAR VISAO TEMPORARIA de Subfile
+ DA3    Executa as funcoes de ATUALIZAR base de dados com a
+        VISAO TEMPORARIA DE Subfile
+****************************************************************************/
+
+#define VIDEO_TRAN_SASIS        "SASIS   "
+#define VIDEO_TRAN_SSEND        "SSEND   "
+#define VIDEO_TRAN_REGBUFFER    "ABUFFER "
+#define VIDEO_TRAN_AREA_CARGA   "CRGA" /* AREA DE CARGA DA TABELA DE ARQUIVO */
+#define VIDEO_TRAN_AREA_FLGINIT "FLIN" /* AREA DE FLAGS DE INICIALIZACAO     */
+#define VIDEO_TRAN_AREA_BF01    "BF01" /* AREA DE MEMORIA DE USO GERAL       */
+#define VIDEO_TRAN_AREA_CRFL    "CRFL" /* AREA DE NUMERO DO CORRENTE ISAM FIL*/
+#define VIDEO_TRAN_AREA_WORK    "WORK" /* AREA DE TRABALHO DE BUFFER DE TRAN */
+
+#define VIDEO_TRAN_TAMAREA_BF01 W(20480)
+#define VIDEO_TRAN_TAMAREA_WORK W(20480)
+#define VIDEO_TRAN_TAMAREA_FLGINIT W(sizeof(DWORD))
+#define VIDEO_TRAN_TAMAREA_CRFL    W(sizeof(DWORD)*3)
+
+#define VIDEO_GRI_TRANGETRECORD "DA0"
+#define VIDEO_GRI_TRANIORECORD  "DA1"
+
+#define VIDEO_TRAN_getarea(nomearea,bufferarea,tamarea)                     \
+                     grifsist(4,VIDEO_TRAN_SASIS,nomearea,bufferarea,tamarea)
+#define VIDEO_TRAN_putarea(nomearea,bufferarea,tamarea,flags)               \
+                     grifsist(5,VIDEO_TRAN_SASIS,nomearea,bufferarea,tamarea,flags)
+#define VIDEO_TRAN_ARMBUF   I(0)
+#define VIDEO_TRAN_ENVBUF   I(1)
+#define VIDEO_TRAN_EXECTRAN I(2)
+
+#define VIDEO_TRAN_ler_siad(chave,registro,arquivo,tamanho)                 \
+        VIDEO_TRAN_oper_siad(chave,registro,VIDEO_SIAD_FIND_IGUAL_NOR,      \
+                             arquivo,tamanho)
+#define VIDEO_TRAN_grv_siad(chave,registro,arquivo,tamanho)                 \
+        VIDEO_TRAN_oper_siad(chave,registro,VIDEO_SIAD_ATUALIZAR,           \
+                             arquivo,tamanho)
+#define VIDEO_TRAN_inc_siad(chave,registro,arquivo,tamanho)                 \
+        VIDEO_TRAN_oper_siad(chave,registro,VIDEO_SIAD_INCLUIR,             \
+                             arquivo,tamanho)
+#define VIDEO_TRAN_exc_siad(chave,arquivo)                                  \
+        VIDEO_TRAN_oper_siad(chave,VD_NULO,VIDEO_SIAD_EXCLUIR,              \
+                             arquivo,VD_NULO)
+#define VIDEO_TRAN_ult_siad(chave,registro,arquivo,tamanho)                 \
+        VIDEO_TRAN_oper_siad(chave,registro,VIDEO_SIAD_FIND_MENOR_IGUAL,    \
+                             arquivo,tamanho)
+#define VIDEO_TRAN_pri_siad(chave,registro,arquivo,tamanho)                 \
+        VIDEO_TRAN_oper_siad(chave,registro,VIDEO_SIAD_FIND_MAIOR_IGUAL,    \
+                             arquivo,tamanho)
+#define VIDEO_TRAN_mig_siad(chave,registro,arquivo,tamanho)                 \
+        VIDEO_TRAN_oper_siad(chave,registro,VIDEO_SIAD_FIND_MAIOR_IGUAL,    \
+                             arquivo,tamanho)
+#define VIDEO_TRAN_meg_siad(chave,registro,arquivo,tamanho)                 \
+        VIDEO_TRAN_oper_siad(chave,registro,VIDEO_SIAD_FIND_MENOR_IGUAL,    \
+                             arquivo,tamanho)
+
+#define VIDEO_GRI_GetRecord(indice,chave,buffer)                            \
+        VIDEO_GRI_ServGetRecord(I(indice),CAST_CHAR(chave),CAST_CHAR(buffer)\
+                                ,I(FALSE),VIDEO_EXTSIAD_FIND_IGUAL,I(FALSE))
+#define VIDEO_GRI_GetGTERecord(indice,chave,buffer)                         \
+        VIDEO_GRI_ServGetRecord(I(indice),CAST_CHAR(chave),CAST_CHAR(buffer)\
+                           ,I(TRUE),VIDEO_EXTSIAD_FIND_MAIOR_IGUAL,I(FALSE))
+#define VIDEO_GRI_FirstRecord(indice,buffer)                                \
+        VIDEO_GRI_ServGetRecord(I(indice),VD_NULO,CAST_CHAR(buffer),I(TRUE),\
+                                       VIDEO_EXTSIAD_FIND_PRIMEIRO,I(FALSE))
+#define VIDEO_GRI_GetLTERecord(indice,chave,buffer)                         \
+        VIDEO_GRI_ServGetRecord(I(indice),CAST_CHAR(chave),CAST_CHAR(buffer)\
+                           ,I(TRUE),VIDEO_EXTSIAD_FIND_MENOR_IGUAL,I(FALSE))
+#define VIDEO_GRI_LastRecord(indice,buffer)                                 \
+        VIDEO_GRI_ServGetRecord(I(indice),VD_NULO,CAST_CHAR(buffer),I(TRUE),\
+                                         VIDEO_EXTSIAD_FIND_ULTIMO,I(FALSE))
+#define VIDEO_GRI_NextRecord(indice,buffer)                                 \
+        VIDEO_GRI_ServGetRecord(I(indice),VD_NULO,CAST_CHAR(buffer),I(TRUE),\
+                                        VIDEO_EXTSIAD_FIND_PROXIMO,I(FALSE))
+#define VIDEO_GRI_PreviousRecord(indice,buffer)                             \
+        VIDEO_GRI_ServGetRecord(I(indice),VD_NULO,CAST_CHAR(buffer),I(TRUE),\
+                                       VIDEO_EXTSIAD_FIND_ANTERIOR,I(FALSE))
+#define VIDEO_GRI_LastInSet(indice,chave,buffer,tamanho)                    \
+        VIDEO_GRI_ServGetRecord(I(indice),CAST_CHAR(chave),CAST_CHAR(buffer)\
+                               ,I(TRUE),VIDEO_EXTSIAD_FIND_LSSET,I(tamanho))
+#define VIDEO_GRI_FirstInSet(indice,chave,buffer,tamanho)                   \
+        VIDEO_GRI_ServGetRecord(I(indice),CAST_CHAR(chave),CAST_CHAR(buffer)\
+                               ,I(TRUE),VIDEO_EXTSIAD_FIND_FRSET,I(tamanho))
+#define VIDEO_GRI_PreviousInSet(indice,buffer)                              \
+        VIDEO_GRI_ServGetRecord(I(indice),VD_NULO,CAST_CHAR(buffer),I(TRUE),\
+                                       VIDEO_EXTSIAD_FIND_PRSET,I(FALSE))
+#define VIDEO_GRI_NextInSet(indice,buffer)                                  \
+        VIDEO_GRI_ServGetRecord(I(indice),VD_NULO,CAST_CHAR(buffer),I(TRUE),\
+                                        VIDEO_EXTSIAD_FIND_NXSET,I(FALSE))
+#define VIDEO_GRI_ReReadRecord(arquivo,buffer)                              \
+        VIDEO_GRI_ServGetRecord(I(arquivo),VD_NULO,CAST_CHAR(buffer),I(TRUE)\
+                                              ,VIDEO_EXTSIAD_REREAD,VD_NULO)
+#define VIDEO_GRI_ReReadVRecord(arquivo,buffer,tamanho)                     \
+        VIDEO_GRI_ServGetRecord(I(arquivo),VD_NULO,CAST_CHAR(buffer),I(TRUE)\
+                                       ,VIDEO_EXTSIAD_REREADVREC,I(tamanho))
+
+#define VIDEO_GRI_AddRecord(arquivo,buffer)                                 \
+        VIDEO_GRI_ServIoRecord(I(arquivo),CAST_CHAR(buffer),I(FALSE),       \
+                                                 VIDEO_EXTSIAD_INCLUSAO)
+#define VIDEO_GRI_DeleteRecord(arquivo)                                     \
+        VIDEO_GRI_ServIoRecord(I(arquivo),VD_NULO,I(FALSE),                 \
+			       VIDEO_EXTSIAD_EXCLUSAO)
+#define VIDEO_GRI_ReWriteRecord(arquivo,buffer)                             \
+        VIDEO_GRI_ServIoRecord(I(arquivo),CAST_CHAR(buffer),I(FALSE),       \
+			       VIDEO_EXTSIAD_ALTERACAO)
+
+#define VIDEO_GRI_AddVRecord(arquivo,buffer,tamanho)                        \
+        VIDEO_GRI_ServIoRecord(I(arquivo),CAST_CHAR(buffer),I(tamanho),     \
+				VIDEO_EXTSIAD_INCVREC)
+#define VIDEO_GRI_ReWriteVRecord(arquivo,buffer,tamanho)                    \
+        VIDEO_GRI_ServIoRecord(I(arquivo),CAST_CHAR(buffer),I(tamanho),     \
+			       VIDEO_EXTSIAD_ALTVREC)
+
+
+#define VIDEO_TRAN_TAMMAXBUFFER 3499
+#define VIDEO_TRAN_TIMEOUT_CEP 7
+
+#define VIDEO_GRI_OPERSIAD        VIDEO_TRAN_OPERSIAD
+#define VIDEO_GRI_SEG             VIDEO_TRAN_SEG
+#define VIDEO_GRI_ARQ             VIDEO_TRAN_ARQ
+#define VIDEO_GRI_PARAM_CARGA     VIDEO_TRAN_PARAM_CARGA
+#define VIDEO_GRI_DATA            VIDEO_TRAN_DATA
+#define VIDEO_GRI_HORA            VIDEO_TRAN_HORA
+#define VIDEO_GRI_BLOQREG         VIDEO_TRAN_BLOQREG
+#define VIDEO_GRI_BUFFER_REDE_REC VIDEO_TRAN_BUFFER_REDE_REC
+#define VIDEO_GRI_BUFFER_REDE     VIDEO_TRAN_BUFFER_REDE_RET
+#define VIDEO_GRI_BUFFER_REDE_RET VIDEO_TRAN_BUFFER_REDE_RET
+#define VIDEO_GRI_SERV_EXTSIAD    VIDEO_TRAN_SERV_EXTSIAD
+#define VIDEO_GRI_TABFUNC         VIDEO_TRAN_TABFUNC
+#define VIDEO_GRI_BUFFER_WORK     VIDEO_TRAN_BUFFER_WORK
+#define VIDEO_GRI_TAMMAXBUFFER    VIDEO_TRAN_TAMMAXBUFFER
+
+#define VIDEO_GRI_envia_cep(a,b) VIDEO_GRI_trata_buffer_rede(a,b,"ENVIA   ")
+#define VIDEO_GRI_receb_cep(a,b) VIDEO_GRI_trata_buffer_rede(a,b,"RECEBE  ")
+#define VIDEO_GRI_dispara_cep    gricep
+#define gricep                   GRICEP
+#define centiobt                 CENTIOBT
+#define grifsist                 GRIFSIST
+
+#define VIDEO_TRAN_envmens(controle,mensagem,tamanho)     \
+                        grifsist(4,VIDEO_TRAN_SSEND,controle,mensagem,tamanho)
+
+#define VIDEO_TRAN_LOCK_INATIVO   0 /* lock do registro esta desativado*/
+#define VIDEO_TRAN_LOCK_NDISP     1 /* teste de lock com term diferente*/
+#define VIDEO_TRAN_LOCK_ATIVO     2 /* lock do registro esta ativo*/
+
+#define VIDEO_GRI_ERRO001   -1000 /* indice invalido*/
+#define VIDEO_TRAN_ERRO001  -1000 /* num indice invalido*/
+#define VIDEO_TRAN_ERRO002  -1001 /* operacao invalida em chave duplicata*/
+#define VIDEO_TRAN_ERRO003  -1002 /* erro de alocacao de memoria*/
+#define VIDEO_TRAN_ERRO004  -1003 /* erro em numero de seg de chaves*/
+#define VIDEO_TRAN_ERRO005  -1004 /* erro em tamanho de segmento int sem sinal*/
+#define VIDEO_TRAN_ERRO006  -1005 /* erro em tamanho de segmento int com sinal*/
+#define VIDEO_TRAN_ERRO007  -1006 /* tipo de segmento de chave invalido*/
+#define VIDEO_TRAN_ERRO008  -1007 /* erro de io remoto uerr_cod possui a letra*/
+#define VIDEO_TRAN_ERRO009  -1008 /* arquivo nao aberto*/
+#define VIDEO_TRAN_ERRO010  -1009 /* nome de arquivo invalido*/
+#define VIDEO_TRAN_ERRO011  -1010 /* fim de arquivo ou registro nao encontrado*/
+#define VIDEO_TRAN_ERRO012  -1011 /* registro ja existe*/
+#define VIDEO_TRAN_ERRO013  -1012 /* tamanho da area de leitura menor que reg.*/
+				  /* oper siad*/
+#define VIDEO_TRAN_ERRO014  -1013 /* erro de io fisico*/
+#define VIDEO_TRAN_ERRO015  -1014 /* chave fornecida difere da chave do registro*/
+#define VIDEO_TRAN_ERRO016  -1015 /* nao ha espaco no sysrec*/
+#define VIDEO_TRAN_ERRO017  -1016 /* siad nao carregado*/
+#define VIDEO_TRAN_ERRO018  -1017 /* codigo de erro nao catalogado*/
+#define VIDEO_TRAN_ERRO019  -1018 /* erro alocacao de mem em env tran*/
+#define VIDEO_TRAN_ERRO020  -1019 /* erro de com buffer recebido nao era*/
+				  /* buffer esperado (placas de rede) env tran*/
+#define VIDEO_TRAN_ERRO021  -1020 /* erro alocacao de mem em rec tran*/
+#define VIDEO_TRAN_ERRO022  -1021 /* erro de com buffer recebido nao era*/
+				  /* buffer esperado (placas de rede) rec tran*/
+#define VIDEO_TRAN_ERRO023  -1022 /* tamanho da area de leitura menor que reg.*/
+				  /* oper tran*/
+
+#define VIDEO_TRAN_ERRO024  -2001 /* estacao gri destino nao encontrada*/
+#define VIDEO_TRAN_ERRO025  -2002 /* buffers de transmicao esgotados*/
+#define VIDEO_TRAN_ERRO026  -2004 /* numero de sessoes esgotados*/
+#define VIDEO_TRAN_ERRO027  -2005 /* identificador de sessao invalido*/
+#define VIDEO_TRAN_ERRO028  -2006 /* buffer insuficiente para receber mensagem*/
+#define VIDEO_TRAN_ERRO029  -2007 /* time out na recepcao*/
+#define VIDEO_TRAN_ERRO030  -2008 /* funcao cep invalida*/
+#define VIDEO_TRAN_ERRO031  -2010 /* erro reentrancia no cep*/
+#define VIDEO_TRAN_ERRO032  -2011 /* identificacao de processo origem invalida*/
+#define VIDEO_TRAN_ERRO033  -2012 /* identificacao do processo destino invalida*/
+#define VIDEO_TRAN_ERRO034  -2020 /* numero de parametros cep incorretos*/
+
+#define VIDEO_TRAN_ERRO035  -3000 /* erro de inicializacao de estruturas*/
+#define VIDEO_TRAN_ERRO036  -3001 /* transacao nao encontrada na tabela*/
+#define VIDEO_TRAN_ERRO037  -3002 /* erro em tipo de servico de buffer*/
+
+#define VIDEO_TRAN_ERRO038  -4004 /* funcao de sistema nao catalogada*/
+#define VIDEO_TRAN_ERRO039  -4008 /* funcao de sistema nao existente*/
+#define VIDEO_TRAN_ERRO040  -4012 /* tabela ade funcao de sistema nao caregada*/
+#define VIDEO_TRAN_ERRO041  -4020 /* parametros de areas permanentes incorreto*/
+#define VIDEO_TRAN_ERRO042  -4024 /* tabela GRTC de area permanente nao existe*/
+#define VIDEO_TRAN_ERRO043  -4028 /* area permanente nao catalogada*/
+#define VIDEO_TRAN_ERRO044  -4032 /* area permanente inexiste na tabela GRTC*/
+#define VIDEO_TRAN_ERRO045  -4036 /* area permanente nao e load modulo*/
+#define VIDEO_TRAN_ERRO046  -4040 /* erro durante escrita do load modulo*/
+#define VIDEO_TRAN_ERRO047  -4044 /* arquivo load modulo nao encontrado*/
+
+#define VIDEO_TRAN_ERRO048  -5000 /* nao ha memoria disponivel*/
+
+#define VIDEO_TRAN_ERRO049  -6000 /* registro bloqueado*/
+
+#define VIDEO_TRAN_ERRO050  -1023 /* numero de segmentos de chave invalido*/
+#define VIDEO_TRAN_ERRO051  -1024 /* servico find na catalogado*/
+#define VIDEO_TRAN_ERRO052  -1025 /* erro find igual dup*/
+#define VIDEO_TRAN_ERRO053  -1026 /* erro numero de indice de duplicata*/
+#define VIDEO_TRAN_ERRO054  -1027 /* erro numero de indice*/
+#define VIDEO_TRAN_ERRO055  -1028 /* erro tamanho de chave set*/
+#define VIDEO_TRAN_ERRO056  -1029 /* set de chave nao encontrada*/
+#define VIDEO_TRAN_ERRO057  -1030 /* erro get chave*/
+#define VIDEO_TRAN_ERRO058  -1031 /* nunero de arquivo invalido*/
+#define VIDEO_TRAN_ERRO059  -1032 /* set de busca em registro nao definido*/
+#define VIDEO_TRAN_ERRO060  -1033 /* servico corrent isam record nao disponivel*/
+#define VIDEO_TRAN_ERRO061  -1034 /* nome de subfile nao encontrado na tabela*/
+#define VIDEO_TRAN_ERRO062  -1035 /* subfile nao aberto*/
+#define VIDEO_TRAN_ERRO063  -1036 /* tabdoda ou arquivos nulo*/
+#define VIDEO_TRAN_ERRO064  -1037 /* impossivel abrir arquivo de dados das telas*/
+#define VIDEO_TRAN_ERRO065  -1038 /* impossivel abrir arquivo de indices das telas*/
+#define VIDEO_TRAN_ERRO066  -1038 /* erro de alocacao de memoria na inicializacao*/
+#define VIDEO_TRAN_ERRO067  -1039 /* erro de alocacao de memoria tabela de indices*/
+#define VIDEO_TRAN_ERRO068  -1040 /* tentativa de resete corrent isam record sem salvar*/
+#define VIDEO_TRAN_ERRO069  -1041 /* arquivo temporario ja criado*/
+#define VIDEO_TRAN_ERRO070  -1042 /* arquivo com nome do terminal nao encontrado*/
+#define VIDEO_TRAN_ERRO071  -1043 /* erro de leitura do arquivo terminal*/
+#define VIDEO_TRAN_ERRO072  -1044 /* erro allocacao de memoria para arquivos temporarios*/
+#define VIDEO_TRAN_ERRO073  -1045 /* nome do arquivo pfilno invalido*/
+#define VIDEO_TRAN_ERRO074  -1046 /* erro de alocacao de memoria GETREC*/
+#define VIDEO_TRAN_ERRO075  -1047 /* num arquivo invalido*/
+#define VIDEO_TRAN_ERRO076  -1048 /* erro interno no controle de isam fil */
+#define VIDEO_TRAN_ERRO077  -7000 /* erro de set de corrente isam record  */
+#define VIDEO_TRAN_ERRO078  -7001 /* nao ha corrente isam record          */
+
+#define VIDEO_GRI_AJUSTA_SUBREDE TRUE
+#define VIDEO_GRI_AJUSTA_REDESUB FALSE
+
+#define VIDEO_GRI_ajusta_subfile_rede(a,b,c) \
+		       VIDEO_GRI_ajusta_subfile(a,b,c,VIDEO_GRI_AJUSTA_SUBREDE)
+#define VIDEO_GRI_ajusta_rede_subfile(a,b,c) \
+		       VIDEO_GRI_ajusta_subfile(a,b,c,VIDEO_GRI_AJUSTA_REDESUB)
+
+/****************************************************************************
+                           FLAGS DE INICIALIZACAO
+****************************************************************************/
+#define VIDEO_TRAN_SIAD_INICIALIZADO   B00
+#define VIDEO_TRAN_INIT_INICIALIZADO   B01
+
+

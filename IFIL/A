@@ -1,0 +1,74 @@
+File CTADREC.C:
+   return( I(isam_err) );
+File CTADVREC.C:
+    return( I(isam_err) );
+File CTCLOSE.C
+                          TRUE,isam_err);
+File CTCOPY.C:
+            return(isam_err);
+                             ret,isam_err);
+                             ret,isam_err);
+            return(isam_err);
+File CTDELTMP.C:
+                      TRUE,isam_err);
+File CTDLREC.C:
+   return( I(isam_err) );
+File CTFIND.C:
+                      negativo, em outro caso, retorna ctree isam_err.
+                  old_isam_err,aux_erro;
+           old_isam_err = isam_err;
+           (isam_err) = old_isam_err;
+        old_isam_err = isam_err;
+        isam_err = old_isam_err;
+         return( I(isam_err) );
+File CTFRSREC.C:
+    RETORNA:        Zero se operacao ok, retorna o isam_err em erro.
+File CTGTEREC.C:
+      return( I(isam_err) );
+File CTISCRIA.C:
+    isam_err = 0;
+        if ( (isam_err = uerr_cod)!=0 )
+    return(isam_err);
+File CTISOPEN.C:
+        isam_err = 0;
+    return(isam_err);
+File CTLSTREC.C:
+    RETORNA:    Zero se operacao ok, retorna isam_err em erro.
+File CTLTEREC.C:
+      return( I(isam_err) );
+File CTNXTREC.C:
+    RETORNA:        Zero se operacao ok, retorna isam_err em erro.
+File CTOPEN.C:
+              isam_fil, (*auxifil)->pfilnam, isam_err);
+                   isam_fil,isam_err);
+                        isam_fil,isam_err);
+            printf("\nFalha Rebuild... St %d %d", isam_fil,isam_err );
+                      isam_fil,isam_err);
+ printf("\n** Arquivo No.%d danificado ST[%d] **",arquivo,isam_err);
+File CTPRVREC.C:
+    RETORNA:        Zero se operacao ok, retorna isam_err em erro.
+File CTREAD.C:
+                      negativo, em outro caso, retorna ctree isam_err.
+       return(isam_err);
+File CTREWREC.C:
+        return( I(isam_err) );
+                       1,isam_err);
+        return( I(isam_err) );
+File CTRWVREC.C:
+   return( I(isam_err) );
+File CTSETFRS.C:
+                      negativo, em outro caso, retorna ctree isam_err.
+        return( I(isam_err) );
+File CTSETLST.C:
+                      negativo, em outro caso, retorna ctree isam_err.
+        return( I(isam_err) );
+File CTSETNXT.C:
+                      negativo, em outro caso, retorna ctree isam_err.
+File CTSETPRV.C:
+                      negativo, em outro caso, retorna ctree isam_err.
+File CTTEMP.C:
+                    ret,isam_err);
+                    ret,isam_err);
+File REBUILD.C:
+     printf("\nSTATUS DE ERRO <INICIALIZA€ŽO DO SISTEMA> [%d %d]",ret,isam_err);
+     printf("\nFATAL ERRO!!! REBUILD ST [%d %d] ARQUIVO [%s]",ret,isam_err,

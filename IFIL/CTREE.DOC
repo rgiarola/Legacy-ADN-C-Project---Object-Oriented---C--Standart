@@ -1,0 +1,182 @@
+    NextInSet( numero_indice, buffer) );
+    PreviousInSet( numero_indice, buffer) );
+
+
+    DeleteRecord(numero_arquivo)
+    {
+     DELETA REGISTRO ATIVO
+    }
+
+    AddVRecord(arquivo, sai_buffer, buf_tam_sai)
+    {
+     ADCIONA UM REGISTRO NO ARQUIVO ESPECIFICADO TAMANHO VARIADO
+    }
+
+    ReReadVRecord(arquivo, ent_buffer, buf_tam_ent)
+
+     ReWriteVRecord(arquivo, sai_buffer, buf_tam_sai))!=0)
+
+   LockISAM(ENABLE/FREE)   ctree
+    {
+     SETA BLOQUEIO E DESBLOQUEIO
+    }
+
+    isam_err                ctree ERRO INTERNO DO CTREE
+    uerr_cod                ctree ERRO INTERNO DO CTREE
+    isam_fil                ctree NUMERO DO ARQUIVO CTREE
+
+    AddRecord(arquivo,buffer)
+    {
+     ADCIONA UM REGISTRO NO ARQUIVO ESPECIFICADO
+    }
+
+    CloseIFile( ATIVO_IFIL+posicao )
+    {
+     FECHA O ARQUIVO IFIL.DFILNO
+    }
+
+    CreateIFile(ATIVO_IFIL+posicao)
+    {
+     CRIA O ARQUIVO IFIL.DFILNO
+    }
+
+    FirstRecord( arquivo/indice , buffer_leitura )
+    {
+     POSICIONA NO INICIO DO ARQUIVO E LE O PRIMEIRO REGISTRO
+    }
+
+    FirstInSet( numero_indice,buffer_da_chave,buffer_leitura,tamanho_chave)
+    {
+     LE O PRIMEIRO REGISTRO QUE SATISFACA OS N BYTES DO TAMANHO
+     tamanho_chave DO buffer_da_chave
+    }
+    NextInSet( numero_indice, buffer) );
+
+    GetGTERecord( numero_indice, buffer_da_chave , buffer_leitura)
+    {
+     LE O REGISTRO MAIOR E OU IGUAL A buffer_da_chave
+    }
+
+    GetLTERecord( numero_indice, buffer_da_chave , buffer_leitura)
+    {
+     LE O REGISTRO MENOR E OU IGUAL A buffer_da_chave
+    }
+
+    GetRecord( numero_indice, buffer_da_chave , buffer_leitura )
+    {
+     LE O REGISTRO IGUAL AO  buffer_da_chave
+    }
+
+    InitISAM( CTREE_buffers, CTREE_fils, CTREE_sects)
+    {
+     retornar NO_ERR
+    }
+
+    LastInSet( numero_indice, buffer_da_chave ,buffer, tamanho )
+    {
+     LE O ULTIMO REGISTRO QUE SATISFACA OS N BYTES DO TAMANHO
+     tamanho_chave DO buffer_da_chave
+    }
+
+    LastRecord( indice/arquivo, buffer_leitura )
+    {
+     posiciona no ultimo registro
+    }
+
+    NextRecord( arquivo/indice, buffer_leitura )
+    {
+     posiciona no proximo registro
+    }
+
+    OpenIFile( ATIVO_IFIL+posicao)
+    {
+     abre um arquivo ifil
+    }
+
+    PreviousRecord( indice/arquivo, buffer_leitura )
+    {
+     posiciona NO REGISTRO ANTERIOR
+    }
+
+    RebuildIFile( ATIVO_IFIL+posicao )
+    {
+     reorganiza arquivo IFIL
+    }
+
+    ReReadRecord(arquivo,buffer)
+    {
+     rele o registro corrente no arquivo
+    }
+
+    ReWriteRecord(numero_arquivo,buffer)
+    {
+     regrava o registro corrente do arquivo
+    }
+
+    ResetRecord(arquivo,SAVCURI/RSTCURI/RSTCURI)
+    {
+     SAVCURI salva buffer corrente do isam record para
+             buffer secundario
+
+     RSTCURI restaura buffer corrente do isam record para
+             buffer secundario
+
+     RSTCURI restarta a posicao do corrente record com o buffer aux
+             buffer secundario
+    }
+
+    numreg = CurrentFileOffset( arquivo )
+    {
+     salva posicao corrente do arquivo
+    }
+
+    SetRecord(arquivo,numreg,buffer_de_dados,tamanho_do_registro))
+    {
+     restarta posicao do arquivo
+    }
+find
+      case FIND_IGUAL      :
+           err = CTREE_readrec (numero_indice, target, modo_leitura );
+           break;
+
+      case FIND_MAIOR      :
+           //err = CTREE_grtrec(numero_indice, target, modo_leitura );
+           //break;
+
+      case FIND_PRIMEIRO   :
+           if( !flag_seg_const ) // Nao ha constantes para delimitar o arquivo.
+             {
+              err = CTREE_frsrec( numero_indice, modo_leitura );
+              break;
+             }
+      case FIND_MAIOR_IGUAL:
+           err = CTREE_gterec( numero_indice, target, modo_leitura );
+           break;
+
+      case FIND_MENOR      :
+           //err = CTREE_letrec(numero_indice, target, modo_leitura );
+           //break;
+
+      case FIND_ULTIMO     :
+           if( !flag_seg_const ) // Nao ha constantes para delimitar o arquivo.
+             {
+              err = CTREE_lstrec( numero_indice, modo_leitura );
+              break;
+             }
+      case FIND_MENOR_IGUAL:
+           err = CTREE_lterec(numero_indice, target, modo_leitura );
+           break;
+
+      case FIND_PROXIMO    :
+           err = CTREE_nxtrec(numero_indice, modo_leitura );
+           break;
+
+      case FIND_ANTERIOR   :
+           err = CTREE_prvrec(numero_indice, modo_leitura );
+           break;
+
+    if( !flag_duplicata )
+        err=GetRecord(
+    else
+        err=FirstInSet(
+TransformKey( numero_indice, target )

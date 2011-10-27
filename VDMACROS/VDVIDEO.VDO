@@ -1,0 +1,59 @@
+#define VIDEO_VOID            void
+#define VD_VOID               VIDEO_VOID
+#define VD_ARQCRGDEF          "STRFILE.CRG"
+#include <NUCLEO.VDO>   /* ARQUIVO CONTENDO DEFINICAO DE TIPOS*/
+#include <GERAIS.VDO>   /* ARQUIVO CONTENDO DEFINICAO DE TIPOS*/
+#include <MENU.VDO>     /* ARQUIVO CONTENDO DEFINICAO DE TIPOS*/
+#include <TELA.VDO>     /* ARQUIVO CONTENDO DEFINICAO DE TIPOS*/
+#include <ARVORE.VDO>   /* ARQUIVO CONTENDO DEFINICAO DE TIPOS*/
+#include <CARGA.VDO>    /* ARQUIVO CONTENDO DEFINICAO DE TIPOS*/
+#include <HELP.VDO>     /* ARQUIVO CONTENDO DEFINICAO DE TIPOS*/
+#include <DEFCAST.VDO>  /* ARQUIVO CONTENDO DEFINICAO DE CAST*/
+#include <DEFBITES.VDO> /* ARQUIVO CONTENDO DEFINICAO DE BITES*/
+#include <DEFTECLA.VDO> /* ARQUIVO CONTENDO DEFINICAO DE TECLAS*/
+#include <DEFFLAGS.VDO> /* ARQUIVO CONTENDO DEFINICAO DE FLAGS DOS*/
+#include <DEFARQVS.VDO> /* ARQUIVO CONTENDO DEFINICAO DE ARQUIVOS*/
+#include <DEFWINDO.VDO> /* ARQUIVO CONTENDO DEFINICAO DE VIDEO*/
+#include <DEFNOMES.VDO> /* ARQUIVO CONTENDO REDEFINICOES DOS NOMES*/
+#include <DEFPROTT.VDO> /* ARQUIVO CONTENDO PROTOTIPOS DE FUNCAO*/
+#include <DEFEXTER.VDO> /* ARQUIVO CONTENDO DEFINICAO DAS VAR. EXTERNAS*/
+#include <DEFMENS.VDO>  /* ARQUIVO CONTENDO MENSAGENS DA PLATAFORMA*/
+#include <DEFTELAS.VDO>
+#include <ALLOC.VDO>    /* ARQUIVO CONTENDO MENSAGENS DA PLATAFORMA*/
+#include <ERROS.H>      /* ARQUIVO CONTENDO MENSAGENS DA PLATAFORMA*/
+
+#ifdef _VIDEO_TRANSAC
+   #ifdef _VIDEO_DOS
+      #include <DEFTTRAN.VDO>
+      #include <DEFMTRAN.VDO>
+      #include <DEFEGRI.VDO>
+      #include <DEFETRAN.VDO>
+      #include <PROTTGRI.VDO>
+      #include <PROTTRAN.VDO>
+      #define VIDEO_isam_err isam_err
+      #define VIDEO_uerr_cod uerr_cod
+      #define VIDEO_isam_fil isam_fil
+   #else
+      #include <DEFTTRAN.VDO>
+      #include <DEFMTRAN.VDO>
+      #include <DEFETRAN.VDO>
+      #include <DEFEGRI.VDO>
+      #include <PROTTGRI.VDO>
+      #include <PROTTRAN.VDO>
+   #endif
+#else
+   #define VIDEO_isam_err isam_err
+   #define VIDEO_uerr_cod uerr_cod
+   #define VIDEO_isam_fil isam_fil
+#endif
+
+#ifdef MS_C
+   #ifndef _VIDEO_TRANSAC
+       #ifdef _VIDEO_DOS
+          #include <DEFETRAN.VDO>
+          #include <PROTTRAN.VDO>
+       #endif
+   #endif
+#endif
+
+

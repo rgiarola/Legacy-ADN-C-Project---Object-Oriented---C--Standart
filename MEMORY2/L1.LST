@@ -1,0 +1,10 @@
+Publics by module
+
+EMS4C   	size = 1450
+	_emsAllocate                      _emsGetFrame
+	_emsGetHandles                    _emsGetPages
+	_emsGetStatus                     _emsLoaded
+	_emsMapMemory                     _emsOwnedPages
+	_emsPageInfo                      _emsPageMap
+	_emsRelease                       _emsRestoreMap
+	_emsSaveMap                       _emsVersion

@@ -1,0 +1,31 @@
+                      FAIRCOM CORPORATION
+                      PRODUCT FIX
+                                     
+Product:   c-tree 6.4B or B2
+Compiler:  N/A
+File:      ctkrnl.c
+Date:      4/11/95
+
+Problem:  519 errors in multi-user non-server mode (FPUTFGET).
+
+Solution:  Add #ifndef FPUTFGET around the following piece of code in
+function ctgetnod() in ctkrnl.c.
+
+#ifndef FPUTFGET /* Added to fix 519 err - 4/11/95 - wd */
+if (!ctrflg && knum->suptyp == NON_SUPER && hnum->numrec < node &&
+      (!(hnum->flmode & OPENCRPT) || !(hnum->flmode & READFIL))) {
+    ctrcvlog("node exceeds logical index EOF",IEOF_ERR);
+#ifdef DBG9477
+    ctrt_printf("\n%s: fid=%lxx numrec=%lxx node=%lxx kmem=%d\n",
+       hnum->flname,
+       hnum->fileid,
+       hnum->numrec,
+       node,
+       knum->kmem);
+    terr(9477);
+#else /* DBG9477 */
+    uerr_cod = ctrcvlog(hnum->flname,IEOF_ERR);
+    return(NULL);
+#endif /* DBG9477 */
+  }
+#endif /* Added to fix 519 err - 4/11/95 - wd */

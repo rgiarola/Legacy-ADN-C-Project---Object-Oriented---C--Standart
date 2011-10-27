@@ -1,0 +1,243 @@
+
+typedef struct
+ {
+  INT2 coli,
+      colf,
+      lini,
+      linf;
+ }VIDEO_EDITOR_COORD;
+
+
+typedef struct
+ {
+  INT2                (*funcao_editora)(),
+                     colatual,
+                     linatual,
+                     codserv,
+                     numtela;
+  VIDEO_EDITOR_COORD selecao;
+  VIDEO_EDITOR_COORD tela;
+  char               imagem[80][25];
+  BOOLEAN            flagmold;
+  BYTE               sombra,
+                     atributo,
+                     ins,
+                     status,
+                     ascii,
+                     scan,
+                     oldascii,
+                     oldscan;
+  char               *servico,
+                     *tipotela;
+ }VIDEO_EDITOR_CONTROLE_EDICAO;
+
+
+INT2 VIDEO_EDITOR_despresa_selecao(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                                  VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_pega_atributo(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                               VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_seta_atributo(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                               VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_deleta_bloco(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                              VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_despresa_imagem(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                                 VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_seta_insercao(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                               VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_seta_status(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                             VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_caracter_box(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                              VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_caracter_seta(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                               VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_caracter_smgr(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                               VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_caracter_letra(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                                VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_caracter_matematica(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                                     VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_seleciona_plot(BYTE *tab_caracter,INT2 numlin,INT2 numcol,
+                                VIDEO_EDITOR_CONTROLE_EDICAO *imagem);
+
+VD_VOID VIDEO_EDITOR_deleta_caracter(VIDEO_EDITOR_CONTROLE_EDICAO *imagem);
+VD_VOID VIDEO_EDITOR_ctrlbacksp(VIDEO_EDITOR_CONTROLE_EDICAO *imagem);
+VD_VOID VIDEO_EDITOR_backsp(VIDEO_EDITOR_CONTROLE_EDICAO *imagem);
+
+INT2 VIDEO_EDITOR_editor_texto(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                              VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_accept_imagem(VIDEO_EDITOR_CONTROLE_EDICAO *imagem,
+                               VIDEO_NUCLEO_SERV            *param);
+
+INT2 VIDEO_EDITOR_atributo_tela(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                               VIDEO_NUCLEO_SERV            **param);
+
+VD_VOID VIDEO_EDITOR_linhatrib(INT2 inic,INT2 fim,INT2 ref,INT2 vet,BYTE cor);
+
+VD_VOID VIDEO_EDITOR_boxatrib(INT2 coli,INT2 colf,INT2 lini,INT2 linf,BYTE cor);
+
+VD_VOID VIDEO_EDITOR_menu_caracteres(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                                     VIDEO_NUCLEO_SERV            **param,
+                                     char                         *nomemenu);
+
+INT2 VIDEO_EDITOR_muda_poscursor(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                                VIDEO_NUCLEO_SERV            **param);
+
+#define  VIDEO_EDITOR_EDICAO VD_MTTECLA(255,255)
+#define VIDEO_EDITOR_pega_atrib(col,lin)  \
+        peekb(0xB800,(((lin-1)*160)+((col-1)*2)+1))
+
+#define   NULO VD_NULO
+#define   SENT_DIR   B(BIT0)
+#define   SENT_ESQ   B(BIT1)
+#define   SENT_SUB   B(BIT3)
+#define   SENT_DES   B(BIT4)
+#define   pega_pos(col,lin)        peekb(0xB800,(((lin-1)*160)+((col-1)*2)))
+#define   pega_pos_atrib(col,lin)  peekb(0xB800,(((lin-1)*160)+((col-1)*2)+1))
+
+typedef struct
+ {
+  BYTE     elemento,   
+           caracteristicas; 
+ }VIDEO_EDITOR_CARAC_TIPO;
+           
+#define   LIN_SPL       0XC4 /* ( Ä ) LINHA TRACO SIMPLES                    */
+#define   LIN_DPL       0XCD /* ( Í ) LINHA TRACO DUPLO                      */
+
+#define   COL_SPL       0XB3 /* ( ³ ) COLUNA TRACO SIMPLES                   */
+#define   COL_DPL       0XBA /* ( º ) COLUNA TRACO DUPLO                     */
+
+#define   CSD_SPL       0XBF /* ( ¿ ) CANTO SUP. DIR TRACO SIMPLES           */
+#define   CSDLSPL       0XB7 /* ( · ) CANTO SUP. DIR. LIN. SIMPLES COL. DUPLA*/
+#define   CSD_DPL       0XBB /* ( » ) CANTO SUP. DIR TRACO DUPLO             */
+#define   CSDLDPL       0XB8 /* ( ¸ ) CANTO SUP. DIR. LIN. DUPLA COL. SIMPLES*/
+
+#define   CSE_SPL       0XDA /* ( Ú ) CANTO SUP. ESQ. TRACO SIMPLES          */
+#define   CSELSPL       0XD6 /* ( Ö ) CANTO SUP. ESQ. LIN. SIMPLES COL. DUPLA*/
+#define   CSE_DPL       0XC9 /* ( É ) CANTO SUP. ESQ. TRACO DUPLO            */
+#define   CSELDPL       0XD5 /* ( Õ ) CANTO SUP. ESQ. LIN. DUPLA COL. SIMPLES*/
+
+#define   CID_SPL       0XD9 /* ( Ù ) CANTO INF. DIR TRACO SIMPLES           */
+#define   CIDLSPL       0XBD /* ( ½ ) CANTO INF. DIR. LIN. SIMPLES COL. DUPLA*/
+#define   CID_DPL       0XBC /* ( ¼ ) CANTO INF. DIR TRACO DUPLO             */
+#define   CIDLDPL       0XBE /* ( ¾ ) CANTO INF. DIR. LIN. DUPLA COL. SIMPLES*/
+
+#define   CIE_SPL       0XC0 /* ( À ) CANTO INF. ESQ. TRACO SIMPLES          */
+#define   CIELSPL       0XD3 /* ( Ó ) CANTO INF. ESQ. LIN. SIMPLES COL. DUPLA*/
+#define   CIE_DPL       0XC8 /* ( È ) CANTO INF. ESQ. TRACO DUPLO            */
+#define   CIELDPL       0XD4 /* ( Ô ) CANTO INF. ESQ. LIN. DUPLA COL. SIMPLES*/
+
+#define   TNO_SPL       0XC2 /* ( Â ) T NORMAL TRACO SIMPLES                 */
+#define   TNOLSPL       0XD2 /* ( Ò ) T NORMAL LIN. SIMPLES COL. DUPLA       */
+#define   TNO_DPL       0XCB /* ( Ë ) T NORMAL TRACO DUPLO                   */
+#define   TNOLDPL       0XD1 /* ( Ñ ) T NORMAL LIN. DUPLA COL. SIMPLES       */
+
+#define   TIN_SPL       0XC1 /* ( Á ) T INVERTIDO TRACO SIMPLES              */
+#define   TINLSPL       0XD0 /* ( Ð ) T INVERTIDO LIN. SIMPLES COL. DUPLA    */
+#define   TIN_DPL       0XCA /* ( Ê ) T INVERTIDO TRACO DUPLO                */
+#define   TINLDPL       0XCF /* ( Ï ) T INVERTIDO LIN. DUPLA COL. SIMPLES    */
+
+#define   TDI_SPL       0XB4 /* ( ´ ) T A DIREITA TRACO SIMPLES              */
+#define   TDILSPL       0XB6 /* ( ¶ ) T A DIREITA LIN. SIMPLES COL. DUPLA    */
+#define   TDI_DPL       0XB9 /* ( ¹ ) T A DIREITA TRACO DUPLO                */
+#define   TDILDPL       0XB5 /* ( µ ) T A DIREITA LIN. DUPLA COL. SIMPLES    */
+
+#define   TES_SPL       0XC3 /* ( Ã ) T A ESQUERDA TRACO SIMPLES             */
+#define   TESLSPL       0XC7 /* ( Ç ) T A ESQUERDA LIN. SIMPLES COL. DUPLA   */
+#define   TES_DPL       0XCC /* ( Ì ) T A ESQUERDA TRACO DUPLO               */
+#define   TESLDPL       0XC6 /* ( Æ ) T A ESQUERDA LIN. DUPLA COL. SIMPLES   */
+
+#define   CRZ_SPL       0XC5 /* ( Å ) CRUZ TRACO SIMPLES                     */
+#define   CRZLSPL       0XD7 /* ( × ) CRUZ COLUNA DUPLA LINHA SIMPLES        */
+#define   CRZ_DPL       0XCE /* ( Î ) CRUZ TRACO DUPLO                       */
+#define   CRZLDPL       0XD8 /* ( Ø ) CRUZ COLUNA SIMPLES LINHA DUPLA        */
+
+#define   CONDSPL       B(BIT0)
+#define   CONDDPL       B(BIT1)
+#define   CONESPL       B(BIT2)
+#define   CONEDPL       B(BIT3)
+#define   CONSSPL       B(BIT4)
+#define   CONSDPL       B(BIT5)
+#define   CONISPL       B(BIT6)
+#define   CONIDPL       B(BIT7)
+#define   DPL           B(2)
+#define   SPL           B(1)
+#define  CON_SUP(x)     (CONSSPL*x)
+#define  CON_INF(x)     (CONISPL*x)
+#define  CON_DIR(x)     (CONDSPL*x)
+#define  CON_ESQ(x)     (CONESPL*x)
+#define  CON_TAB(x)     B(VIDEO_EDITOR_tab_caracteres[x].caracteristicas)
+
+VD_VOID VIDEO_EDITOR_pega_carac_conect(INT2 *col,INT2 *lin,BYTE *conect,
+                                       BYTE *carac,BYTE sentido,INT2 tipo);
+
+INT2 VIDEO_EDITOR_pegatipo(INT2 *tipo,char *caracter,
+                          VIDEO_EDITOR_CONTROLE_EDICAO *imagem);
+
+INT2 VIDEO_EDITOR_muda_poscursor(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                                VIDEO_NUCLEO_SERV            **param);
+      
+INT2 VIDEO_EDITOR_lintela(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                         VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_pos_mouse(BYTE *ascii, BYTE *scan, INT2 flag);
+
+INT2 VIDEO_EDITOR_atributo_sombra(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                                 VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_display_moldura(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                                 VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_marca_bloco(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                             VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_monta_box(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                           VIDEO_NUCLEO_SERV            **param);
+
+VD_VOID VIDEO_EDITOR_mudapostela(INT2 coli,INT2 colf,
+                                 INT2 lini,INT2 linf,char *buffer_tela);
+
+INT2 VIDEO_EDITOR_movimenta_bloco(VIDEO_EDITOR_COORD           *coord,
+                                 BYTE                         flag,
+                                 char                         *buffer_transp,
+                                 VIDEO_EDITOR_CONTROLE_EDICAO *imagem);
+
+INT2 VIDEO_EDITOR_move_bloco(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                            VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_copia_bloco(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                             VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_move_tela(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                           VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_tamanho_tela(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                              VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_termina(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                         VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_arvore_comandos(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                                 VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_repete_comando(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                                VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_despresa_area_servico(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                                       VIDEO_NUCLEO_SERV            **param);
+
+INT2 VIDEO_EDITOR_despresa_tudo(VIDEO_EDITOR_CONTROLE_EDICAO **imagem,
+                               VIDEO_NUCLEO_SERV            **param);
+

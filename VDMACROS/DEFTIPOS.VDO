@@ -1,0 +1,349 @@
+/*==========================================================================
+            DEFINICOES DOS TIPOS DE DADOS USADOS NA BLIBLIOTECA
+==========================================================================*/
+
+typedef unsigned char BYTE;           /* TIPO DE DADO BYTE*/
+
+typedef unsigned char BOOLEAN;        /* TIPO DE DADO BOOLEAN*/
+
+typedef unsigned int  WORD;           /* TIPO DE DADO WORD*/
+
+typedef unsigned long int  DWORD;     /* TIPO DE DADO DWORD*/
+
+typedef struct
+ {
+  int      (*funcao)();
+ }VIDEO_FUNCAO;
+
+typedef struct
+ {
+  int     coli,
+          colf,
+          lini,
+          linf;
+  VD_VOID *buffer;
+ }VIDEO_ESTWIN;
+
+/*===========================================================================
+            ESTRUTURA DE PARAMETROS DE EDICAO DE CAMPO (parcampo)
+===========================================================================*/
+typedef struct
+ {
+  int      (*editacampo)(),      /*FUNCAO DE EDICAO DE CAMPO               */
+           (*consiste)(),        /*FUNCAO DE CONSISTENCIA DE CAMPO         */
+           (*pegacaracter)(),    /*FUNCAO DE LEITURA DE TECLADO            */
+           coli,              /* COLUNA INICIAL DE EDICAO DO CAMPO         */
+           lini,              /* LINHA INICIAL DE EDICAO DO CAMPO          */
+           *tabskip, /* TABELA DE TECLAS DE FINALIZA€AO DE CAMPO AUTOSKIP  */
+           autos,                /*AUTOS PARA TRATAMENTO DE CAMPO          */
+           tamanho,              /*TAMANHO DO CAMPO                        */
+           tipo,                 /*TIPO DO CAMPO                           */
+           decimais,             /*NUMERO DE DECIMAIS PARA CAMPO NUMERICOM */
+           coldes,               /*COLUNA DA DESCRICAO                     */
+           lindes;               /*LINHA DA DESCRICAO                      */
+  char     *descr,               /*DESCRICAO DO CAMPO                      */
+           *mascara,             /*MASCARA DE EDICAO                       */
+           *buffer;           /* BUFFER DE RETORNO DA LINHA EDITADA        */
+  BYTE     cor,      /*  COR DA LINHA DE EDICAO TODOS OS ATRIBUTOS DE VIDEO*/
+           cordescr,
+           tipocampo;
+ }VIDEO_CAMPOTEL_CAMPO;
+
+/*==========================================================================*/
+
+
+typedef struct
+ {
+  WORD    servico;
+  int     (*VIDEO_tratador_nucleo)(),
+          (*VIDEO_tratador_usuario)();
+ }VIDEO_SWAP_TRATADOR_SERVICO;
+
+/*==========================================================================*/
+
+
+typedef struct
+ {
+  int     (*VIDEO_funcao)();
+  char    VIDEO_buffer[1];
+ }VIDEO_TAB_FUNC;
+
+/*===========================================================================
+          ESTRUTURA DE ITEM DE TABELA DE SERVICO A EXECUTAR (tabserv)
+===========================================================================*/
+typedef struct
+ {
+  int       *VIDEO_servico,   /* IDENTIFICADOR DO SERVICO                 */
+            (*VIDEO_funcao)();/* FUNCAO REALIZADORA DO SERVICO            */
+ }VIDEO_TABSERV;
+/*=========================================================================*/
+
+
+/*===========================================================================
+              ESTRUTURA DE DEFINICAO DO MODELO REQUISITOR DE SERVICO
+===========================================================================*/
+typedef struct
+ {
+  VIDEO_TAB_FUNC *VIDEO_campos;  /* RELACAO DOS CAMPOS            */
+  int            VIDEO_numcampos,/* NUMERO DE CAMPOS              */
+                 VIDEO_tamcampo, /* TAMANHO DA ESTRUTURA DE CAMPOS*/
+                 VIDEO_inicial;  /* CAMPO INICIAL                 */
+  VIDEO_TABSERV  *VIDEO_tabserv; /* TABELA DE SERVICOS A EXECUTAR */
+  int            VIDEO_servrec;  /* SERVICO REQUISITADO PELO MSPAS*/
+  BOOLEAN        VIDEO_repdisp;  /* SERVICO A SER EXECUTADO ESTA  */
+                                 /* SERVREC                       */
+ }VIDEO_NUCLEO_SERV;
+
+/*=========================================================================*/
+
+typedef struct
+ {
+  int     (*MENU_pega_opcao)(), /*Funcao Tratadora do Servico.*/
+          coli,colf,            /*Coluna inicial/final.*/
+          lini,linf,            /*Linha inicial/final.*/
+          numop,numpag,         /*Numero de Opcoes/Numero de Paginas.*/
+          opsel,colatu,         /*Opcao Selecionada/Coluna Display Atual.*/
+          col,lin,              /*Coluna Opcao/Linha Opcao.*/
+          opini,colpag,         /*Opcao Inicial da Pagina.*/
+          numlin,tamcol,        /**/
+          opselec,tamdispop,    /**/
+          (*funcserv)();        /**/
+  char    **opcoes;             /**/
+
+  BYTE    cor_opcao,            /**/
+          cor_selecao,          /**/
+          cor_moldura,          /**/
+          cor_sombra;           /**/
+
+  BOOLEAN flagdispcol,          /**/
+          flagdispop,           /**/
+          flagmoldura;          /**/
+
+  BYTE    tipomoldura,          /**/
+          caracmoldura;         /**/
+ }VIDEO_INFO_MENU;
+
+/*=========================================================================*/
+
+typedef struct
+ {
+  int   col,
+        lin;
+  BYTE  entrada,
+        saida;
+ }VIDEO_POSICAO_CAMPO;
+
+/*=========================================================================*/
+
+typedef struct
+ {
+  char  *descritor;
+  BYTE  status;
+ }VIDEO_DESCRITOR_CAMPO;
+
+/*=========================================================================*/
+
+typedef struct
+ {
+  char  *buffer_binario,
+        *mascara;
+  WORD  tamanho,
+        autos,
+        tipo,
+	decimais,
+        status,
+        *tabskip,
+        tabskip_num,
+        mascara_num;
+ }VIDEO_IDENT_CAMPO;
+
+/*=========================================================================*/
+typedef struct
+ {
+  int               flagdispmoldura,
+                    flagdispcampos,
+                    flagdiplinha,
+                    indice,
+                    coli,
+                    colf,
+                    lini,
+                    linf,
+                    linatual,
+                    numcampos,
+                    (*user_func)(),  /* Funcao Generica.*/
+                    flaguser,
+                    (*funcserv)();
+  BYTE              cor,
+                    flagpopwin,
+                    flagmanut;
+  char              caracter,
+                    *titulo,
+                    *nomeindice;
+  DWORD             numrec;
+  BOOLEAN           flagnumrec;
+ }VIDEO_PESQUISA_TELA;
+
+typedef struct
+ {
+  int                    (*pesquisa_tela)();
+  VD_VOID                 *telas;
+  VIDEO_NUCLEO_SERV       *linhatela;
+  VIDEO_SEG_CHAVE         *celchave;
+  VIDEO_PESQUISA_TELA     *planilha;
+  VIDEO_TRANSP_DADOS      *transpdados;
+ }VIDEO_PESQUISA_PLANILHA;
+
+typedef struct
+ {
+  VIDEO_POSICAO_CAMPO   *cord;
+  VIDEO_DESCRITOR_CAMPO *descr;
+ }VIDEO_MENSAGEM;
+
+
+ typedef struct
+  {
+   int                indice,
+                      *situacao;
+   VIDEO_MENSAGEM     *mens;
+   VIDEO_SEG_CHAVE    *celchave;
+   VIDEO_TRANSP_DADOS *transpdados;
+   char               *nomeindice;
+  }VIDEO_CONSDB;
+
+typedef struct
+ {
+  WORD             objeto_num,
+                   valid_num;
+  BYTE	           tipocons;
+                   union
+                     {
+                      char                    *faixa,
+                                              **tabela;
+                      VIDEO_INFO_MENU         *menu;
+                      VIDEO_MENSAGEM          *mens;
+                      VIDEO_CONSDB            *consdb;
+                      VIDEO_PESQUISA_PLANILHA *planilha;
+                      int                     (*user_cons)();
+                      VD_VOID                 *manutencao;
+                     }validacao;
+ }VIDEO_CAMPO_CONSISTENCIA;
+
+/*===========================================================================*/
+
+typedef struct
+ {
+  int                      (*editacampo)(); /* Funcao de Edicao do Campo.*/
+  WORD                     objeto_num;      /* Numero do Objeto para carga.*/
+  VIDEO_POSICAO_CAMPO      *crcampo;        /* Coord. do Campo.*/
+  VIDEO_IDENT_CAMPO        *campo;          /* Identidade do Campo.*/
+  VIDEO_CAMPO_CONSISTENCIA *consiste;       /* Parametros de Consistencia.*/
+  char                     *user_func;      /* Funcao Generica.*/
+  int                      flag_disparo;    /* Flag de Disparo da Funcao.*/
+  char                     *dodacampo;      /* Doda campo.*/
+  int                      offsetbuffer;    /* Offset do buffer do campo*/
+ }VIDEO_CAMPO_TELA;
+
+/*==========================================================================*/
+
+typedef struct
+ {
+  char VIDEO_conec_se_dupla[2],
+       VIDEO_conec_sd_dupla[2],
+       VIDEO_conec_ie_dupla[2],
+       VIDEO_conec_id_dupla[2],
+       VIDEO_conec_se_simples[2],
+       VIDEO_conec_sd_simples[2],
+       VIDEO_conec_ie_simples[2],
+       VIDEO_conec_id_simples[2],
+       VIDEO_conec_se_carac[2],
+       VIDEO_conec_sd_carac[2],
+       VIDEO_conec_ie_carac[2],
+       VIDEO_conec_id_carac[2],
+       VIDEO_conec_col_dupla,
+       VIDEO_conec_col_simples,
+       VIDEO_conec_col_carac,
+       VIDEO_conec_lin_dupla,
+       VIDEO_conec_lin_simples,
+       VIDEO_conec_lin_carac;
+ }VIDEO_BOX_PARAMETROS;
+
+/*==========================================================================*/
+
+typedef struct
+ {
+  int    VIDEO_maxcol,
+         VIDEO_maxlin,
+         VIDEO_minlin,
+         VIDEO_mincol;
+ }VIDEO_DIM_TELA_PARAMETROS;
+
+/*==========================================================================*/
+
+typedef struct
+ {
+  VD_VOID **endvar,
+          *end;
+  WORD    tam;
+ }VIDEO_ADMEM_DESCRITOR;
+
+/*==========================================================================*/
+
+typedef struct
+ {
+  WORD      VIDEO_ADMEM_num_tab,
+            VIDEO_ADMEM_ct_stack,
+            VIDEO_ADMEM_livre,
+            VIDEO_ADMEM_tam_area,
+            VIDEO_ADMEM_num_descmem;
+
+  char      *VIDEO_ADMEM_area_buffer,
+            *VIDEO_ADMEM_topo,
+            *VIDEO_ADMEM_base;
+  VD_VOID   **VIDEO_ADMEM_ultimo;
+
+  VIDEO_ADMEM_DESCRITOR  *VIDEO_ADMEM_area_mem;
+ }VIDEO_ADMEM_PARAMETROS;
+
+/*==========================================================================*/
+
+typedef struct
+ {
+  int VIDEO_num_desc_win;
+  BYTE *VIDEO_pilha_desc_disp_win,
+       *VIDEO_pilha_desc_disp_win_fim,
+       VIDEO_pilha_descritor_usado_win_buffer[200],
+       *VIDEO_pilha_descritor_usado_win,
+       VIDEO_pilha_desc_disp_win_buffer[200];
+  VIDEO_ESTWIN VIDEO_pilha_win[200];
+ }VIDEO_ADM_WINDOW_PARAMETROS;
+
+/*==========================================================================*/
+
+typedef struct
+ {
+  int VIDEO_filtro_ent_tcl,
+      *VIDEO_filtro_buffertcl,
+      *VIDEO_filtro_tclbufini,
+      *VIDEO_filtro_tclbuffin,
+      *VIDEO_filtro_tabskiptcl;
+ }VIDEO_TCL_FILTRO_PARAMETROS;
+
+/*==========================================================================*/
+
+typedef struct
+ {
+  int      (*pegacaracter)(),    /* FUNCAO DE LEITURA DE TECLADO           */
+           col,                  /* COLUNA INICIAL DE EDICAO DO CAMPO      */
+           lin,                  /* LINHA INICIAL DE EDICAO DO CAMPO       */
+           tamanho,              /* TAMANHO DO CAMPO                       */
+           tipo,                 /* TIPO DO CAMPO                          */
+           decimais;             /* NUMERO DE DECIMAIS PARA CAMPO NUMERICOM*/
+  WORD	   autos,		 /* AUTOS PARA TRATAMENTO DE CAMPO	   */
+           *tabskip; /* TABELA DE TECLAS DE FINALIZA€AO DE CAMPO AUTOSKIP  */
+  char     *mascara,             /* MASCARA DE EDICAO                      */
+           *buffer;              /* BUFFER DE RETORNO DA LINHA EDITADA     */
+  BYTE     cor;      /*  COR DA LINHA DE EDICAO TODOS OS ATRIBUTOS DE VIDEO*/
+ }VIDEO_EDITA_CAMPO;
+
+/*==========================================================================*/
+

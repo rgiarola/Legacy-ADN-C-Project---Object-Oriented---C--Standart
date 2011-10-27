@@ -1,0 +1,107 @@
+
+#ifdef DATABASE_CTREE
+ #define DATABASE_ENABLE                       ENABLE
+ #define DATABASE_FREE                         FREE
+ #define DATABASE_SAVCURI                      SAVCURI
+ #define DATABASE_RSTCURI                      RSTCURI
+ #define DATABASE_LockISAM(FlagLock)           LockISAM(FlagLock)
+ #define DATABASE_AddRecord(arquivo,buffer)    AddRecord(arquivo,buffer)
+ #define DATABASE_CloseIFile(ifil)             CloseIFile(ifil)
+ #define DATABASE_DeleteRecord(arquivo)        DeleteRecord(arquivo)
+ #define DATABASE_FirstRecord(indice,buffer)   FirstRecord(indice,buffer)
+ #define DATABASE_TransformKey(indice,target)  TransformKey(indice,target)
+ #define DATABASE_GetGTERecord(ind,targ,buf)   GetGTERecord(ind,targ,buf)
+ #define DATABASE_logsis()                     CTREE_logsis()
+ #define DATABASE_LastRecord(indice,buffer)    LastRecord(indice,buffer)
+ #define DATABASE_GetLTERecord(ind,targ,buf)   GetLTERecord(ind,targ,buf)
+ #define DATABASE_NextRecord(indice,buffer)    NextRecord(indice,buffer)
+ #define DATABASE_CreateIFile(ifil)            CreateIFile(ifil)
+ #define DATABASE_OpenIFile(ifil)              OpenIFile(ifil)
+ #define DATABASE_CloseIFile(ifil)             CloseIFile(ifil)
+ #define DATABASE_RebuildIFile(ifil)           RebuildIFile(ifil)
+ #define DATABASE_PreviousRecord(ind,buf)      PreviousRecord(ind,buf)
+ #define DATABASE_ReReadVRecord(arq,buf,tam)   ReReadVRecord(arq,buf,tam)
+ #define DATABASE_GetRecord(ind,targ,buf)      GetRecord(ind,targ,buf)
+ #define DATABASE_FirstInSet(ind,targ,buf,tam) FirstInSet(ind,targ,buf,tam)
+ #define DATABASE_ReReadRecord(arquivo,buffer) ReReadRecord(arquivo,buffer)
+ #define DATABASE_ReWriteRecord(arq,buffer)    ReWriteRecord(arq,buffer)
+ #define DATABASE_LastInSet(ind,targ,buf,tam)  LastInSet(ind,targ,buf,tam)
+ #define DATABASE_NextInSet(indice,buffer)     NextInSet(indice,buffer)
+ #define DATABASE_PreviousInSet(indice,buffer) PreviousInSet(indice,buffer)
+ #define DATABASE_GetTempFileName(nome,tam)    GetTempFileName(nome,tam)
+ #define DATABASE_CreateISAM(arq_par)          CreateISAM(arq_par)
+ #define DATABASE_OpenISAM(arq_par)            OpenISAM(arq_par)
+ #define DATABASE_CurrentFileOffset(fil)       CurrentFileOffset(fil)
+ #define DATABASE_FreeCurrentFileOffset(pos)   /* */
+
+ #define DATABASE_SetRecord(arq,pos,buf,tam)   SetRecord(arq,pos,buf,tam)
+ #define DATABASE_ResetRecord(arquivo,servico) ResetRecord(arquivo,servico)
+ #define DATABASE_FreeCuri(arquivo)            VIDEO_GRI_RET_FALSE()
+
+ #define DATABASE_CmpFileOffset(pos1,pos2)     ((pos1) == (pos2))
+ #define DATABASE_unlink(arquivo)              unlink(arquivo)
+ #define DATABASE_AddVRecord(arq,buf,tam)      AddVRecord(arq,buf,tam)
+ #define DATABASE_ReReadVRecord(arq,buf,tam)   ReReadVRecord(arq,buf,tam)
+ #define DATABASE_ReWriteVRecord(arq,buf,tam)  ReWriteVRecord(arq,buf,tam)
+ #define DATABASE_opentmp(arq,pos)             CTREE_opentmp(arq,pos)
+ #define DATABASE_criatmp(arq,pos)             CTREE_criatmp(arq,pos)
+ #define DATABASE_inicializa(doda,arquivos)    CTREE_inicializa(doda,arquivos)
+#endif
+
+#ifdef DATABASE_GRI
+ #define DATABASE_ENABLE                       ENABLE
+ #define DATABASE_FREE                         FREE
+ #define DATABASE_SAVCURI                      SAVCURI
+ #define DATABASE_RSTCURI                      RSTCURI
+ #define DATABASE_FREECURI                     VIDEO_GRI_FREECURI
+ #define DATABASE_RSTREG                       VIDEO_GRI_RSTREG
+ #define VIDEO_GRI_FREECURI                    W(10)
+ #define VIDEO_GRI_RSTREG                      W(11)
+ #define DATABASE_LockISAM(FlagLock)           VIDEO_GRI_RET_FALSE()
+ #define DATABASE_GetTempFileName(nome,tam)    VIDEO_GRI_GetTempFileName(nome,tam)
+ #define DATABASE_CreateISAM(arq_par)          VIDEO_GRI_RET_FALSE()
+ #define DATABASE_OpenISAM(arq_par)            VIDEO_GRI_RET_FALSE()
+ #define DATABASE_CreateIFile(ifil)            VIDEO_GRI_CreateIFile(ifil)
+ #define DATABASE_OpenIFile(ifil)              VIDEO_GRI_OpenIFile(ifil)
+ #define DATABASE_opentmp(arq,pos)             VIDEO_GRI_opentmp(arq,pos)
+ #define DATABASE_criatmp(arq,pos)             VIDEO_GRI_criatmp(arq,pos)
+ #define DATABASE_CloseIFile(ifil)             VIDEO_GRI_CloseIFile(ifil)
+ #define DATABASE_RebuildIFile(ifil)           VIDEO_GRI_RebuildIFile(ifil)
+ #define DATABASE_logsis()                     VIDEO_GRI_RET_FALSE()
+ #define DATABASE_TransformKey(indice,target)  VIDEO_GRI_RET_TRUE()
+ #define DATABASE_inicializa(doda,arquivos)    VIDEO_GRI_inicializa(doda,arquivos)
+
+ #define DATABASE_AddRecord(arquivo,buffer)    VIDEO_GRI_AddRecord(arquivo,buffer)
+ #define DATABASE_ReReadRecord(arquivo,buffer) VIDEO_GRI_ReReadRecord(arquivo,buffer)
+ #define DATABASE_ReWriteRecord(arq,buffer)    VIDEO_GRI_ReWriteRecord(arq,buffer)
+
+ #define DATABASE_AddVRecord(arq,buf,tam)      VIDEO_GRI_AddVRecord(arq,buf,tam)
+ #define DATABASE_ReReadVRecord(arq,buf,tam)   VIDEO_GRI_ReReadVRecord(arq,buf,tam)
+ #define DATABASE_ReWriteVRecord(arq,buf,tam)  VIDEO_GRI_ReWriteVRecord(arq,buf,tam)
+
+ #define DATABASE_DeleteRecord(arquivo)        VIDEO_GRI_DeleteRecord(arquivo)
+
+ #define DATABASE_GetRecord(ind,targ,buf)      VIDEO_GRI_GetRecord(ind,targ,buf)
+ #define DATABASE_GetGTERecord(ind,targ,buf)   VIDEO_GRI_GetGTERecord(ind,targ,buf)
+ #define DATABASE_FirstRecord(indice,buffer)   VIDEO_GRI_FirstRecord(indice,buffer)
+ #define DATABASE_GetLTERecord(ind,targ,buf)   VIDEO_GRI_GetLTERecord(ind,targ,buf)
+ #define DATABASE_LastRecord(indice,buffer)    VIDEO_GRI_LastRecord(indice,buffer)
+ #define DATABASE_NextRecord(indice,buffer)    VIDEO_GRI_NextRecord(indice,buffer)
+ #define DATABASE_PreviousRecord(ind,buf)      VIDEO_GRI_PreviousRecord(ind,buf)
+ #define DATABASE_LastInSet(ind,targ,buf,tam)  VIDEO_GRI_LastInSet(ind,targ,buf,tam)
+ #define DATABASE_FirstInSet(ind,targ,buf,tam) VIDEO_GRI_FirstInSet(ind,targ,buf,tam)
+
+ #define DATABASE_PreviousInSet(indice,buffer) VIDEO_GRI_PreviousInSet(indice,buffer)
+ #define DATABASE_NextInSet(indice,buffer)     VIDEO_GRI_NextInSet(indice,buffer)
+
+ #define DATABASE_ResetRecord(arquivo,servico) VIDEO_GRI_ResetRecord(arquivo,servico,VD_NULO,VD_NULO)
+ #define DATABASE_FreeCuri(arquivo)            VIDEO_GRI_ResetRecord(arquivo,DATABASE_FREECURI,VD_NULO,VD_NULO)
+ #define DATABASE_SetRecord(arq,pos,buf,tam)   VIDEO_GRI_ResetRecord(arq,DATABASE_RSTREG,pos,buffer)
+
+ #define DATABASE_CurrentFileOffset(fil)       VIDEO_GRI_CurrentFileOffset(fil)
+
+ #define DATABASE_FreeCurrentFileOffset(pos)   /* */
+ #define DATABASE_CmpFileOffset(pos1,pos2)     ((pos1) == (pos2))
+ #define DATABASE_unlink(arquivo)              VIDEO_GRI_RET_FALSE()
+#endif
+

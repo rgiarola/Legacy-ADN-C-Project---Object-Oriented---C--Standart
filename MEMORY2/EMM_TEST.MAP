@@ -1,0 +1,686 @@
+
+ Start  Stop   Length Name               Class
+
+ 00000H 077B0H 077B1H _TEXT              CODE
+ 077B1H 0806BH 008BBH EMM_TEST_TEXT      CODE
+ 0806CH 08172H 00107H EMS_ERR_TEXT       CODE
+ 08173H 090FAH 00F88H EMM4C_TEXT         CODE
+ 09100H 096BFH 005C0H E87_PROG           CODE
+ 096C0H 0BE2FH 02770H EMU_PROG           CODE
+ 0BE30H 0CA77H 00C48H _TEXTC             CODE
+ 0CA80H 0CA80H 00000H _FARDATA           FAR_DATA
+ 0CA80H 0CA80H 00000H _FARBSS            FAR_BSS
+ 0CA80H 0CA80H 00000H _OVERLAY_          OVRINFO
+ 0CA80H 0CA80H 00000H _1STUB_            STUBSEG
+ 0CA80H 0DE31H 013B2H _DATA              DATA
+ 0DE32H 0DE35H 00004H _CVTSEG            DATA
+ 0DE36H 0DE3BH 00006H _SCNSEG            DATA
+ 0DE3CH 0DE3CH 00000H _CONST             CONST
+ 0DE3CH 0DE59H 0001EH _INIT_             INITDATA
+ 0DE5AH 0DE5AH 00000H _INITEND_          INITDATA
+ 0DE5AH 0DE65H 0000CH _EXIT_             EXITDATA
+ 0DE66H 0DE66H 00000H _EXITEND_          EXITDATA
+ 0DE66H 0EABBH 00C56H _BSS               BSS
+ 0EABCH 0EABCH 00000H _BSSEND            BSSEND
+ 0EAC0H 0EBF0H 00131H _STACK             STACK
+
+  Address         Publics by Name
+
+ 0000:29A5       operator delete(void far*)
+ 0000:29BB       operator delete[](void far*)
+ 0000:2A86       operator new(unsigned int)
+ 0000:2A58       set_new_handler(void(far*)())
+ 0000:3A1F       set_terminate(void(far*)())
+ 0000:3B13       set_unexpected(void(far*)())
+ 0BE3:0000       string::string(const string far&)
+ 0BE3:00E9       string::string(const char far*)
+ 0BE3:0305       string::~string()
+ 0BE3:038B       string::assert_element(unsigned int) const
+ 0BE3:0449       string::assert_index(unsigned int) const
+ 0CA8:134C       string::case_sensitive
+ 0CA8:1356       string::freeboard
+ 0CA8:1352       string::initial_capac
+ 0BE3:0A94       string::initial_capacity(unsigned int)
+ 0BE3:0ADB       string::max_waste(unsigned int)
+ 0CA8:134E       string::paranoid_check
+ 0CA8:1354       string::resize_inc
+ 0BE3:0AB1       string::resize_increment(unsigned int)
+ 0BE3:0A3D       string::set_case_sensitive(int)
+ 0BE3:0A5A       string::set_paranoid_check(int)
+ 0CA8:1350       string::skip_white
+ 0BE3:0A77       string::skip_whitespace(int)
+ 0000:3A15       terminate()
+ 0BE3:05C2       tstringref::tstringref(const char far*,unsigned int,const char far*,unsigned int,unsigned int)
+ 0BE3:06A8       tstringref::~tstringref()
+ 0BE3:0776       tstringref::check_freeboard()
+ 0BE3:07DE       tstringref::grow_to(unsigned int)
+ 0BE3:0708       tstringref::reserve(unsigned int)
+ 0BE3:0840       tstringref::round_capacity(unsigned int)
+ 0BE3:087F       tstringref::splice(unsigned int,unsigned int,const char far*,unsigned int)
+ 0BE3:0507       tsubstring::assert_element(unsigned int) const
+ 0000:6DD6       typeinfo::operator =(const typeinfo far&)
+ 0000:6D68       typeinfo::typeinfo(const typeinfo far&)
+ 0000:6DE5       typeinfo::~typeinfo()
+ 0000:6E19       typeinfo::operator ==(const typeinfo far&) const
+ 0000:6E3F       typeinfo::operator !=(const typeinfo far&) const
+ 0000:6E60       typeinfo::before(const typeinfo far&) const
+ 0000:6ED8       typeinfo::name() const
+ 0000:3B0A       unexpected()
+ 0000:3C9E       xalloc::xalloc(const string far&,unsigned int)
+ 0000:3D1D       xalloc::raise()
+ 0000:411C       xmsg::operator =(const xmsg far&)
+ 0000:3F8E       xmsg::xmsg(const xmsg far&)
+ 0000:3EC3       xmsg::xmsg(const string far&)
+ 0000:4039       xmsg::~xmsg()
+ 0000:40A5       xmsg::raise()
+ 0000:29ED       xnew_handler()
+ 0000:588E       _catchcleanup()
+ 0000:5136       _rethrowexception(unsigned int,unsigned char far*)
+ 0000:50DD       _throwexception(void far*,void far*,void far*,void far*,unsigned int,unsigned int,unsigned int,unsigned char far*)
+ 0000:71BB       __dynamiccast(void far*,void far*,void far*,void far*,int)
+ 0000:3BA4       __getpolymorphicdtc(void far*,unsigned int)
+ 0000:3BF8       __getpolymorphicdtcfar(void far*,unsigned int)
+ 0000:6EF2       __gettypeinfo(void far*,void far*,void far*,void far*)
+ 0000:73A8       __refdestructorcount()
+ 0000:73AE       __refexceptionlist()
+ 0000:6D56       __throwexceptionname()
+ 0000:6D36       __throwfilename()
+ 0000:6D48       __throwlinenumber()
+ 0CA8:0000       DATASEG@
+ 0000:026D       DGROUP@
+ 096C:213F       e086_Entry
+ 096C:26CD       e086_Shortcut
+ 0910:04E0       e087_Entry
+ 0910:05A3       e087_Shortcut
+ 0910:003F       e087_Trap
+ 096C:25E9       e287_FPU_Control
+ 096C:273E       EmuVectorException
+ 0000:FE32  Abs  FIARQQ
+ 0000:0E32  Abs  FICRQQ
+ 0000:5C32  Abs  FIDRQQ
+ 0000:1632  Abs  FIERQQ
+ 0000:0632  Abs  FISRQQ
+ 0000:A23D  Abs  FIWRQQ
+ 0000:4000  Abs  FJARQQ
+ 0000:C000  Abs  FJCRQQ
+ 0000:8000  Abs  FJSRQQ
+ 0000:0FF3       FTOL@
+ 0000:0FF3       F_FTOL@
+ 0000:2731       F_LDIV@
+ 0000:2740       F_LMOD@
+ 0000:2738       F_LUDIV@
+ 0000:2748       F_LUMOD@
+ 0000:27DF       F_LXLSH@
+ 0000:3278       F_PADD@
+ 0000:32A7       F_PSUB@
+ 0000:2731       LDIV@
+ 0000:2740       LMOD@
+ 0000:2738       LUDIV@
+ 0000:2748       LUMOD@
+ 0000:27DF       LXLSH@
+ 0000:272E       N_LDIV@
+ 0000:273D       N_LMOD@
+ 0000:2735       N_LUDIV@
+ 0000:2745       N_LUMOD@
+ 0000:27DC       N_LXLSH@
+ 0000:27FD       N_LXMUL@
+ 0000:3275       N_PADD@
+ 0000:32D5       N_PCMP@
+ 0000:32A4       N_PSUB@
+ 0000:3278       PADD@
+ 0000:32A7       PSUB@
+ 096C:2151       rs1
+ 096C:26A2       rs2
+ 0000:337C       _abort
+ 077B:045D       _Allocate
+ 0000:3390       _atexit
+ 0000:296D       _atoi
+ 0000:28F8       _atol
+ 0CA8:009C       _AvgAlloc
+ 077B:0822       _CheckError
+ 077B:040D       _ChooseSlot
+ 0817:041E       _DisplayBits
+ 077B:06D4       _DumpSlots
+ 0817:08A1       _emmAlloc
+ 0817:0DFF       _emmCheck
+ 0817:082F       _emmDone
+ 0817:037E       _emmError
+ 0817:0AB7       _emmFree
+ 0817:068E       _emmInit
+ 0817:0C56       _emmLock
+ 0817:085C       _emmPages
+ 0817:0DA0       _emmStats
+ 0817:0D1A       _emmUnlock
+ 0000:0644       _emsAllocate
+ 0806:000C       _emsError
+ 0000:05FB       _emsGetFrame
+ 0000:070A       _emsGetHandles
+ 0000:0619       _emsGetPages
+ 0000:05D9       _emsGetStatus
+ 0000:07B9       _emsLoaded
+ 0000:0674       _emsMapMemory
+ 0000:072A       _emsOwnedPages
+ 0000:074F       _emsPageInfo
+ 0000:0777       _emsPageMap
+ 0000:0698       _emsRelease
+ 0000:06F0       _emsRestoreMap
+ 0000:06D6       _emsSaveMap
+ 0000:06B2       _emsVersion
+ 0000:2398       _eof
+ 0CA8:007E       _errno
+ 0000:3420       _exit
+ 0000:2E03       _farfree
+ 0000:2F17       _farmalloc
+ 0000:307B       _farrealloc
+ 0000:17F2       _fflush
+ 0000:24F1       _fgetc
+ 0000:25EA       _fgetchar
+ 077B:03E8       _FindFreeSlot
+ 0000:18C3       _flushall
+ 0000:1992       _fprintf
+ 0000:1CC3       _fputc
+ 0000:1E4E       _fputchar
+ 0000:19B2       _fputs
+ 0000:2E03       _free
+ 077B:0674       _Frees
+ 0000:1A90       _fseek
+ 0000:1B12       _ftell
+ 0000:3486       _getvect
+ 0817:0624       _HandleDump
+ 0000:1287       _isatty
+ 0000:101F       _kbhit
+ 0000:2724       _localeconv
+ 0000:129C       _lseek
+ 077B:0001       _main
+ 0000:2F0D       _malloc
+ 0CA8:0090       _ManagedHandles
+ 0CA8:13E6       _ManagedPages
+ 0CA8:009A       _MaxAlloc
+ 0CA8:13EC       _MaxSize
+ 0000:1035       _memcmp
+ 0000:105D       _memcpy
+ 0000:111B       _memmove
+ 0000:10A7       _memset
+ 0CA8:0098       _MinAlloc
+ 0CA8:13EA       _MinSize
+ 0000:10C9       _movmem
+ 0CA8:0094       _NbrAlloc
+ 0CA8:0096       _NbrFree
+ 0CA8:13E8       _NumberLaps
+ 0CA8:0092       _NumberSlots
+ 0817:0454       _PageDump
+ 0000:1BF3       _perror
+ 0000:0E6E       _pow10
+ 0000:1C84       _printf
+ 0000:2071       _puts
+ 0000:397E       _raise
+ 0000:52BD       _RaiseException
+ 0000:2829       _rand
+ 077B:083B       _Random
+ 077B:0864       _Range
+ 0000:3074       _realloc
+ 0CA8:009E       _Seed
+ 0000:3255       _setblock
+ 0000:1081       _setmem
+ 0000:20D2       _setvbuf
+ 0000:3499       _setvect
+ 0000:3850       _signal
+ 0000:2814       _srand
+ 0CA8:13EE       _State
+ 0000:1140       _strcmp
+ 0000:1170       _strlen
+ 077B:05BB       _VerifyMark
+ 0CA8:11AA       __8086
+ 0CA8:09A0       __8087
+ 0000:346B       __abort
+ 0000:1000  Abs  __AHINCR
+ 0000:000C  Abs  __AHSHIFT
+ 0CA8:11DA       __argc
+ 0CA8:11DC       __argv
+ 0CA8:11AC       __atexitcnt
+ 0CA8:1FA0       __atexittbl
+ 0000:3183       __brk
+ 0CA8:0088       __brklvl
+ 0CA8:006A       __C0argc
+ 0CA8:006C       __C0argv
+ 0CA8:0070       __C0environ
+ 0CA8:0AC3       __cChar
+ 0000:3449       __cexit
+ 0CA8:0AC2       __cFlag
+ 0000:0159       __checknull
+ 0000:0146       __cleanup
+ 0CA8:1054       __ctype
+ 0000:6CE1       __CurrExcContext
+ 0000:0000  Abs  __cvtfak
+ 0000:345B       __c_exit
+ 0CA8:09A2       __default87
+ 0CA8:202C       __DestructorCountPtr
+ 0CA8:0C7E       __doserrno
+ 0000:1273       __DOSERROR
+ 0CA8:0C80       __dosErrorToSV
+ 0EAC:0020       __emu
+ 0CA8:0074       __envLng
+ 0CA8:0076       __envseg
+ 0CA8:0078       __envSize
+ 0000:3C50       __ExceptInit
+ 0000:5FA1       __ExceptionHandler
+ 0CA8:0080       __Exception_list
+ 0000:3433       __exit
+ 0CA8:11AE       __exitbuf
+ 0CA8:11B2       __exitfopen
+ 0CA8:11B6       __exitopen
+ 0000:24D5       __fgetc
+ 0000:190F       __flushout
+ 0000:0F44       __fperror
+ 0CA8:115A       __fpstklen
+ 0000:0A82       __fpuint
+ 0000:1CA3       __fputc
+ 0000:1E66       __FPUTN
+ 0000:5271       __Global_unwind
+ 0CA8:0084       __heapbase
+ 0CA8:008C       __heaptop
+ 0CA8:005A       __Int0Vector
+ 0CA8:005E       __Int4Vector
+ 0CA8:0062       __Int5Vector
+ 0CA8:0066       __Int6Vector
+ 0000:1235       __IOERROR
+ 0CA8:09A6       __LDT
+ 0CA8:1018       __localeconvention
+ 0000:5ECB       __Local_unwind
+ 0000:2852       __LONGTOA
+ 0000:026F       __MMODEL
+ 0CA8:1196       __new_handler
+ 0000:24EE       __Nfgetc
+ 0CA8:0C54       __nfile
+ 0CA8:0C56       __openfd
+ 0CA8:007C       __osmajor
+ 0CA8:007D       __osminor
+ 0CA8:007C       __osversion
+ 0000:0E79       __POW10
+ 0CA8:09A4       __protected
+ 0CA8:007A       __psp
+ 0000:12FB       __read
+ 0000:29A1       __REALCVT
+ 0CA8:13B2       __RealCvtVector
+ 0000:01BB       __restorezero
+ 0000:5EEB       __Return_unwind
+ 0000:12C9       __rtl_read
+ 0000:26C9       __rtl_write
+ 0000:31C6       __sbrk
+ 0CA8:13B6       __ScanTodVector
+ 0000:0000  Abs  __setargv__
+ 0000:1191       __setupio
+ 0CA8:118E       __stklen
+ 0CA8:0AC4       __streams
+ 0CA8:0D42       __sys_errlist
+ 0CA8:0E02       __sys_nerr
+ 0000:015A       __terminate
+ 0000:0000  Abs  __turboCvt
+ 0000:28D4       __UTOA
+ 0CA8:007C       __version
+ 0000:132F       __VPRINTER
+ 0000:2708       __write
+ 0000:0C58       __XCVT
+ 0000:2359       __xfflush
+ 0CA8:0082       ___brklvl
+ 0000:3A8B       ___call_terminate
+ 0000:3B55       ___call_unexpected
+ 0CA8:1212       ___CPPexceptionList
+ 0000:32F6       ___ErrorMessage
+ 0CA8:1216       ___exceptFlags
+ 0CA8:123A       ___exceptionNameBuff
+ 0CA8:1236       ___exceptMemAllocVars
+ 0CA8:1232       ___exceptStaticBuffP
+ 0CA8:12BA       ___ExceptStaticXbuff
+ 0000:7423       ___ExitExceptBlocks
+ 0000:2CC3       ___first
+ 0000:0999       ___fpreset
+ 0000:73B4       ___InitExceptBlocks
+ 0000:425A       ___JumpToCatch__
+ 0000:2CC5       ___last
+ 0000:25FA       ___read
+ 0000:2CC7       ___rover
+ 0CA8:1218       ___savedDS
+ 0CA8:121A       ___savedSI
+ 0CA8:2020       ___SignalPtr
+ 0CA8:121C       ___terminatePTR
+ 0CA8:1224       ___terminate_DS
+ 0CA8:122E       ___throwExceptionName
+ 0CA8:1228       ___throwFileName
+ 0CA8:122C       ___throwLineNumber
+ 0CA8:1220       ___unexpectdPTR
+ 0CA8:1226       ___unexpectd_DS
+ 0000:21F3       ___write
+ 0CA8:1190       ___xalloc
+
+  Address         Publics by Value
+
+ 0000:0000  Abs  __turboCvt
+ 0000:0000  Abs  __setargv__
+ 0000:0000  Abs  __cvtfak
+ 0000:000C  Abs  __AHSHIFT
+ 0000:0632  Abs  FISRQQ
+ 0000:0E32  Abs  FICRQQ
+ 0000:1000  Abs  __AHINCR
+ 0000:1632  Abs  FIERQQ
+ 0000:4000  Abs  FJARQQ
+ 0000:5C32  Abs  FIDRQQ
+ 0000:8000  Abs  FJSRQQ
+ 0000:A23D  Abs  FIWRQQ
+ 0000:C000  Abs  FJCRQQ
+ 0000:FE32  Abs  FIARQQ
+ 0000:0146       __cleanup
+ 0000:0159       __checknull
+ 0000:015A       __terminate
+ 0000:01BB       __restorezero
+ 0000:026D       DGROUP@
+ 0000:026F       __MMODEL
+ 0000:05D9       _emsGetStatus
+ 0000:05FB       _emsGetFrame
+ 0000:0619       _emsGetPages
+ 0000:0644       _emsAllocate
+ 0000:0674       _emsMapMemory
+ 0000:0698       _emsRelease
+ 0000:06B2       _emsVersion
+ 0000:06D6       _emsSaveMap
+ 0000:06F0       _emsRestoreMap
+ 0000:070A       _emsGetHandles
+ 0000:072A       _emsOwnedPages
+ 0000:074F       _emsPageInfo
+ 0000:0777       _emsPageMap
+ 0000:07B9       _emsLoaded
+ 0000:0999       ___fpreset
+ 0000:0A82       __fpuint
+ 0000:0C58       __XCVT
+ 0000:0E6E       _pow10
+ 0000:0E79       __POW10
+ 0000:0F44       __fperror
+ 0000:0FF3       F_FTOL@
+ 0000:0FF3       FTOL@
+ 0000:101F       _kbhit
+ 0000:1035       _memcmp
+ 0000:105D       _memcpy
+ 0000:1081       _setmem
+ 0000:10A7       _memset
+ 0000:10C9       _movmem
+ 0000:111B       _memmove
+ 0000:1140       _strcmp
+ 0000:1170       _strlen
+ 0000:1191       __setupio
+ 0000:1235       __IOERROR
+ 0000:1273       __DOSERROR
+ 0000:1287       _isatty
+ 0000:129C       _lseek
+ 0000:12C9       __rtl_read
+ 0000:12FB       __read
+ 0000:132F       __VPRINTER
+ 0000:17F2       _fflush
+ 0000:18C3       _flushall
+ 0000:190F       __flushout
+ 0000:1992       _fprintf
+ 0000:19B2       _fputs
+ 0000:1A90       _fseek
+ 0000:1B12       _ftell
+ 0000:1BF3       _perror
+ 0000:1C84       _printf
+ 0000:1CA3       __fputc
+ 0000:1CC3       _fputc
+ 0000:1E4E       _fputchar
+ 0000:1E66       __FPUTN
+ 0000:2071       _puts
+ 0000:20D2       _setvbuf
+ 0000:21F3       ___write
+ 0000:2359       __xfflush
+ 0000:2398       _eof
+ 0000:24D5       __fgetc
+ 0000:24EE       __Nfgetc
+ 0000:24F1       _fgetc
+ 0000:25EA       _fgetchar
+ 0000:25FA       ___read
+ 0000:26C9       __rtl_write
+ 0000:2708       __write
+ 0000:2724       _localeconv
+ 0000:272E       N_LDIV@
+ 0000:2731       LDIV@
+ 0000:2731       F_LDIV@
+ 0000:2735       N_LUDIV@
+ 0000:2738       LUDIV@
+ 0000:2738       F_LUDIV@
+ 0000:273D       N_LMOD@
+ 0000:2740       LMOD@
+ 0000:2740       F_LMOD@
+ 0000:2745       N_LUMOD@
+ 0000:2748       LUMOD@
+ 0000:2748       F_LUMOD@
+ 0000:27DC       N_LXLSH@
+ 0000:27DF       F_LXLSH@
+ 0000:27DF       LXLSH@
+ 0000:27FD       N_LXMUL@
+ 0000:2814       _srand
+ 0000:2829       _rand
+ 0000:2852       __LONGTOA
+ 0000:28D4       __UTOA
+ 0000:28F8       _atol
+ 0000:296D       _atoi
+ 0000:29A1       __REALCVT
+ 0000:29A5       operator delete(void far*)
+ 0000:29BB       operator delete[](void far*)
+ 0000:29ED       xnew_handler()
+ 0000:2A58       set_new_handler(void(far*)())
+ 0000:2A86       operator new(unsigned int)
+ 0000:2CC3       ___first
+ 0000:2CC5       ___last
+ 0000:2CC7       ___rover
+ 0000:2E03       _free
+ 0000:2E03       _farfree
+ 0000:2F0D       _malloc
+ 0000:2F17       _farmalloc
+ 0000:3074       _realloc
+ 0000:307B       _farrealloc
+ 0000:3183       __brk
+ 0000:31C6       __sbrk
+ 0000:3255       _setblock
+ 0000:3275       N_PADD@
+ 0000:3278       F_PADD@
+ 0000:3278       PADD@
+ 0000:32A4       N_PSUB@
+ 0000:32A7       PSUB@
+ 0000:32A7       F_PSUB@
+ 0000:32D5       N_PCMP@
+ 0000:32F6       ___ErrorMessage
+ 0000:337C       _abort
+ 0000:3390       _atexit
+ 0000:3420       _exit
+ 0000:3433       __exit
+ 0000:3449       __cexit
+ 0000:345B       __c_exit
+ 0000:346B       __abort
+ 0000:3486       _getvect
+ 0000:3499       _setvect
+ 0000:3850       _signal
+ 0000:397E       _raise
+ 0000:3A15       terminate()
+ 0000:3A1F       set_terminate(void(far*)())
+ 0000:3A8B       ___call_terminate
+ 0000:3B0A       unexpected()
+ 0000:3B13       set_unexpected(void(far*)())
+ 0000:3B55       ___call_unexpected
+ 0000:3BA4       __getpolymorphicdtc(void far*,unsigned int)
+ 0000:3BF8       __getpolymorphicdtcfar(void far*,unsigned int)
+ 0000:3C50       __ExceptInit
+ 0000:3C9E       xalloc::xalloc(const string far&,unsigned int)
+ 0000:3D1D       xalloc::raise()
+ 0000:3EC3       xmsg::xmsg(const string far&)
+ 0000:3F8E       xmsg::xmsg(const xmsg far&)
+ 0000:4039       xmsg::~xmsg()
+ 0000:40A5       xmsg::raise()
+ 0000:411C       xmsg::operator =(const xmsg far&)
+ 0000:425A       ___JumpToCatch__
+ 0000:50DD       _throwexception(void far*,void far*,void far*,void far*,unsigned int,unsigned int,unsigned int,unsigned char far*)
+ 0000:5136       _rethrowexception(unsigned int,unsigned char far*)
+ 0000:5271       __Global_unwind
+ 0000:52BD       _RaiseException
+ 0000:588E       _catchcleanup()
+ 0000:5ECB       __Local_unwind
+ 0000:5EEB       __Return_unwind
+ 0000:5FA1       __ExceptionHandler
+ 0000:6CE1       __CurrExcContext
+ 0000:6D36       __throwfilename()
+ 0000:6D48       __throwlinenumber()
+ 0000:6D56       __throwexceptionname()
+ 0000:6D68       typeinfo::typeinfo(const typeinfo far&)
+ 0000:6DD6       typeinfo::operator =(const typeinfo far&)
+ 0000:6DE5       typeinfo::~typeinfo()
+ 0000:6E19       typeinfo::operator ==(const typeinfo far&) const
+ 0000:6E3F       typeinfo::operator !=(const typeinfo far&) const
+ 0000:6E60       typeinfo::before(const typeinfo far&) const
+ 0000:6ED8       typeinfo::name() const
+ 0000:6EF2       __gettypeinfo(void far*,void far*,void far*,void far*)
+ 0000:71BB       __dynamiccast(void far*,void far*,void far*,void far*,int)
+ 0000:73A8       __refdestructorcount()
+ 0000:73AE       __refexceptionlist()
+ 0000:73B4       ___InitExceptBlocks
+ 0000:7423       ___ExitExceptBlocks
+ 077B:0001       _main
+ 077B:03E8       _FindFreeSlot
+ 077B:040D       _ChooseSlot
+ 077B:045D       _Allocate
+ 077B:05BB       _VerifyMark
+ 077B:0674       _Frees
+ 077B:06D4       _DumpSlots
+ 077B:0822       _CheckError
+ 077B:083B       _Random
+ 077B:0864       _Range
+ 0806:000C       _emsError
+ 0817:037E       _emmError
+ 0817:041E       _DisplayBits
+ 0817:0454       _PageDump
+ 0817:0624       _HandleDump
+ 0817:068E       _emmInit
+ 0817:082F       _emmDone
+ 0817:085C       _emmPages
+ 0817:08A1       _emmAlloc
+ 0817:0AB7       _emmFree
+ 0817:0C56       _emmLock
+ 0817:0D1A       _emmUnlock
+ 0817:0DA0       _emmStats
+ 0817:0DFF       _emmCheck
+ 0910:003F       e087_Trap
+ 0910:04E0       e087_Entry
+ 0910:05A3       e087_Shortcut
+ 096C:213F       e086_Entry
+ 096C:2151       rs1
+ 096C:25E9       e287_FPU_Control
+ 096C:26A2       rs2
+ 096C:26CD       e086_Shortcut
+ 096C:273E       EmuVectorException
+ 0BE3:0000       string::string(const string far&)
+ 0BE3:00E9       string::string(const char far*)
+ 0BE3:0305       string::~string()
+ 0BE3:038B       string::assert_element(unsigned int) const
+ 0BE3:0449       string::assert_index(unsigned int) const
+ 0BE3:0507       tsubstring::assert_element(unsigned int) const
+ 0BE3:05C2       tstringref::tstringref(const char far*,unsigned int,const char far*,unsigned int,unsigned int)
+ 0BE3:06A8       tstringref::~tstringref()
+ 0BE3:0708       tstringref::reserve(unsigned int)
+ 0BE3:0776       tstringref::check_freeboard()
+ 0BE3:07DE       tstringref::grow_to(unsigned int)
+ 0BE3:0840       tstringref::round_capacity(unsigned int)
+ 0BE3:087F       tstringref::splice(unsigned int,unsigned int,const char far*,unsigned int)
+ 0BE3:0A3D       string::set_case_sensitive(int)
+ 0BE3:0A5A       string::set_paranoid_check(int)
+ 0BE3:0A77       string::skip_whitespace(int)
+ 0BE3:0A94       string::initial_capacity(unsigned int)
+ 0BE3:0AB1       string::resize_increment(unsigned int)
+ 0BE3:0ADB       string::max_waste(unsigned int)
+ 0CA8:0000       DATASEG@
+ 0CA8:005A       __Int0Vector
+ 0CA8:005E       __Int4Vector
+ 0CA8:0062       __Int5Vector
+ 0CA8:0066       __Int6Vector
+ 0CA8:006A       __C0argc
+ 0CA8:006C       __C0argv
+ 0CA8:0070       __C0environ
+ 0CA8:0074       __envLng
+ 0CA8:0076       __envseg
+ 0CA8:0078       __envSize
+ 0CA8:007A       __psp
+ 0CA8:007C       __version
+ 0CA8:007C       __osversion
+ 0CA8:007C       __osmajor
+ 0CA8:007D       __osminor
+ 0CA8:007E       _errno
+ 0CA8:0080       __Exception_list
+ 0CA8:0082       ___brklvl
+ 0CA8:0084       __heapbase
+ 0CA8:0088       __brklvl
+ 0CA8:008C       __heaptop
+ 0CA8:0090       _ManagedHandles
+ 0CA8:0092       _NumberSlots
+ 0CA8:0094       _NbrAlloc
+ 0CA8:0096       _NbrFree
+ 0CA8:0098       _MinAlloc
+ 0CA8:009A       _MaxAlloc
+ 0CA8:009C       _AvgAlloc
+ 0CA8:009E       _Seed
+ 0CA8:09A0       __8087
+ 0CA8:09A2       __default87
+ 0CA8:09A4       __protected
+ 0CA8:09A6       __LDT
+ 0CA8:0AC2       __cFlag
+ 0CA8:0AC3       __cChar
+ 0CA8:0AC4       __streams
+ 0CA8:0C54       __nfile
+ 0CA8:0C56       __openfd
+ 0CA8:0C7E       __doserrno
+ 0CA8:0C80       __dosErrorToSV
+ 0CA8:0D42       __sys_errlist
+ 0CA8:0E02       __sys_nerr
+ 0CA8:1018       __localeconvention
+ 0CA8:1054       __ctype
+ 0CA8:115A       __fpstklen
+ 0CA8:118E       __stklen
+ 0CA8:1190       ___xalloc
+ 0CA8:1196       __new_handler
+ 0CA8:11AA       __8086
+ 0CA8:11AC       __atexitcnt
+ 0CA8:11AE       __exitbuf
+ 0CA8:11B2       __exitfopen
+ 0CA8:11B6       __exitopen
+ 0CA8:11DA       __argc
+ 0CA8:11DC       __argv
+ 0CA8:1212       ___CPPexceptionList
+ 0CA8:1216       ___exceptFlags
+ 0CA8:1218       ___savedDS
+ 0CA8:121A       ___savedSI
+ 0CA8:121C       ___terminatePTR
+ 0CA8:1220       ___unexpectdPTR
+ 0CA8:1224       ___terminate_DS
+ 0CA8:1226       ___unexpectd_DS
+ 0CA8:1228       ___throwFileName
+ 0CA8:122C       ___throwLineNumber
+ 0CA8:122E       ___throwExceptionName
+ 0CA8:1232       ___exceptStaticBuffP
+ 0CA8:1236       ___exceptMemAllocVars
+ 0CA8:123A       ___exceptionNameBuff
+ 0CA8:12BA       ___ExceptStaticXbuff
+ 0CA8:134C       string::case_sensitive
+ 0CA8:134E       string::paranoid_check
+ 0CA8:1350       string::skip_white
+ 0CA8:1352       string::initial_capac
+ 0CA8:1354       string::resize_inc
+ 0CA8:1356       string::freeboard
+ 0CA8:13B2       __RealCvtVector
+ 0CA8:13B6       __ScanTodVector
+ 0CA8:13E6       _ManagedPages
+ 0CA8:13E8       _NumberLaps
+ 0CA8:13EA       _MinSize
+ 0CA8:13EC       _MaxSize
+ 0CA8:13EE       _State
+ 0CA8:1FA0       __atexittbl
+ 0CA8:2020       ___SignalPtr
+ 0CA8:202C       __DestructorCountPtr
+ 0EAC:0020       __emu
+
+Program entry point at 0000:0000
+

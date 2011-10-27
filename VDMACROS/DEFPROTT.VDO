@@ -1,0 +1,990 @@
+
+int _USERENTRY VIDEO_display_cascata_save_screen(int colm,int linm,int (*funcao)());
+
+VD_VOID _USERENTRY VIDEO_display_abre_save_screen(int col,int lin,char *buffer,
+                                       int sentido,int  cor,int (*funcao)());
+
+int _USERENTRY VIDEO_prepara_tabela_pesq_doda(VD_VOID);
+
+double _USERENTRY VIDEO_total_tempo(VD_time tempo);
+VD_time _USERENTRY VIDEO_conv_tempo_total(double TempoTotal);
+
+void _USERENTRY VIDEO_rastreador_farfree(void far *buffer);
+void _FAR * _USERENTRY VIDEO_rastreador_farmalloc(unsigned long int tamanho);
+
+VD_VOID _USERENTRY VIDEO_espera(int tempo);
+
+VIDEO_TABSERV *_USERENTRY VIDEO_localiza_servico(WORD          servico,
+                                      VIDEO_TABSERV *tabserv);
+
+VD_VOID _USERENTRY VIDEO_freq(VD_VOID);
+
+VD_VOID _USERENTRY VIDEO_libera_buffer_teclado(VD_VOID);
+
+VD_VOID _USERENTRY VIDEO_save_screen_default(int (*funcao)());
+
+int _USERENTRY VIDEO_cont_proc_tela(VD_VOID);
+
+int _USERENTRY VIDEO_aborta(VD_VOID);
+
+INT2 _USERENTRY VIDEO_grava_erro(char *mensagem);
+
+INT2 _USERENTRY VIDEO_valida_arq_backup(VIDEO_CAMPO_TELA  **campos,
+			BOOLEAN flagmens  ,
+			VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_valida_drive(VIDEO_CAMPO_TELA  **campos,
+		   BOOLEAN flagdisp  ,
+		   VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_valida_diretorio(VIDEO_CAMPO_TELA  **campos,
+		       BOOLEAN		 flag	 ,
+		       VIDEO_NUCLEO_SERV **param);
+
+WORD _USERENTRY VIDEO_IMPRESS_envia(char carac,int impressora);
+
+WORD _USERENTRY VIDEO_IMPRESS_inicializa(int impressora);
+
+WORD _USERENTRY VIDEO_IMPRESS_status(int  impressora);
+
+INT2 _USERENTRY VIDEO_tprt(INT2 col, INT2 lin, char *buffer, BYTE cor, INT2 vetor);
+
+INT2  _USERENTRY VIDEO_tipo_vetor(INT2 refer_ini, INT2 refer_fim, INT2 refer_eixo,
+                      BYTE carac, BYTE cor, INT2 vetor);
+
+INT2  _USERENTRY VIDEO_mvwindow(INT2 coli,INT2 colf,INT2 lini,INT2 linf,
+              INT2 numcol, INT2 numlin, INT2 vetor, BYTE cor);
+
+INT2  _USERENTRY VIDEO_opete(INT2 coli, INT2 colf, INT2 lini, INT2 linf, char *buffer,
+           INT2 servico);
+
+INT2  _USERENTRY VIDEO_box(INT2 coli, INT2 colf, INT2 lini, INT2 linf, BYTE  cor,
+            INT2 flagwin, char carac);
+
+INT2  _USERENTRY VIDEO_quadro(INT2 coli, INT2 colf, INT2 lini, INT2 linf, INT2 tipo,
+                  BYTE cor);
+
+INT2  _USERENTRY VIDEO_gerwindow(INT2 coli, INT2 colf, INT2 lini, INT2 linf,
+          INT2 operacao, VIDEO_ESTWIN **imagem);
+
+INT2 _USERENTRY VIDEO_pop_descwin( VD_VOID );
+
+INT2 _USERENTRY VIDEO_push_descwin( VD_VOID );
+
+INT2 _USERENTRY VIDEO_teste_cordenadas_x_y();
+
+INT2 _USERENTRY VIDEO_getkbdfiltcl(BYTE *ascii, BYTE *scan);
+
+INT2 _USERENTRY VIDEO_insfiltcl(BYTE ascii, BYTE scan);
+
+INT2 _USERENTRY VIDEO_getkey(BYTE *ascii, BYTE *scan);
+
+INT2 _USERENTRY VIDEO_getkeyfiltcl(BYTE *ascii, BYTE *scan);
+
+INT2 _USERENTRY VIDEO_testefiltcl(BYTE *ascii, BYTE *scan);
+
+INT2  _USERENTRY VIDEO_getkbd(BYTE *ascii, BYTE *scan);
+
+INT2  _USERENTRY VIDEO_getkbdfiltcl(BYTE *ascii, BYTE *scan);
+
+INT2 _USERENTRY VIDEO_gtxy(INT2 col, INT2 lin);
+
+INT2 _USERENTRY VIDEO_getxy(INT2 *col, INT2 *lin);
+
+INT2 _USERENTRY VIDEO_lepos(INT2 col, INT2 lin, BYTE *ascii, BYTE *scan);
+
+INT2 _USERENTRY VIDEO_leposfiltcl(INT2 col, INT2 lin, BYTE *ascii, BYTE *scan);
+
+INT2 _USERENTRY VIDEO_keypos(INT2 col, INT2 lin, BYTE *ascii, BYTE *scan);
+
+INT2 _USERENTRY VIDEO_keyposfiltcl(INT2 col, INT2 lin, BYTE *ascii, BYTE *scan);
+
+INT2 _USERENTRY VIDEO_setatrib(INT2 coli, INT2 colf, INT2 lini, INT2 linf, BYTE cor);
+
+INT2 _USERENTRY VIDEO_restaura_param_cor(BYTE *atribfundo, BYTE *corfundo,
+			     BYTE *atribfrente,BYTE *corfrente,BYTE config);
+
+INT2 _USERENTRY VIDEO_tcursor(INT2 mlini, INT2 mlinf);
+
+INT2 _USERENTRY VIDEO_NUCLEO_servidor_mspas(VIDEO_NUCLEO_SERV  *param);
+
+INT2 _USERENTRY VIDEO_alteracor_pict(INT2 coli, INT2 colf, INT2 lini, INT2 linf,
+                         INT2 col , INT2 lin , INT2 flagtipo, INT2 numcol,
+			 BYTE *cor_opcoes , BYTE *cor_selecao,
+			 BYTE *cor_moldura, BYTE *cor_sombra,
+                         INT2  (*funcserv)(BYTE *ascii,BYTE *scan));
+
+INT2 _USERENTRY VIDEO_descarga_parametros(VD_VOID);
+
+/***********************************************************/
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_esquerda(VIDEO_INFO_MENU **campos,
+                                  VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_letra(VIDEO_INFO_MENU **campos,
+                              VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_help(VIDEO_INFO_MENU **campos,
+                              VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_direita(VIDEO_INFO_MENU **campos,
+                                  VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_anterior(VIDEO_INFO_MENU **campos,
+                                  VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_posterior(VIDEO_INFO_MENU **campos,
+                                   VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_primeira(VIDEO_INFO_MENU **campos,
+                                  VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_ultima(VIDEO_INFO_MENU **campos,
+                                VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_aborta(VIDEO_INFO_MENU **campos,
+                                VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_opcao(VIDEO_INFO_MENU **campos,
+                               VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_mover(VIDEO_INFO_MENU **campos,
+                               VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_atributos(VIDEO_INFO_MENU **campos,
+                                   VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_pagpos(VIDEO_INFO_MENU **campos,
+                                VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_pagant(VIDEO_INFO_MENU **campos,
+                                VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_inicio(VIDEO_INFO_MENU **campos,
+                                VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_fim(VIDEO_INFO_MENU **campos,
+                             VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_col_anterior(VIDEO_INFO_MENU **campos,
+                                      VIDEO_NUCLEO_SERV **param,
+                                      INT2 servico);
+
+INT2 _USERENTRY VIDEO_MENU_seleciona_col_posterior(VIDEO_INFO_MENU **campos,
+                                       VIDEO_NUCLEO_SERV **param,
+                                       INT2 servico);
+
+INT2 _USERENTRY VIDEO_MENU_pega_selecao(VIDEO_INFO_MENU   *work,
+                            VIDEO_NUCLEO_SERV *param);
+
+INT2 _USERENTRY VIDEO_MENU_descarrega_estrutura(VIDEO_INFO_MENU *menu,
+                                    INT2 menu_num, INT2 flagfim);
+
+INT2 _USERENTRY VIDEO_MENU_carrega_estrutura(VIDEO_INFO_MENU *menu,
+                                 INT2 menu_num, INT2 flaginicio);
+
+
+INT2 _USERENTRY VIDEO_mostra_opcoes(VIDEO_INFO_MENU *work);
+
+INT2  _USERENTRY VIDEO_movequadro(INT2 *coli, INT2 *colf, INT2 *lini, INT2 *linf, INT2 *col ,
+                      INT2 *lin, BYTE flagsombra, BYTE atributo,
+                      INT2 (*funcgettcl)(BYTE *ascii, BYTE *scan));
+
+
+INT2 _USERENTRY VIDEO_compara_int(INT2 *ptr1,INT2 *ptr2, INT2 tam);
+
+/**************************************************************/
+
+VD_VOID _FAR * _USERENTRY VIDEO_free_mem_dos(VD_VOID far *buffer);
+
+VD_VOID _FAR * _USERENTRY VIDEO_alloc_mem_dos(WORD tam);
+
+INT2 _USERENTRY VIDEO_alloc_mem_adm(VD_VOID **endvar, WORD tamanho);
+
+INT2 _USERENTRY VIDEO_free_mem_adm(VD_VOID **endvar);
+
+INT2 _USERENTRY VIDEO_ADMEM_inicializa_alocador( VD_VOID );
+
+VD_VOID _USERENTRY VIDEO_ADMEM_inicializa_controle( VD_VOID );
+
+VD_VOID _USERENTRY VIDEO_ADMEM_organiza(VD_VOID);
+
+/**************************************************************/
+
+INT2 _USERENTRY VIDEO_carga_parametros(VD_VOID);
+
+INT2 _USERENTRY VIDEO_salva_parametros(VD_VOID);
+
+/**************************************************************/
+
+INT2 _USERENTRY VIDEO_testa_tabskip(BYTE ascii,BYTE scan,WORD *tabskip);
+
+INT2 _USERENTRY VIDEO_EDITA_campo(VIDEO_EDITA_CAMPO *campo,
+                      VIDEO_NUCLEO_SERV *param);
+
+INT2 _USERENTRY VIDEO_EDITA_campo_testaponto(char *buffer,INT2 decimais);
+
+INT2 _USERENTRY VIDEO_EDITA_campo_testanum(char *buffer, char num, INT2  pos, INT2 ins,
+                               INT2  autos, INT2 tam);
+
+INT2 _USERENTRY VIDEO_EDITA_testa_sinalponto(char *buffer, WORD autos,
+                                 INT2  tamanho, INT2 decimais);
+
+/**************************************************************/
+INT2 _USERENTRY VIDEO_TELA_funcoes_especiais(VIDEO_TELA_ENTRADA_DADOS **tela,
+                                  VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_troca_serv_teclas(VIDEO_TELA_ENTRADA_DADOS **tela,
+                                  VIDEO_NUCLEO_SERV        **param);
+
+VD_VOID _USERENTRY VIDEO_TELA_busca_dadosrelacional(VIDEO_CAMPO_TELA *campo,WORD flag);
+
+VD_VOID _USERENTRY VIDEO_TELA_libera_subfile(VIDEO_TELA_ENTRADA_DADOS *tela,INT2 flagtela);
+
+INT2 _USERENTRY VIDEO_TELA_salva_subfile(VIDEO_IMAGEMTELA *imagem);
+
+VD_VOID _USERENTRY VIDEO_TELA_seta_alteracao(VIDEO_TELA_ENTRADA_DADOS *tela);
+
+INT2 _USERENTRY VIDEO_TELA_refresh_tela(VIDEO_TELA_ENTRADA_DADOS **tela,
+                            VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_data_base_exsub(VIDEO_TELA_ENTRADA_DADOS *tela,
+                               VIDEO_IMAGEMTELA         *imagem,
+                               INT2                      servico);
+
+
+INT2 _USERENTRY VIDEO_TELA_campo_anterior(BYTE **campos,VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_TELA_campo_posterior(BYTE **campos,VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_TELA_linha_anterior(VIDEO_CAMPO_TELA **campos,
+                              VIDEO_NUCLEO_SERV    **param);
+
+INT2 _USERENTRY VIDEO_TELA_dispara_manutencao(VIDEO_TELA_ENTRADA_DADOS **telas,
+                                  VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_linha_posterior(VIDEO_CAMPO_TELA **campos,
+                               VIDEO_NUCLEO_SERV    **param);
+
+INT2 _USERENTRY VIDEO_TELA_primeiro_campo(BYTE              **campos,
+                              VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_TELA_ultimo_campo(BYTE **campos,VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_TELA_aborta_tela(VIDEO_CAMPO_TELA **campos,
+                            VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_TELA_consiste_campo(VIDEO_CAMPO_TELA **campos,
+                               VIDEO_NUCLEO_SERV    **param);
+
+INT2 _USERENTRY VIDEO_TELA_consiste_camp_imagem(VIDEO_CAMPO_TELA **campos,
+                                    INT2               flagmens,
+                                    VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_TELA_edita_campo(VIDEO_CAMPO_TELA  *campo,
+                           VIDEO_NUCLEO_SERV *param);
+
+INT2 _USERENTRY VIDEO_TELA_coloca_ponto(char *buffer, INT2 decimais);
+
+INT2 _USERENTRY VIDEO_TELA_monta_buffer_saida(VIDEO_EDITA_CAMPO *campoedit,
+                                   VIDEO_CAMPO_TELA  *campo,
+                                   char              *buffer);
+
+INT2 _USERENTRY VIDEO_TELA_monta_buffer_entrada(VIDEO_EDITA_CAMPO *campoedit,
+                                     VIDEO_CAMPO_TELA  *campo,
+                                     char              *buffer);
+
+
+INT2 _USERENTRY VIDEO_TELA_consiste_saida(VIDEO_EDITA_CAMPO *campoedit,
+                              VIDEO_CAMPO_TELA  *campo,
+                              char              *buffer);
+
+INT2 _USERENTRY VIDEO_TELA_compara_numero(char *string1, char *string2,WORD tamanho);
+
+INT2 _USERENTRY VIDEO_TELA_consiste_tabela(char *elemento,
+                               char **tabela, INT2 (*functesta)(),
+                               INT2 tamanho);
+
+INT2 _USERENTRY VIDEO_TELA_consiste_faixa(char *elemento, char *faixa,
+                              INT2  (*functesta)(char *inicio,
+                                                char *fim,
+                                                char *elemento));
+
+INT2 _USERENTRY VIDEO_TELA_faixa_texto(char *inicio, char *fim, char *elemento);
+
+INT2 _USERENTRY VIDEO_TELA_faixa_numero(char *inicio, char *fim, char *elemento);
+
+VD_VOID _USERENTRY VIDEO_TELA_display_faixa(char *mensagem);
+
+VD_VOID _USERENTRY VIDEO_TELA_display_campos(VIDEO_CAMPO_TELA *campo,INT2 numcampos,
+                                  VIDEO_NUCLEO_SERV *param,WORD flaguser);
+
+INT2 _USERENTRY VIDEO_TELA_display_mens(VIDEO_MENSAGEM *mensagem);
+
+INT2 _USERENTRY VIDEO_TELA_chama_data_base_adm(VIDEO_CAMPO_TELA  **campos,
+                                   VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_TELA_dispara_userserv(VIDEO_TELA_ENTRADA_DADOS **telas,
+                                VIDEO_NUCLEO_SERV        **param);
+
+VD_VOID _USERENTRY VIDEO_PESQUISA_display_imagem(VIDEO_PESQUISA_PLANILHA *pesquisa,
+                                      VIDEO_NUCLEO_SERV       *param);
+
+INT2 _USERENTRY VIDEO_TELA_busca_pesquisa(VIDEO_TELA_ENTRADA_DADOS **telas,
+                              VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_data_base_adm(VIDEO_TELA_ENTRADA_DADOS **telas,
+                             VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_data_base_exc(VIDEO_TELA_ENTRADA_DADOS **telas,
+                             VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_selec_tela_posterior(VIDEO_TELA_ENTRADA_DADOS **telas,
+                                    VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_selec_tela_anterior(VIDEO_TELA_ENTRADA_DADOS **telas,
+                                   VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_accept_tela(VIDEO_TELA_ENTRADA_DADOS *telaedit,
+                           VIDEO_NUCLEO_SERV        *param);
+
+INT2 _USERENTRY VIDEO_TELA_termina_edicao(VIDEO_TELA_ENTRADA_DADOS **telas,
+                              VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_data_base_preg(VIDEO_TELA_ENTRADA_DADOS **telas,
+                              VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_data_base_adm_pos(VIDEO_CAMPO_TELA  **campos,
+                                 VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_TELA_data_base_adm_ant(VIDEO_CAMPO_TELA  **campos,
+                                 VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_TELA_data_base_adm_pri(VIDEO_CAMPO_TELA  **campos,
+                                 VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_TELA_data_base_adm_ult(VIDEO_CAMPO_TELA  **campos,
+                                 VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_TELA_seleciona_inclusao(VIDEO_TELA_ENTRADA_DADOS **telas,
+                                  VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_monta_chave_db(VIDEO_CAMPO_CONSISTENCIA *consiste,
+                              char                     *buffer  );
+
+INT2 _USERENTRY VIDEO_TELA_data_base_adm_menor(VIDEO_CAMPO_TELA  **campos,
+                                   VIDEO_NUCLEO_SERV **param );
+
+INT2 _USERENTRY VIDEO_TELA_data_base_adm_maior(VIDEO_CAMPO_TELA  **campos,
+                                   VIDEO_NUCLEO_SERV **param );
+
+INT2 _USERENTRY VIDEO_TELA_seleciona_alteracao(VIDEO_TELA_ENTRADA_DADOS **telas,
+                                   VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_seleciona_pasta(VIDEO_TELA_ENTRADA_DADOS **telas,
+                               VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_seleciona_copia(VIDEO_TELA_ENTRADA_DADOS **telas,
+                               VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_refresh_imagens(VIDEO_TELA_ENTRADA_DADOS **telas,
+                               VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_reseta_imagem(VIDEO_TELA_ENTRADA_DADOS **telas,
+                             VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_consiste_all(VIDEO_TELA_ENTRADA_DADOS *telas,INT2 fseta_imag);
+
+
+INT2 _USERENTRY VIDEO_TELA_testa_consiste_campo(VIDEO_CAMPO_TELA *campo);
+
+VD_VOID _USERENTRY VIDEO_TELA_disp_campo(VIDEO_CAMPO_TELA *tabcampo,char **campos,
+                              VIDEO_NUCLEO_SERV       **param,INT2 servico,
+                              INT2 flaguser);
+
+INT2 _USERENTRY VIDEO_TELA_consiste_tabela_menu(VIDEO_CAMPO_TELA **campos,
+                                    VIDEO_INFO_MENU   *menu);
+INT2 _USERENTRY VIDEO_TELA_testa_segconst_sub(VIDEO_IMAGEMTELA *imagem);
+/**************************************************************/
+
+
+INT2 _USERENTRY VIDEO_PESQUISA_linha_posterior(VIDEO_PESQUISA_PLANILHA **telapesq,
+                                   VIDEO_NUCLEO_SERV       **param);
+
+INT2 _USERENTRY VIDEO_PESQUISA_linha_anterior(VIDEO_PESQUISA_PLANILHA **telapesq,
+                                  VIDEO_NUCLEO_SERV       **param);
+
+INT2 _USERENTRY VIDEO_PESQUISA_pagina_anterior(VIDEO_PESQUISA_PLANILHA **telapesq,
+                                    VIDEO_NUCLEO_SERV       **param);
+
+INT2 _USERENTRY VIDEO_PESQUISA_pagina_posterior(VIDEO_PESQUISA_PLANILHA **telapesq,
+                                    VIDEO_NUCLEO_SERV       **param);
+
+INT2 _USERENTRY VIDEO_PESQUISA_ultimo_registro(VIDEO_PESQUISA_PLANILHA **telapesq,
+                                   VIDEO_NUCLEO_SERV       **param);
+
+INT2 _USERENTRY VIDEO_PESQUISA_primeiro_registro(VIDEO_PESQUISA_PLANILHA **telapesq,
+                                     VIDEO_NUCLEO_SERV       **param);
+
+INT2 _USERENTRY VIDEO_PESQUISA_seleciona_registro(VIDEO_PESQUISA_PLANILHA **telapesq,
+                                      VIDEO_NUCLEO_SERV       **param);
+
+INT2 _USERENTRY VIDEO_PESQUISA_termina(VIDEO_PESQUISA_PLANILHA **telapesq,
+                           VIDEO_NUCLEO_SERV       **param);
+
+INT2 _USERENTRY VIDEO_PESQUISA_manutencao(VIDEO_PESQUISA_PLANILHA **telapesq,
+                              VIDEO_NUCLEO_SERV       **param);
+
+INT2 _USERENTRY VIDEO_PESQUISA_display_campos_posterior(VIDEO_PESQUISA_PLANILHA *telapesqINT2,
+                                            VIDEO_NUCLEO_SERV *param );
+
+INT2 _USERENTRY VIDEO_PESQUISA_display_campos_anterior(VIDEO_PESQUISA_PLANILHA *telapesq,
+                                           VIDEO_NUCLEO_SERV *param );
+
+INT2 _USERENTRY VIDEO_PESQUISA_accept_tela(VIDEO_PESQUISA_PLANILHA *telapesq,
+                               VIDEO_NUCLEO_SERV       *param);
+
+/* ============================================================================
+                           Prototipos de Funcoes Arvore.
+   ============================================================================ */
+VD_VOID _USERENTRY VIDEO_ARVORE_display_elemento(INT2 col,INT2 lin,BYTE cor_fundo,
+                                      BYTE cor_elemento,
+                                      struct VIDEO_ARVORE_ELEMENTO *elemento);
+
+INT2 _USERENTRY VIDEO_ARVORE_aborta_arvore(VIDEO_ARVORE_ESTRUTURA **arvore,
+                               VIDEO_NUCLEO_SERV      **param);
+
+VD_VOID _USERENTRY VIDEO_ARVORE_monta_elemento(INT2 coluna,INT2 tamanho,INT2 flagfimlinha,
+                                    INT2 flagfimbloco,INT2 servico,
+                                    struct VIDEO_ARVORE_ELEMENTO *elemento,
+                                    struct VIDEO_ARVORE_ELEMENTO *anterior,
+                                    char *buffer, char *linha);
+
+INT2 _USERENTRY VIDEO_ARVORE_monta_bloco(struct VIDEO_ARVORE_UNIDADE *membros,
+                             struct VIDEO_ARVORE_LINHA **linha,
+                             struct VIDEO_ARVORE_ELEMENTO *anterior,
+                             INT2 coluna_disp,INT2 *linha_disp,INT2 chamada,
+                             INT2 tamespaco,INT2 *maxcol);
+
+VD_VOID _USERENTRY VIDEO_ARVORE_reendereca_linha(VIDEO_ARVORE_ESTRUTURA *arvore);
+
+VD_VOID _USERENTRY VIDEO_ARVORE_reendereca_coluna(
+                                struct VIDEO_ARVORE_LINHA *linhainicial,
+                                struct VIDEO_ARVORE_ELEMENTO *colunainicial);
+
+INT2 _USERENTRY VIDEO_ARVORE_monta_arvore(VIDEO_ARVORE_ESTRUTURA *arvore);
+
+VD_VOID _USERENTRY VIDEO_ARVORE_desmonta_arvore(VIDEO_ARVORE_ESTRUTURA *arvore);
+
+INT2 _USERENTRY VIDEO_ARVORE_coluna_posterior(VIDEO_ARVORE_ESTRUTURA **arvore,
+                                  VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_coluna_anterior(VIDEO_ARVORE_ESTRUTURA **arvore,
+                                 VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_funcoes_especiais(VIDEO_ARVORE_ESTRUTURA **arvore,
+                                    VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_linha_inferior(VIDEO_ARVORE_ESTRUTURA **arvore,
+                                 VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_linha_superior(VIDEO_ARVORE_ESTRUTURA **arvore,
+                                VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_termina(VIDEO_ARVORE_ESTRUTURA **arvore,
+                         VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_seleciona(VIDEO_ARVORE_ESTRUTURA **arvore,
+			   VIDEO_NUCLEO_SERV	  **param);
+
+VD_VOID _USERENTRY VIDEO_ARVORE_display_arvore(VIDEO_ARVORE_ESTRUTURA *arvore);
+
+VD_VOID _USERENTRY VIDEO_ARVORE_display_linha(VIDEO_ARVORE_ESTRUTURA *arvore);
+
+INT2 _USERENTRY VIDEO_ARVORE_accept_arvore(VIDEO_ARVORE_ESTRUTURA *arvore,
+                               VIDEO_NUCLEO_SERV      *param);
+
+VD_VOID _USERENTRY VIDEO_ARVORE_desativa_prompt(VIDEO_ARVORE_ESTRUTURA       *arvore,
+                                     struct VIDEO_ARVORE_ELEMENTO *elemento);
+
+INT2 _USERENTRY VIDEO_ARVORE_pagina_anterior(VIDEO_ARVORE_ESTRUTURA **arvore,
+                                 VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_pagina_posterior(VIDEO_ARVORE_ESTRUTURA **arvore,
+                                  VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_inicio_arvore(VIDEO_ARVORE_ESTRUTURA **arvore,
+                               VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_fim_arvore(VIDEO_ARVORE_ESTRUTURA **arvore,
+                            VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_primeiro_item(VIDEO_ARVORE_ESTRUTURA **arvore,
+                               VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_ultimo_item(VIDEO_ARVORE_ESTRUTURA **arvore,
+                             VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_inicio_janela(VIDEO_ARVORE_ESTRUTURA **arvore,
+                               VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_fim_janela(VIDEO_ARVORE_ESTRUTURA **arvore,
+                            VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_inicio_linha(VIDEO_ARVORE_ESTRUTURA **arvore,
+                              VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_fim_linha(VIDEO_ARVORE_ESTRUTURA **arvore,
+                           VIDEO_NUCLEO_SERV      **param);
+
+VD_VOID _USERENTRY VIDEO_ARVORE_display_conect_linha(VIDEO_ARVORE_ESTRUTURA *arvore);
+
+VD_VOID _USERENTRY VIDEO_ARVORE_display_scrobar(VIDEO_ARVORE_ESTRUTURA *arvore);
+VD_VOID _USERENTRY VIDEO_MOUSE_config(VD_VOID);
+
+INT2 _USERENTRY VIDEO_ARVORE_mouseumclick(VIDEO_ARVORE_ESTRUTURA **arvore,
+                              VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_mousedoisclick(VIDEO_ARVORE_ESTRUTURA **arvore,
+                                VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_mouseumtrav(VIDEO_ARVORE_ESTRUTURA **arvore,
+                             VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_mousedoistrav(VIDEO_ARVORE_ESTRUTURA **arvore,
+                               VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_setas_mouse(VIDEO_ARVORE_ESTRUTURA **arvore,
+                             VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_ARVORE_seleciona_mouse(VIDEO_ARVORE_ESTRUTURA **arvore,
+                                 VIDEO_NUCLEO_SERV      **param);
+
+INT2 _USERENTRY VIDEO_PESQUISA_dispara_userserv(VIDEO_PESQUISA_PLANILHA **telapesq,
+				     VIDEO_NUCLEO_SERV	     **param);
+
+/* ============================================================================
+                           Prototipos de Funcoes Mouse.
+   ============================================================================ */
+
+INT2 _USERENTRY VIDEO_MOUSE_inicializa(VD_VOID);
+
+VD_VOID _USERENTRY VIDEO_MOUSE_habcursor(VD_VOID);
+
+VD_VOID _USERENTRY VIDEO_MOUSE_velocidade(int velocidade);
+
+VD_VOID _USERENTRY VIDEO_MOUSE_deshabcursor(VD_VOID);
+
+VD_VOID _USERENTRY VIDEO_MOUSE_getpos(INT2 *col,INT2 *lin);
+
+VD_VOID _USERENTRY VIDEO_MOUSE_dpi(INT2 col,INT2 lin);
+
+VD_VOID _USERENTRY VIDEO_MOUSE_setpos(INT2 col,INT2 lin);
+
+VD_VOID _USERENTRY VIDEO_MOUSE_INT2bot(INT2 *botpres,INT2 *numclick,INT2 *col, INT2 *lin);
+
+INT2 _USERENTRY VIDEO_MOUSE_intbotpress(VD_VOID);
+
+
+/* ============================================================================
+                           Prototipos de Funcoes De mascara
+   ============================================================================ */
+
+char *_USERENTRY VIDEO_EDITA_expande_mascara(char *mascara);
+
+char _USERENTRY VIDEO_EDITA_testa_caracter_na_mascara(char *caracter, char mascara,
+                                             char *carmont, INT2 *col);
+
+INT2 _USERENTRY VIDEO_EDITA_monta_mascara(char *entrada ,char *mascara,char *saida,
+                         char *caracter,INT2 *col,WORD    flagset,WORD    flagmostra);
+
+INT2 _USERENTRY VIDEO_display_mascara(INT2 col, INT2 lin, char *entrada ,
+                          char *mascara,BYTE cor, WORD    flagset,WORD flagmostra);
+
+INT2 _USERENTRY VIDEO_EDITA_mascara_coldir(char *mascara,INT2  *posmasc,INT2 *col,
+                               INT2 *posbuffer,INT2 fim);
+
+INT2 _USERENTRY VIDEO_EDITA_mascara_colesq(char *mascara,INT2  *posmasc,INT2 *col,
+                               INT2 *posbuffer);
+
+VD_VOID _USERENTRY VIDEO_EDITA_mascara_delcar(char *mascara,char *bflocal,INT2 *fim,
+                                   INT2  pos,INT2 col,INT2 lin,BYTE cor,WORD    flagmostra);
+
+VD_VOID _USERENTRY VIDEO_EDITA_mascara_posiciona(char *mascara,char *buffer,INT2 coli,
+                                      INT2 *col,INT2 pos);
+
+VD_VOID _USERENTRY VIDEO_EDITA_mascara_bakcar(char *mascara,char *bflocal,INT2 *posbuffer,
+                                   INT2 *posmasc,INT2 *fim,INT2 coli,INT2 *col,
+                                   INT2 lin,BYTE cor,WORD    flagmostra);
+
+INT2 _USERENTRY VIDEO_monta_mascara(char *entrada, char *mascara,
+                        char *saida, char flaglimpa,WORD    flagmostra);
+
+INT2 _USERENTRY VIDEO_TELA_monta_buffer_mascara(VIDEO_EDITA_CAMPO *campoedit,
+				     char *buffer_binario,
+                                     INT2  tipo, BYTE cor);
+
+
+/* ============================================================================
+           Prototipos de Funcoes De carga de parametros de arquivo
+   ============================================================================ */
+
+INT2     _USERENTRY VIDEO_cargaarq(IDE_TABREFERBUFFER *tabreferbuffer,char *arqcarga,char *arqpath);
+
+VD_VOID _USERENTRY VIDEO_inicarqnome(VD_VOID);
+
+VD_VOID _USERENTRY VIDEO_inicdodanome(VD_VOID);
+
+VD_VOID _USERENTRY VIDEO_inictabref(VD_VOID);
+
+INT2     _USERENTRY VIDEO_inicdodabuf(VD_VOID);
+
+INT2     _USERENTRY VIDEO_enddodabuf(IDE_TABREFERDODA *work,TEXT *buffer);
+
+VD_VOID _USERENTRY VIDEO_freecarga(VD_VOID);
+
+INT2     _USERENTRY VIDEO_enddodatela(VIDEO_CAMPO_TELA *campos,INT2 num);
+
+IDE_TABREFERDODA *_USERENTRY VIDEO_locitemtab(char *item);
+
+INT2 _USERENTRY VIDEO_endnomeindice(VIDEO_CAMPO_TELA *campos,INT2 num);
+
+INT2 _USERENTRY VIDEO_endnomearquivo(VIDEO_TELA_ENTRADA_DADOS *telas,INT2 num);
+
+INT2 _USERENTRY VIDEO_CRG_carrega_objeto(VIDEO_ESTMANUT *tela,INT2 tipoobjeto);
+
+INT2 _USERENTRY VIDEO_CRG_dispara_tela(VIDEO_ESTMANUT *tela);
+
+INT2 _USERENTRY VIDEO_CRG_executa_tela(VIDEO_ESTMANUT *tela);
+
+VD_VOID _USERENTRY VIDEO_CRG_end_cons_obrigatorio(VIDEO_CAMPO_CONSISTENCIA *consiste,
+								   VIDEO_TABCRGTELA 		*strtelacrg);
+
+VD_VOID _USERENTRY VIDEO_CRG_end_cons_faixa(VIDEO_CAMPO_CONSISTENCIA *consiste,
+							 VIDEO_TABCRGTELA		  *strtelacrg);
+
+VD_VOID _USERENTRY VIDEO_CRG_end_cons_manutencao(VIDEO_CAMPO_CONSISTENCIA *consiste,
+								  VIDEO_TABCRGTELA		   *strtelacrg);
+
+VD_VOID _USERENTRY VIDEO_CRG_end_cons_menu(VIDEO_CAMPO_CONSISTENCIA *consiste,
+							VIDEO_TABCRGTELA		 *strtelacrg);
+
+VD_VOID _USERENTRY VIDEO_CRG_end_cons_consdb(VIDEO_CAMPO_CONSISTENCIA *consiste,
+							  VIDEO_TABCRGTELA		   *strtelacrg);
+
+VD_VOID _USERENTRY VIDEO_CRG_end_cons_valkey(VIDEO_CAMPO_CONSISTENCIA *consiste,
+							  VIDEO_TABCRGTELA		   *strtelacrg);
+
+VD_VOID _USERENTRY VIDEO_CRG_end_cons_dupkey(VIDEO_CAMPO_CONSISTENCIA *consiste,
+							  VIDEO_TABCRGTELA		   *strtelacrg);
+
+VD_VOID _USERENTRY VIDEO_CRG_end_cons_posiciona(VIDEO_CAMPO_CONSISTENCIA *consiste,
+								 VIDEO_TABCRGTELA		  *strtelacrg);
+
+VD_VOID _USERENTRY VIDEO_CRG_end_cons_user_func(VIDEO_CAMPO_CONSISTENCIA *consiste,
+								 VIDEO_TABCRGTELA		  *strtelacrg);
+
+VD_VOID _USERENTRY VIDEO_CRG_end_cons_busca(VIDEO_CAMPO_CONSISTENCIA *consiste,
+							 VIDEO_TABCRGTELA		  *strtelacrg);
+
+INT2 _USERENTRY VIDEO_CRG_endereca_campos(VIDEO_CAMPO_TELA *campo,
+                              INT2              numcampos,
+                              VIDEO_TABCRGTELA *strtelacrg);
+
+INT2 _USERENTRY VIDEO_CRG_endereca_tela(VIDEO_TABCRGTELA *strtelacrg);
+
+INT2 _USERENTRY VIDEO_CRG_prepara_tela(VIDEO_ESTMANUT *tela);
+
+INT2 _USERENTRY VIDEO_CRG_libera_tela(VIDEO_ESTMANUT *tela);
+
+INT2 _USERENTRY VIDEO_TELA_dispara_display(VIDEO_TELA_ENTRADA_DADOS **tela,
+                               VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_CRG_display_imagem(VIDEO_ESTMANUT *tela,
+                             INT2 num_imagem,    INT2 disp_campos);
+
+INT2 _USERENTRY VIDEO_VISUAL_dispara_spool(VD_VOID);
+
+INT2 _USERENTRY VIDEO_VISUAL_deleta_arquivo(VIDEO_VISUAL_CONTROLE **visual,
+                                 VIDEO_NUCLEO_SERV     **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_impressao_arquivo(VIDEO_VISUAL_CONTROLE *visual);
+
+INT2 _USERENTRY VIDEO_VISUAL_salva_variaveis(char **buffer);
+
+VD_VOID _USERENTRY VIDEO_VISUAL_restaura_variaveis(char **buffer);
+
+// void interrupt (_USERENTRY VIDEO_VISUAL_nova_int05(void));
+void interrupt VIDEO_VISUAL_nova_int05(void);
+
+// void interrupt (_USERENTRY VIDEO_VISUAL_nova_int24(void));
+void interrupt VIDEO_VISUAL_nova_int24(
+               WORD bp,
+               WORD di,
+               WORD si,
+               WORD ds,
+               WORD es,
+               WORD dx,
+               WORD cx,
+               WORD bx,
+               WORD ax);
+
+INT2 _USERENTRY VISUAL_valida_path(VIDEO_CAMPO_TELA  **campo ,
+                        int               flagmens,
+                        VIDEO_NUCLEO_SERV **param );
+
+VD_VOID _USERENTRY VIDEO_VISUAL_dispara_visual(char *nomevisual,char *nomerelat,
+                                    BOOLEAN flag,VIDEO_ESTMANUT *telavisual,
+						 INT2 (*visualaux)(),
+						 INT2 flagimpressao);
+
+INT2 _USERENTRY VIDEO_VISUAL_carrega_pagina(VIDEO_VISUAL_CONTROLE *visual,
+                                 int                   sentido);
+
+INT2 _USERENTRY VIDEO_VISUAL_carrega_pagina_anterior(VIDEO_VISUAL_CONTROLE *visual);
+
+INT2 _USERENTRY VIDEO_VISUAL_carrega_pagina_posterior(VIDEO_VISUAL_CONTROLE *visual);
+
+char *_USERENTRY VIDEO_VISAO_indexa_texto(VIDEO_VISUAL_CONTROLE *visual);
+
+INT2 _USERENTRY VIDEO_VISUAL_mouse_posiciona(VIDEO_VISUAL_CONTROLE **visual,
+                               VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_imprime_arquivo(VIDEO_VISUAL_CONTROLE **visual,
+                               VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_procura_arquivo(VIDEO_VISUAL_CONTROLE **visual,
+                                  VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_config_impressora(VIDEO_VISUAL_CONTROLE **visual,
+                                    VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_tela_conf_imp(VIDEO_IMAGEMTELA  **imagem,
+                                int               flag,
+                                VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_accept_visual(VIDEO_VISUAL_CONTROLE *visual,
+                           VIDEO_NUCLEO_SERV   *param);
+
+INT2 _USERENTRY VIDEO_VISUAL_fim_pagina(VIDEO_VISUAL_CONTROLE **visual,
+                          VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_inicio_pagina(VIDEO_VISUAL_CONTROLE **visual,
+                             VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_linha_anterior(VIDEO_VISUAL_CONTROLE **visual,
+                              VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_coluna_anterior(VIDEO_VISUAL_CONTROLE **visual,
+                                VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_tab_anterior(VIDEO_VISUAL_CONTROLE **visual,
+                             VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_linha_posterior(VIDEO_VISUAL_CONTROLE **visual,
+                               VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_coluna_posterior(VIDEO_VISUAL_CONTROLE **visual,
+                                 VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_tab_posterior(VIDEO_VISUAL_CONTROLE **visual,
+                              VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_mouse_posiciona(VIDEO_VISUAL_CONTROLE **visual,
+                               VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_pagina_anterior(VIDEO_VISUAL_CONTROLE **visual,
+                               VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_pagina_posterior(VIDEO_VISUAL_CONTROLE **visual,
+                                VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_ultima_linha(VIDEO_VISUAL_CONTROLE **visual,
+                            VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_termina(VIDEO_VISUAL_CONTROLE **visual,
+                       VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_primeira_linha(VIDEO_VISUAL_CONTROLE **visual,
+                              VIDEO_NUCLEO_SERV   **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_menu(VIDEO_VISUAL_CONTROLE **visual,
+                    VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_VISUAL_opcoes(VIDEO_VISUAL_CONTROLE **visual,
+                         VIDEO_NUCLEO_SERV **param);
+
+INT2 _USERENTRY VIDEO_CRG_dispara_menu(VIDEO_ESTMANUT *menu,INT2 flagdispcol,
+                           INT2 flagdispop      ,INT2 flagmoldura);
+
+INT2 _USERENTRY VIDEO_CRG_executa_menu(VIDEO_ESTMANUT *menu);
+
+
+VD_VOID _USERENTRY VIDEO_CRG_prepara_menu(VIDEO_ESTMANUT *menu);
+long _USERENTRY double VIDEO_atold_t(char *buffer,INT2  tamanho);
+
+long _USERENTRY int VIDEO_atol_t(char *buffer,INT2 tamanho);
+
+unsigned _USERENTRY long int VIDEO_atoul_t(char *buffer,INT2 tamanho);
+
+INT2 _USERENTRY VD_telaconfirma(INT2 xi,INT2 yi,char *mens,INT2 cor, int tipo);
+
+INT2 _USERENTRY VD_telamensagem(INT2 xi,INT2 yi,char *mens,INT2 cor, BOOLEAN flag);
+
+DATET _USERENTRY VIDEO_sysdate(VOID);
+
+long _USERENTRY int VIDEO_systime(VD_VOID);
+long _USERENTRY int VIDEO_timein ( int, int, int );      // Converte para Computacional
+
+// Converte de Computacional p/Formal
+int      _USERENTRY VIDEO_timeout( long, int *, int *, int *);
+
+
+INT2 _USERENTRY VD_inictel( INT2 x1, INT2 x2, INT2 y1, INT2 y2,INT2 cor );
+INT2 _USERENTRY VD_inictel_trans (INT2 Modo, INT2 Veloz,
+                       INT2 Coli, INT2 Colf,
+                       INT2 Lini, INT2 Linf,
+                       BYTE CaracLimpa,INT2 CorLimpa,
+                       BYTE CaracFundo,INT2 CorFundo);
+
+long _USERENTRY double VIDEO_atold_t(char *buffer,INT2  tamanho);
+
+long _USERENTRY int VIDEO_atol_t(char *buffer,INT2  tamanho);
+
+unsigned _USERENTRY long int VIDEO_atoul_t(char *buffer,INT2 tamanho);
+
+BYTE _USERENTRY VIDEO_monta_cor(BYTE cor);
+
+VD_VOID _USERENTRY VIDEO_TELA_desativa_status(VIDEO_IMAGEMTELA *imagem);
+
+INT2 _USERENTRY VIDEO_TELA_testa_imagem_pai(VIDEO_TELA_ENTRADA_DADOS *tela,INT2 flagserv);
+
+VD_VOID _USERENTRY VIDEO_TELA_ajusta_posicao(VIDEO_IMAGEMTELA *imagem);
+
+INT2 _USERENTRY VIDEO_TELA_data_base_adm_inclusao(VIDEO_TELA_ENTRADA_DADOS **telas,
+                                      VIDEO_NUCLEO_SERV        **param);
+
+INT2 _USERENTRY VIDEO_TELA_data_base_adm_alteracao(VIDEO_TELA_ENTRADA_DADOS **telas,
+                                       VIDEO_NUCLEO_SERV        **param);
+
+VD_VOID _USERENTRY VIDEO_swap_tratadores(VIDEO_SWAP_TRATADOR_SERVICO *tratadores,
+			      VIDEO_TABSERV		  *tabserv,
+                              INT2                         modo,
+                              INT2                         *servico);
+
+VD_VOID _USERENTRY VIDEO_inic_tab_swap_tratadores(VIDEO_SWAP_TRATADOR_SERVICO *tratadores,
+				       VIDEO_TABSERV		   *tabserv);
+
+
+VD_VOID _USERENTRY VIDEO_inic_transp(VIDEO_TRANSP_DADOS *transpdados);
+
+INT2 _USERENTRY VIDEO_inicdodaespelho(VD_VOID);
+
+INT2 _USERENTRY VIDEO_mostra_mens_erro(char *mens,int flagget);
+
+INT2 _USERENTRY VIDEO_mostra_erro_critico(int erro);
+
+INT2 _USERENTRY VIDEO_TELA_aborta_tudo(VIDEO_TELA_ENTRADA_DADOS **tela,
+                           VIDEO_NUCLEO_SERV        **param);
+
+VD_VOID _USERENTRY VIDEO_quick_sort(INT2 esq,INT2 dir,INT2 testru,INT2 tchave,
+                         INT2 offchave,
+                         INT2 (*compara_chave)(VD_VOID *origem,VD_VOID *destino, WORD tamanho),
+                         VD_VOID (*troca_elemento)(VD_VOID *origem,VD_VOID *destino),
+                         BYTE  *tabela);
+
+INT2 _USERENTRY VIDEO_pesquisa_binaria(char *celula,INT2 *medio,
+          INT2  (*compara_chaves)(VD_VOID *origem, VD_VOID *destino, WORD tam),
+          INT2   maior,
+          char  *chave,
+          INT2   tchave,
+          INT2   testru);
+
+INT2 _USERENTRY VIDEO_Dcomp(double *chave,double *par1,INT2 tchave);
+
+INT2 _USERENTRY VIDEO_Icomp(INT2 *chave,INT2 *par1,INT2 tchave);
+
+INT2 _USERENTRY VIDEO_Lcomp(long int *chave,long int *par1,INT2 tchave);
+
+INT2 _USERENTRY VIDEO_testa_nome_funcao_pesquisa();
+
+VIDEO_TABFUNCAO *_USERENTRY VIDEO_funcao_tabfuncuser(char *nomefunc);
+
+IDE_TABREFERDODA *_USERENTRY VIDEO_elemento_tabrefer(char *elemento,
+                                          INT2  tipo     );
+
+INT2 _USERENTRY VIDEO_display_mem_disp(BYTE *ascii,BYTE *scan, INT2 flag);
+
+VD_VOID * _USERENTRY VD_farmalloc(DWORD tamanho);
+
+VD_VOID _USERENTRY VD_farfree(VD_VOID *ptr);
+
+VD_VOID _USERENTRY VIDEO_CALC_calcula_percentual(VIDEO_CAMPO_TELA *campo);
+
+VD_VOID _USERENTRY VIDEO_CALC_efetua_operacao(VIDEO_CAMPO_TELA *campo);
+
+INT2 _USERENTRY VIDEO_CALC_operacao(VIDEO_CAMPO_TELA *campo,INT2 flag,
+                         VIDEO_NUCLEO_SERV *param);
+
+INT2 _USERENTRY VIDEO_CALC_intercepta_caracter(BYTE *ascii,BYTE *scan,INT2 flag);
+
+INT2 _USERENTRY VIDEO_CALC_fixa_decimais(VIDEO_CAMPO_TELA *campo,INT2 flag,
+                              VIDEO_NUCLEO_SERV *param);
+
+INT2 _USERENTRY VIDEO_CALC_dispara(VD_VOID);
+
+INT2 _USERENTRY VIDEO_GRI_RET_TRUE();
+
+INT2 _USERENTRY VIDEO_CRG_executa_menu_carrega(VIDEO_ESTMANUT *menu);
+
+VD_VOID _USERENTRY VIDEO_alarme_sonoro(int maximo,int minimo,int inc,int tempo1,
+                            int tempo2,int vezes,int loop);
+
+VOID _USERENTRY VIDEO_ACESSO_nao_disponivel(char *origem);
+
+INT2 _USERENTRY VIDEO_ACESSO_inclusao(VD_VOID);
+
+INT2 _USERENTRY VIDEO_ACESSO_exclusao(VD_VOID);
+
+INT2 _USERENTRY VIDEO_ACESSO_alteracao(VD_VOID);
+
+INT2 _USERENTRY VIDEO_ACESSO_pesquisa(VD_VOID);
+
+INT2 _USERENTRY VIDEO_ACESSO_manutencao(VD_VOID);
+
+INT2 _USERENTRY VIDEO_ACESSO_pag_PGDN(VD_VOID);
+
+INT2 _USERENTRY VIDEO_ACESSO_pag_PGUP(VD_VOID);
+
+INT2 _USERENTRY VIDEO_ACESSO_pag_SHIFT_PGDN(VD_VOID);
+
+INT2 _USERENTRY VIDEO_ACESSO_pag_SHIFT_PGUP(VD_VOID);
+
+INT2 _USERENTRY VIDEO_ACESSO_pag_CTRL_PGUP(VD_VOID);
+
+INT2 _USERENTRY VIDEO_ACESSO_pag_CTRL_PGDN(VD_VOID);
+
+INT2 _USERENTRY VIDEO_ACESSO_spool_impressao(VD_VOID);
+
+INT2 _USERENTRY VIDEO_ACESSO_acesso_geral(VD_VOID);
+
+INT2 _USERENTRY VIDEO_ACESSO_testa_permissao(int flag,int origem,int destino);
+
+INT2 _USERENTRY VIDEO_ACESSO_permissao_acesso(BYTE tipoacesso);
+
+INT2 _USERENTRY VIDEO_ACESSO_gerador_relatorios(VD_VOID);
+
+int _USERENTRY VIDEO_ACESSO_conta_tabela_servico(VIDEO_TABSERV *tabela);
+
+int _USERENTRY VIDEO_ACESSO_inicializa(VD_VOID);
+
+int _USERENTRY VIDEO_ACESSO_inicializa_tabela(VIDEO_TABSERV *origem,
+                                   VIDEO_TABSERV **destino);
+
+int _USERENTRY VIDEO_ACESSO_restaura_tabela(VIDEO_TABSERV *origem,
+                                 VIDEO_TABSERV *destino);
+
+int _USERENTRY VIDEO_ACESSO_restaura(VD_VOID);
+
+
+
